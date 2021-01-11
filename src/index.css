@@ -1,13 +1,24 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.contentLogin{
+    margin-top: 30vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.cinza{
+    background-color: #abeafe;
+}
+
+.hrWhite{
+    background-color: #fff;
+    opacity: 0.2;
+}
+
+.opacityCards{
+    opacity: 0.5;
+}
+
+.bgMultiColor{
+    background-color: #A69B00;
+}
+
+.click{
+    cursor: pointer;
 }

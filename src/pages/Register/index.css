@@ -1,0 +1,17 @@
+@media (min-width: 500px){
+    body{
+        background-image: url(../../img/background.png);
+        background-repeat: no-repeat;
+        background-size: inherit;
+        background-position-y: -10vh;
+    
+    }
+}
+
+@media only screen and (max-width: 499px){
+    body{
+        background-image: url(../../img/background_cell.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
