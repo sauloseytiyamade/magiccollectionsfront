@@ -34,18 +34,29 @@ const Login = (props) => {
             email,
             password
         }
-        axios.post(`${BASE_URL_BACK}/users`,data)
-        .then(resp => {
-            if(resp.data.message == 'user created'){
-                toast.success('Cadastro realizado com sucesso!! Seja Bem-Vindo(a)!!')
-                setTimeout(() => {
-                    window.location.href = `${BASE_URL_FRONT}/login`
-                }, 2000)
-            }
-        })
-        .catch(err => {
-            toast.info(handlerError(err.response.data.message))
-        })
+
+        axios.get(`${BASE_URL_BACK}/users/${email}`)
+            .then(resp => {
+                if(resp.data.message == true){
+                    toast.info('Já existe um usuário cadastrado em nosso sistema com este e-mail')
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_FRONT}/login`
+                    }, 5000)
+                }else{
+                    axios.post(`${BASE_URL_BACK}/users`,data)
+                    .then(resp => {
+                        if(resp.data.message == 'user created'){
+                            toast.success('Cadastro realizado com sucesso!! Seja Bem-Vindo(a)!!')
+                            setTimeout(() => {
+                                window.location.href = `${BASE_URL_FRONT}/login`
+                            }, 5000)
+                        }
+                    })
+                    .catch(err => {
+                        toast.info(handlerError(err.response.data.message))
+                    })
+                }
+            })
     }
 
     return(
@@ -63,7 +74,7 @@ const Login = (props) => {
                         </div>
                     </div>
                     <div className='input-group mb-3'>
-                        <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' autoFocus required />
+                        <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
                         <div className='input-group-prepend'>
                         <span className='input-group-text'><i className='fas fa-envelope'></i></span>
                         </div>

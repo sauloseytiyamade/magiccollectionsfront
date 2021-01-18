@@ -8,6 +8,8 @@ const handlerError = (error) => {
             return 'Este usuário já está cadastrado'
         case 'user not found':
             return 'Este usuário não está cadastrado'
+        case 'Token invalid':
+            return 'Opss!! Houve algum problema de autenticação'
 
         default:
             break;

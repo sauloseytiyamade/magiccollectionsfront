@@ -1,5 +1,5 @@
 @media (min-width: 500px){
-    body{
+    .login{
         background-image: url(../../img/background.png);
         background-repeat: no-repeat;
         background-size: inherit;
@@ -9,9 +9,17 @@
 }
 
 @media only screen and (max-width: 499px){
-    body{
+    .login{
         background-image: url(../../img/background_cell.png);
         background-repeat: no-repeat;
         background-size: cover;
     }
+}
+
+.my-facebook-button-class{
+    background-color: #3b5998;
+    border: 0;
+    padding: 0.5em;
+    width: 13em;
+    color: #fff;
 }
