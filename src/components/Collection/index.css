@@ -8,3 +8,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
 .click{
     cursor: pointer;
 }
+
+.link_text{
+    color: white;
+}
+
+.link_text:hover{
+    color: white;
+}

@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import './index.css'
 import ImgGui from '../../img/guilherme_souza.png'
 import Collection from '../../components/Collection'
+import AddCards from '../../components/AddCards'
 
 const UserCollection = (props) => {
 
@@ -52,6 +53,7 @@ const UserCollection = (props) => {
                 <div className="content-wrapper p-2">
                     <Switch>
                         <Route path={`${props.match.path}/cards`} component={Collection} />
+                        <Route path={`${props.match.path}/addcard`} component={AddCards} />
                     </Switch>
                 </div>
                 <footer className="main-footer">

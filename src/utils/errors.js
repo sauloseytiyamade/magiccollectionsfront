@@ -10,7 +10,10 @@ const handlerError = (error) => {
             return 'Este usuário não está cadastrado'
         case 'Token invalid':
             return 'Opss!! Houve algum problema de autenticação'
-
+        case 'card exist collection':
+            return 'Opss!! Este card já existe na sua coleção'
+        case 'card collection created':
+            return 'Card Criado com Sucesso!!'
         default:
             break;
     }
