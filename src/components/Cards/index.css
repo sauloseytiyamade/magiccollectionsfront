@@ -16,3 +16,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
 .link_text:hover{
     color: white;
 }
+
+.link_text_pen{
+    color: black;
+}
+
+.link_text_pen:hover{
+    color: black;
+}

@@ -1,4 +1,4 @@
-const handlerError = (error) => {
+const messages = (error) => {
     switch (error) {
         case 'user or password invalid':
             return 'Usuário ou senha inválidos'
@@ -14,11 +14,13 @@ const handlerError = (error) => {
             return 'Opss!! Este card já existe na sua coleção'
         case 'card collection created':
             return 'Card Criado com Sucesso!!'
+        case 'card collection updated':
+            return 'Card Atualizado com Sucesso'
         default:
             break;
     }
 }
 
 module.exports = {
-    handlerError
+    messages
 }

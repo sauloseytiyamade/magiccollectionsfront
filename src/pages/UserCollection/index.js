@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import './index.css'
 import ImgGui from '../../img/guilherme_souza.png'
-import Collection from '../../components/Collection'
+import Cards from '../../components/Cards'
 import AddCards from '../../components/AddCards'
+import EditCards from '../../components/EditCards'
 
 const UserCollection = (props) => {
 
@@ -52,8 +53,10 @@ const UserCollection = (props) => {
                 </aside>
                 <div className="content-wrapper p-2">
                     <Switch>
-                        <Route path={`${props.match.path}/cards`} component={Collection} />
-                        <Route path={`${props.match.path}/addcard`} component={AddCards} />
+                        <Route path={`${props.match.path}/cards`} component={Cards} />
+                        <Route path={`${props.match.path}/addcard`} exact component={AddCards} />
+                        <Route path={`${props.match.path}/editcard/:id`} exact component={EditCards} />
+                        <Redirect from={`${props.match.path}*`} to={`${props.match.path}/cards`} />
                     </Switch>
                 </div>
                 <footer className="main-footer">

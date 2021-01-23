@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import './index.css'
 import { Typeahead} from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
-import {handlerError} from '../../utils/errors'
+import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {useHistory} from 'react-router-dom'
 import axios from 'axios';
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
 
 const AddCards = () => {
 
+    const history = useHistory()
     const [allcards, setAllCards] = useState([])
     const [cardName, setCardName] = useState([]);
     const [cardSelected, setCardSelected] = useState('')
@@ -38,7 +40,7 @@ const AddCards = () => {
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(handlerError(err.response.data.message))
+                toast.info(messages(err.response.data.message))
             })
 
         axios.get(`${BASE_URL_BACK}/cardqualities`,configAxios)
@@ -47,7 +49,7 @@ const AddCards = () => {
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(handlerError(err.response.data.message))
+                toast.info(messages(err.response.data.message))
             })
 
         axios.get(`${BASE_URL_BACK}/cardlanguages`,configAxios)
@@ -56,7 +58,7 @@ const AddCards = () => {
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(handlerError(err.response.data.message))
+                toast.info(messages(err.response.data.message))
             })
     }, [])
 
@@ -124,14 +126,15 @@ const AddCards = () => {
 
         axios.post(`${BASE_URL_BACK}/collections`,objAddCard,configAxios)
             .then(resp => {
-                toast.success(handlerError(resp.data.message))
+                toast.success(messages(resp.data.message))
+                setTimeout(() => {
+                    history.push('/usercollection/cards')
+                }, 5000);
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(handlerError(err.response.data.message))
+                toast.info(messages(err.response.data.message))
             })
-        
-
     }
 
 

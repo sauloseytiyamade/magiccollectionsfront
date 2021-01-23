@@ -15,3 +15,9 @@
     background-color: #000 !important;
     border-color: #000 !important; 
 }
+
+@media (min-width: 992px){
+    .fa-bars:before{
+        display: none;
+    }
+}

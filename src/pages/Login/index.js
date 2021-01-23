@@ -4,7 +4,7 @@ import axios from 'axios'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'; 
-import {handlerError} from '../../utils/errors'
+import {messages} from '../../utils/messages'
 import {Link} from 'react-router-dom'
 import {BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
 import GoogleLogin from 'react-google-login'
@@ -50,7 +50,7 @@ const Login = (props) => {
         })
         .catch(err => {
             //Caso dê algum erro é enviada uma mensagem para o usuário
-            toast.info(handlerError(err.response.data.message))
+            toast.info(messages(err.response.data.message))
         })
     }
 

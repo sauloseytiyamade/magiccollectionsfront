@@ -4,7 +4,7 @@ import axios from 'axios'
 import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'; 
-import {handlerError} from '../../utils/errors'
+import {messages} from '../../utils/messages'
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import './index.css'
@@ -53,7 +53,7 @@ const Login = (props) => {
                         }
                     })
                     .catch(err => {
-                        toast.info(handlerError(err.response.data.message))
+                        toast.info(messages(err.response.data.message))
                     })
                 }
             })

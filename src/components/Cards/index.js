@@ -3,16 +3,15 @@ import {Link} from 'react-router-dom'
 import './index.css'
 import axios from 'axios'
 import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
-import {handlerError} from '../../utils/errors'
+import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
 import {Redirect} from 'react-router'
 import {AuthContext} from '../../utils/auth'
 import jwt from 'jsonwebtoken'
 import $ from 'jquery'
-
 import Modals from '../Modals'
 
-const Table = () => {
+const Cards = () => {
     let {isAuth} = useContext(AuthContext)
     const [data, setData] = useState([])
     const token = localStorage.getItem('token')
@@ -92,10 +91,6 @@ const Table = () => {
     if(isAuth == false){
         return <Redirect to='/login' />
     }
-    
-    const editItem = () => {
-        console.log('edit');
-    }
 
     const deleteItem = () => {
         const configAxios = {
@@ -130,14 +125,14 @@ const Table = () => {
                     <td className="text-center">{line.quality}</td>
                     <td className="text-center">{line.language}</td>
                     <td className="text-center">{line.quantity}</td>
-                    <td className="text-center"><i className="fas fa-pencil-alt click" onClick={() => editItem()}></i></td>
-                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => testeItem(line.id)}></i></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )
         )
     }
 
-    const testeItem = (id) => {
+    const openModal = (id) => {
         setLineId(id)
         refModal.current.openModal()
     }
@@ -207,4 +202,4 @@ const Table = () => {
     )
 }
 
-export default Table
+export default Cards
