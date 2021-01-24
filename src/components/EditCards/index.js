@@ -5,7 +5,7 @@ import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import { toast, ToastContainer } from 'react-toastify'
 import {messages} from '../../utils/messages'
 import _ from 'lodash'
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 
 const EditCards = (props) => {
     const token = localStorage.getItem('token')
@@ -141,7 +141,8 @@ const EditCards = (props) => {
                     </div>
                     <div className="row">
                     <div className="col-lg-12">
-                        <button type="submit" className="btn btn-dark">Atualizar</button>
+                        <button type="submit" className="btn btn-dark mr-2">Atualizar</button>
+                        <Link className="btn btn-dark mr-2" to='/usercollection/cards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

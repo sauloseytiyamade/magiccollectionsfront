@@ -5,7 +5,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import axios from 'axios';
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
@@ -177,7 +177,8 @@ const AddCards = () => {
                     </div>
                     <div className="row">
                     <div className="col-lg-12">
-                        <button type="submit" className="btn btn-dark">Cadastrar</button>
+                        <button type="submit" className="btn btn-dark mr-2">Cadastrar</button>
+                        <Link className="btn btn-dark mr-2" to='/usercollection/cards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

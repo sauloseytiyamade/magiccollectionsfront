@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import {Link} from 'react-router-dom'
 import './index.css'
 import axios from 'axios'
-import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
-import {Redirect} from 'react-router'
+import {useHistory} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
 import jwt from 'jsonwebtoken'
 import $ from 'jquery'
@@ -13,6 +13,7 @@ import Modals from '../Modals'
 
 const Cards = () => {
     let {isAuth} = useContext(AuthContext)
+    const history = useHistory()
     const [data, setData] = useState([])
     const token = localStorage.getItem('token')
     const [lineId, setLineId] = useState()
@@ -78,18 +79,20 @@ const Cards = () => {
                     })
                 })
                 .catch(err => {
-                    console.log(err);
+                    if(err.response.data.error == 'token invalid'){
+                        history.push('/login')
+                    }
                 })
                     
 
         }catch(err){
-            return <Redirect to='/login' />
+            history.push('/login')
         }
 
     },[])
 
     if(isAuth == false){
-        return <Redirect to='/login' />
+        history.push('/login')
     }
 
     const deleteItem = () => {
@@ -125,6 +128,7 @@ const Cards = () => {
                     <td className="text-center">{line.quality}</td>
                     <td className="text-center">{line.language}</td>
                     <td className="text-center">{line.quantity}</td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/cardview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
                     <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
@@ -178,6 +182,7 @@ const Cards = () => {
                             <th className="text-center">Qualidade</th>
                             <th className="text-center">Idioma</th>
                             <th className="text-center">Quantidade</th>
+                            <th className="text-center">Visualizar</th>
                             <th className="text-center">Editar</th>
                             <th className="text-center">Remover</th>
                         </tr>
