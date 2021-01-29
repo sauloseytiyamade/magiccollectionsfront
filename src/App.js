@@ -1,5 +1,5 @@
 import Router from './Routes'
-import {AuthContext, AuthProvider} from './utils/auth'
+import {AuthProvider} from './utils/auth'
 
 function App() {
   return (

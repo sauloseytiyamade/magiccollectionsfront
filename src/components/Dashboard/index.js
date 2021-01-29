@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Loading from '../Loading'
 import './index.css'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import SwampImage from '../../img/pantano_branco.svg'
@@ -38,6 +39,7 @@ const Dashboard = () => {
     const [incomum, setIncomum] = useState(0)
     const [rara, setRara] = useState(0)
     const [lendaria, setLendaria] = useState(0)
+    const refLoading = useRef()
 
     const configAxios = {
         headers: {
@@ -93,7 +95,7 @@ const Dashboard = () => {
                 return sum + n
             }) || 0)
 
-            setCardsPlaneswalker(_.reduce(_.map(_.filter(resp.data, {'card_type':'Encantamento'}), 'quantity'), (sum,n) => {
+            setCardsPlaneswalker(_.reduce(_.map(_.filter(resp.data, {'card_type':'Planeswalker'}), 'quantity'), (sum,n) => {
                 return sum + n
             }) || 0)
 
@@ -132,6 +134,8 @@ const Dashboard = () => {
             setLendaria(_.reduce(_.map(_.filter(resp.data, {'rarity':'Lendaria'}), 'quantity'), (sum,n) => {
                 return sum + n
             }) || 0)
+
+            refLoading.current.executeLoading()
         })
     },[id])
 
@@ -229,7 +233,7 @@ const Dashboard = () => {
                                         ['Mágica Instântanea', cardsInstant],
                                         ['Feitiço', cardsSorcery],
                                         ['Encanamento', cardsEnchantment],
-                                        ['Planswalker', cardsPlaneswalker],
+                                        ['Planeswalker', cardsPlaneswalker],
                                     ]}
                                     options={{
                                         chartArea: { left: 0, top: 0, right: 0, bottom: 10 },
@@ -347,6 +351,9 @@ const Dashboard = () => {
                     </div>
                 </div>
                 </div>
+                <Loading
+                    ref={refLoading}
+                />
         </section>
     )
 }

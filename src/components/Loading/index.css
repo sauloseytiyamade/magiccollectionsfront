@@ -1,0 +1,11 @@
+.loading{
+    position: absolute;
+    left: 53%;
+    top: 45%;
+}
+
+.loading-text{
+    position: absolute;
+    left: 55%;
+    top: 48%;
+}

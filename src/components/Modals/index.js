@@ -1,4 +1,4 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {Modal, Button} from 'react-bootstrap'
 
 const Modals = forwardRef((props, ref) => {

@@ -10,6 +10,7 @@ import {AuthContext} from '../../utils/auth'
 import jwt from 'jsonwebtoken'
 import $ from 'jquery'
 import Modals from '../Modals'
+import Loading from '../Loading'
 
 const Cards = () => {
     let {isAuth} = useContext(AuthContext)
@@ -18,6 +19,7 @@ const Cards = () => {
     const token = localStorage.getItem('token')
     const [lineId, setLineId] = useState()
     const refModal = useRef()
+    const refLoading = useRef()
     
     useEffect(() => {
         try{
@@ -76,6 +78,8 @@ const Cards = () => {
                         $('#exportPdf').on('click', function() {
                             dataTable.button('.buttons-pdf').trigger();
                         });
+
+                        refLoading.current.executeLoading()
                     })
                 })
                 .catch(err => {
@@ -202,6 +206,9 @@ const Cards = () => {
                 nameButton='Excluir'
                 deleteItem={deleteItem}
                 ref={refModal}
+            />
+            <Loading 
+                ref={refLoading}
             />
         </div>
     )

@@ -29,33 +29,37 @@ const MenuLeft = () => {
             </nav>
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <a href="#" className="brand-link">
-                <span className="brand-text font-weight-bold">MAGIC COLLECTIONS</span>
+                    <span className="brand-text font-weight-bold">
+                        MAGIC COLLECTIONS
+                    </span>
                 </a>
                 <div className="sidebar text-center mt-3">
                     <img src={ImgGui} className="img-circle mb-2" alt="Guilherme Souza" />
                     <div className="text-white ml-2 text-bold">
-                        {userName}
+                        {isAdmin &&
+                            <i class="far fa-gem text-warning"></i> 
+                        } {userName}
                     </div>
                     <hr className="hrWhite" />
                     <nav>
                         <ul className="nav nav-pills nav-sidebar flex-column">
                             <li className="nav-item">
-                                <Link to='dashboard' className="nav-link">
+                                <Link to='/usercollection/dashboard' className="nav-link">
                                     <i className="fas fa-tachometer-alt text-white mr-2"></i>
                                     <p className="text-white text-bold">Dashboard</p>
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to='cards' className="nav-link">                                    
+                                <Link to='/usercollection/cards' className="nav-link">                                    
                                     <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
                                     <p className="text-white text-bold">Minha Coleção</p>
                                 </Link>
                             </li>
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='cards' className="nav-link">                                    
+                                    <Link to='/usercollection/editioncards' className="nav-link">                                    
                                         <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
-                                        <p className="text-white text-bold">Teste Admin</p>
+                                        <p className="text-white text-bold">Cadastro edição / cards</p>
                                     </Link>
                                 </li>
                             }
