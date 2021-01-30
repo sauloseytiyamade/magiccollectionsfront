@@ -13,9 +13,23 @@ const messages = (error) => {
         case 'card exist collection':
             return 'Opss!! Este card já existe na sua coleção'
         case 'card collection created':
-            return 'Card Criado com Sucesso!!'
+            return 'Card criado com sucesso!!'
         case 'card collection updated':
-            return 'Card Atualizado com Sucesso'
+            return 'Card atualizado com sucesso'
+        case 'edition created':
+            return 'Edição criada com sucesso'
+        case 'edition exist':
+            return 'Opss!! Esta edição já existe'
+        case 'card deleted':
+            return 'Card excluído com sucesso'
+        case 'card collection deleted':
+            return 'Card excluído com sucesso'
+        case 'card exist':
+            return 'Opss!! Este card já existe'
+        case 'card created':
+            return 'Card criado com sucess'
+        case 'card updated':
+            return 'Card atualizado com sucesso'
         default:
             break;
     }

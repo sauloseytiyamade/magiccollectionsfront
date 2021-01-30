@@ -37,7 +37,7 @@ const MenuLeft = () => {
                     <img src={ImgGui} className="img-circle mb-2" alt="Guilherme Souza" />
                     <div className="text-white ml-2 text-bold">
                         {isAdmin &&
-                            <i class="far fa-gem text-warning"></i> 
+                            <i className="far fa-gem text-warning"></i> 
                         } {userName}
                     </div>
                     <hr className="hrWhite" />

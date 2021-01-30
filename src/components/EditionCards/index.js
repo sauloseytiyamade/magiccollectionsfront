@@ -1,191 +1,311 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react'
+import './index.css'
+import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {Link} from 'react-router-dom'
+import axios from 'axios';
+import {messages} from '../../utils/messages'
+import {toast, ToastContainer } from 'react-toastify'
+import Modals from '../Modals'
+import _ from 'lodash'
+import $ from 'jquery'
 
 
 const EditionCards = () => {
+    const [cardEditions, setCardEditions] = useState([])
+    const [cardFilterEdition, setCardFilterEdition] = useState([])
+    const [lineId, setLineId] = useState()
+    const token = localStorage.getItem('token')
+    const refEdition = useRef()
+    const refModal = useRef()
+    const configAxios = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }    
+
+    useEffect(() => {
+        axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
+            .then(resp => {
+                setCardEditions(resp.data.edition)
+                let dataTable = $('#dataTableEditionCards').DataTable({
+                    "responsive": true,
+                    "autoWidth": false,
+                    "lengthChange": false,
+                    "pageLength": 10,
+                    "bInfo" : false,
+                    "language": {
+                        "paginate": {
+                          "previous": "Anterior",
+                          "next": "Próxima"
+                        },
+                        "emptyTable": "Não existe dados para serem carregados"
+                    },
+                    buttons: [
+                        { 
+                            extend: 'pdfHtml5',
+                            customize: function(doc) {
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center'; 
+                            },
+                            exportOptions:{
+                                columns: [0,1,2,3,4,5,6,7]
+                            }
+                        },
+                        { 
+                            extend: 'excel',
+                            exportOptions:{
+                                columns: [0,1,2,3,4,5,6,7]
+                            }
+                        }
+                    ]
+                })
+
+                $('#searchBarTec').on('keyup change', function () {
+                    dataTable.search(this.value).draw()
+                })
+
+                $('#exportExcel').on('click', function() {
+                    dataTable.button('.buttons-excel').trigger()
+                })
+
+                $('#exportPdf').on('click', function() {
+                    dataTable.button('.buttons-pdf').trigger()
+                })
+            })
+            .catch(err => {
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+            })
+    
+    }, [])
+
+    const handleChangeOptions = (e) => {
+        const idEdition = refEdition.current.value
+
+        axios.get(`${BASE_URL_BACK}/cards`,configAxios)
+            .then(resp => {
+                $('#dataTableEditionCards').DataTable().destroy();
+                setCardFilterEdition(_.filter(resp.data, {'edition_id': parseInt(idEdition)}))
+                let dataTable = $('#dataTableEditionCards').DataTable({
+                    "responsive": true,
+                    "autoWidth": false,
+                    "lengthChange": false,
+                    "pageLength": 10,
+                    "bInfo" : false,
+                    "language": {
+                        "paginate": {
+                          "previous": "Anterior",
+                          "next": "Próxima"
+                        },
+                        "emptyTable": "Não existe dados para serem carregados"
+                    },
+                    buttons: [
+                        { 
+                            extend: 'pdfHtml5',
+                            customize: function(doc) {
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center'; 
+                            },
+                            exportOptions:{
+                                columns: [0,1,2,3,4,5,6,7]
+                            }
+                        },
+                        { 
+                            extend: 'excel',
+                            exportOptions:{
+                                columns: [0,1,2,3,4,5,6,7]
+                            }
+                        }
+                    ]
+                })
+
+                $('#searchBarTec').on('keyup change', function () {
+                    dataTable.search(this.value).draw()
+                })
+
+                $('#exportExcel').on('click', function() {
+                    dataTable.button('.buttons-excel').trigger()
+                })
+
+                $('#exportPdf').on('click', function() {
+                    dataTable.button('.buttons-pdf').trigger()
+                })
+            })
+            .catch(err => {
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+            })
+    }
+
+    const renderEditions = () => {
+        return(
+            <div className="col-lg-4 mt-3">
+                <div className="form-group">
+                <label>Selecione a edição</label>
+                <select className="form-control" ref={refEdition} onChange={e => handleChangeOptions(e)} required>
+                    <option>Selecione uma edição</option>
+                    {cardEditions.map(edition => {
+                        return(
+                            <option key={edition.id} value={edition.id}>{edition.edition}</option>
+                        )
+                    })}
+                </select>
+                </div>
+            </div>
+        )
+    }
+
+    const renderRow = () => {
+        return cardFilterEdition.map(line => (
+                <tr key={line.id}>
+                    <td>{line.card_name}</td>
+                    <td className="text-center">{line.card_type}</td>
+                    <td className="text-center">{line.card_color}</td>
+                    <td className="text-center">{line.edition}</td>
+                    <td className="text-center">{line.rarity}</td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
+                </tr>
+            )
+        )
+    }
+
+    const openModal = (id) => {
+        setLineId(id)
+        refModal.current.openModal()
+    }
+
+    const deleteItem = () => {
+        axios.delete(`${BASE_URL_BACK}/cards/${lineId}`,configAxios)
+            .then(resp => {
+                if(resp.data.message == 'cards deleted'){
+                    toast.success(messages(resp.data.message))
+                    const filtered = cardFilterEdition.filter(cards => {
+                        return cards.id != lineId
+                    })            
+                    setCardFilterEdition(filtered)
+                    refModal.current.openModal()
+                }
+            })
+            .catch(err => {
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+            })
+    }
+
+    const saveNewEdition = (evt) => {
+        evt.preventDefault()
+        const objAddEdtion = {
+            'edition': evt.target.newEdition.value,
+            'code': evt.target.codeNewEdition.value
+        }
+
+        axios.post(`${BASE_URL_BACK}/cardeditions`,objAddEdtion,configAxios)
+            .then(resp => {
+                toast.success(messages(resp.data.message))
+                axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
+                    .then(resp => {
+                        setCardEditions(resp.data.edition)
+                    })
+
+            })
+            .catch(err => {
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+            })
+    }
+
     return(
-        <section class="content">
-           <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 mt-2 mb-3">
+        <section className="content">
+           <div className="container-fluid">
+                <div className="row">
+                    <div className="col-12 mt-2 mb-3">
                     <h1>Edições e Cards</h1>
                     </div>
                 </div>
-                <div class="row">
-                <div class="col-lg-4 mt-3">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Selecione a edição</label>
-                        <select class="form-control">
-                        <option>Mirrodin</option>
-                        <option>8ª Edição</option>
-                        <option>Darksteel</option>
-                        <option>Odisséia</option>
-                        <option>7ª Edição</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="col-lg-4 mt-5">                
-                        <button type="button" class="btn btn-dark">Nova Edição</button>
+                <div className="row">
+                    {renderEditions()}
+                    <div className="col-lg-4 mt-5">                
+                        <button type="button" data-toggle="collapse" href="#addNewEdition" className="btn btn-dark mb-3">Nova Edição</button>
                     </div>
                 </div>
 
-                <hr class="mb-4"></hr>
+                <form onSubmit={saveNewEdition}>
+                    <div className="row">
+                        <div className="col-lg-4">
+                            <div className="collapse multi-collapse" id="addNewEdition">
+                                <div className="row">
+                                    <div className="col-lg-6">
+                                        <input type="text" name='newEdition' className="form-control mb-3" placeholder="Qual o nome da edição?" />
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <input type="text" name='codeNewEdition' className="form-control mb-3" placeholder="Qual o código da edição?" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4">
+                            <div className="collapse multi-collapse" id="addNewEdition">
+                                <button type="submit" className="btn btn-dark mr-2">Salvar</button>
+                                <a href="https://en.wikipedia.org/wiki/List_of_Magic:_The_Gathering_sets" target='_blank'><i className="fas fa-question-circle text-primary helpme" title='Código da edição'></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
-                <div class="row">
-                    <div class="col-12 mt-2 mb-3">
+                <hr className="mb-4"></hr>
+
+                <div className="row">
+                    <div className="col-12 mt-2 mb-3">
                     <h1>Cards</h1>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-11">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Qual carta você está procurando?" />
-                            <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-search"></i>
+                <div className="row">
+                    <div className="col-lg-11">
+                        <div className="input-group mb-3">
+                            <input type="email" className="form-control" id="searchBarTec" placeholder="Qual carta você está procurando?" />
+                            <div className="input-group-append">
+                            <div className="input-group-text">
+                                <i className="fas fa-search"></i>
                             </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-1 mb-2">
-                        <button type="button" class="btn btn-dark">Adicionar</button>
+                    <div className="col-lg-1 mb-2">
+                        <Link className="btn btn-dark" to='/usercollection/addeditioncards'>Adicionar</Link>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                    <div class="col-lg-12">
-                        <table id="example2" class="table table-bordered table-responsive-sm table-responsive-md">
+                <div className="row">
+                    <div className="col-lg-12">
+                    <div className="col-lg-12">
+                        <table id="dataTableEditionCards" className="table table-bordered table-responsive-sm table-responsive-md">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nome</th>
-                            <th class="text-center">Tipo</th>
-                            <th class="text-center">Cor</th>
-                            <th class="text-center">Edição</th>
-                            <th class="text-center">Raridade</th>
-                            <th class="text-center">Editar</th>
-                            <th class="text-center">Remover</th>
+                            <th className="text-center">Tipo</th>
+                            <th className="text-center">Cor</th>
+                            <th className="text-center">Edição</th>
+                            <th className="text-center">Raridade</th>
+                            <th className="text-center">Editar</th>
+                            <th className="text-center">Remover</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Aves do Paraíso</td>
-                            <td class="text-center">Criatura</td>
-                            <td class="text-center">Verde</td>
-                            <td class="text-center">8ª Edição</td>
-                            <td class="text-center">Rara</td>
-                            <td class="text-center"><i class="fas fa-pencil-alt"></i></td>
-                            <td class="text-center"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
+                            {renderRow()}
                         </tbody>
                         </table>
                     </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-2 offset-lg-10">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                        <li class="page-item"><a class="page-link text-dark" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                    </div>
-                </div>
            </div>
+           <ToastContainer />
+           <Modals 
+                title='Exclusão de card'
+                body='Deseja realmente excluir este card? Se você fizer isso, este card será removido de todos os usuários'
+                nameButton='Excluir'
+                deleteItem={deleteItem}
+                ref={refModal}
+            />
         </section>
     )
 }

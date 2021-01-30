@@ -10,7 +10,7 @@ import axios from 'axios';
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
 
-const AddCards = () => {
+const AddCardsCollection = () => {
 
     const history = useHistory()
     const [allcards, setAllCards] = useState([])
@@ -144,7 +144,7 @@ const AddCards = () => {
             <div className="container-fluid">
                 <div className="row">
                 <div className="col-12 mt-2 mb-3">
-                    <h1>Cadastro de Cards</h1>
+                    <h1>Cadastro de cartas na sua coleção</h1>
                 </div>
                 </div>
 
@@ -153,7 +153,6 @@ const AddCards = () => {
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>Nome da Carta</label>
-                            <label>Tipo da Carta</label>
                             <Typeahead
                                 id="cardsName"
                                 onChange={(selected) => {
@@ -189,4 +188,4 @@ const AddCards = () => {
     )
 }
 
-export default AddCards
+export default AddCardsCollection

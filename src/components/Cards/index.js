@@ -45,7 +45,8 @@ const Cards = () => {
                                 "paginate": {
                                   "previous": "Anterior",
                                   "next": "Próxima"
-                                }
+                                },
+                                "emptyTable": "Não existe dados para serem carregados"
                             },
                             buttons: [
                                 { 
@@ -109,6 +110,7 @@ const Cards = () => {
         axios.delete(`${BASE_URL_BACK}/collections/${lineId}`,configAxios)
             .then(resp => {
                 if(resp.data.message == 'card collection deleted'){
+                    toast.success(messages(resp.data.message))
                     const filtered = data.filter(cards => {
                         return cards.id != lineId
                     })            

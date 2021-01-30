@@ -7,7 +7,7 @@ import {messages} from '../../utils/messages'
 import _ from 'lodash'
 import { useHistory, useParams, Link } from 'react-router-dom';
 
-const EditCards = (props) => {
+const EditCardsCollection = (props) => {
     const token = localStorage.getItem('token')
     const {id} = useParams()
     const history = useHistory()
@@ -153,4 +153,4 @@ const EditCards = (props) => {
     )
 }
 
-export default EditCards
+export default EditCardsCollection

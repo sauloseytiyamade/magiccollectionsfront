@@ -21,21 +21,21 @@ const Loading = forwardRef((props, ref) => {
 
     return(
         <>
-            <div class="d-flex justify-content-center loading">
-                <div class="spinner-grow text-dark" role="status">
+            <div className="d-flex justify-content-center loading">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
-                <div class="spinner-grow text-dark" role="status">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
-                <div class="spinner-grow text-dark" role="status">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
-                <div class="spinner-grow text-dark" role="status">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
-                <div class="spinner-grow text-dark" role="status">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
-                <div class="spinner-grow text-dark" role="status">
+                <div className="spinner-grow text-dark" role="status">
                 </div>
             </div>
-            <div class="d-flex justify-content-center loading-text">
+            <div className="d-flex justify-content-center loading-text">
                 <h5>Carregando...</h5>
             </div>
         </>
