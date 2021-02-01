@@ -16,6 +16,7 @@ const AddEditionCards = () => {
     const refCardColor = useRef()
     const refCardEdition = useRef()
     const refCardRarity = useRef()
+    const history = useHistory()
 
     const configAxios = {
         headers: {
@@ -145,6 +146,9 @@ const AddEditionCards = () => {
             .then(resp => {
                 if(resp.data.message == 'card created'){
                     toast.success(messages(resp.data.message))
+                    setTimeout(() => {
+                        history.push('/usercollection/editioncards')
+                    }, 5000);
                 }
             })
             .catch(err => {

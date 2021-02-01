@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import './index.css'
 import axios from 'axios'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
-import {useHistory} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
 import jwt from 'jsonwebtoken'
 import $ from 'jquery'

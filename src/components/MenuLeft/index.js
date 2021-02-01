@@ -49,6 +49,14 @@ const MenuLeft = () => {
                                     <p className="text-white text-bold">Dashboard</p>
                                 </Link>
                             </li>
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/usercollection/dashboardadmin' className="nav-link">                                    
+                                        <i className="fas fa-tachometer-alt text-white mr-2"></i>
+                                        <p className="text-white text-bold">Dashboard Admin</p>
+                                    </Link>
+                                </li>
+                            }
                             <li className="nav-item">
                                 <Link to='/usercollection/cards' className="nav-link">                                    
                                     <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
@@ -60,6 +68,14 @@ const MenuLeft = () => {
                                     <Link to='/usercollection/editioncards' className="nav-link">                                    
                                         <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro edição / cards</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/usercollection/users' className="nav-link">                                    
+                                        <i className="fas fa-users text-white mr-2"></i>
+                                        <p className="text-white text-bold">Administrar Usuários</p>
                                     </Link>
                                 </li>
                             }

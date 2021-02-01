@@ -10,6 +10,8 @@ import Dashboard from '../../components/Dashboard'
 import EditionCards from '../../components/EditionCards'
 import EditEditionCards from '../../components/EditEditionCards'
 import AddEditionCards from '../../components/AddEditionCards'
+import DashboardAdmin from '../../components/DashboardAdmin'
+import Users from '../../components/Users'
 
 const UserCollection = (props) => {
 
@@ -27,11 +29,13 @@ const UserCollection = (props) => {
                         <Route path={`${props.match.path}/cards`} component={Cards} />
                         <Route path={`${props.match.path}/addcard`} exact component={AddCardsCollection} />
                         <Route path={`${props.match.path}/dashboard`} exact component={Dashboard} />
+                        <Route path={`${props.match.path}/dashboardadmin`} exact component={DashboardAdmin} />
                         <Route path={`${props.match.path}/editcard/:id`} exact component={EditCardsCollection} />
                         <Route path={`${props.match.path}/cardview/:id`} exact component={CardView} />
                         <Route path={`${props.match.path}/editioncards`} exact component={EditionCards} />
                         <Route path={`${props.match.path}/addeditioncards`} exact component={AddEditionCards} />
                         <Route path={`${props.match.path}/editioncards/:id`} component={EditEditionCards} />
+                        <Route path={`${props.match.path}/users`} component={Users} />
                         <Redirect from={`${props.match.path}*`} to={`${props.match.path}/cards`} />
                     </Switch>
                 </div>
