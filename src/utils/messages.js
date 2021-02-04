@@ -30,6 +30,10 @@ const messages = (error) => {
             return 'Card criado com sucess'
         case 'card updated':
             return 'Card atualizado com sucesso'
+        case 'user deleted':
+            return 'Usuário deletado com sucesso'
+        case 'user updated':
+            return 'Usuário atualizado com sucesso'
         default:
             break;
     }

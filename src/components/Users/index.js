@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import Modals from '../Modals'
+import {messages} from '../../utils/messages'
+import { toast, ToastContainer } from 'react-toastify'
 import _ from 'lodash'
 import $ from 'jquery'
 import axios from 'axios';
@@ -8,6 +11,8 @@ import axios from 'axios';
 const Users = () => {
     const token = localStorage.getItem('token')
     const [data, setData] = useState([])
+    const [lineId, setLineId] = useState()
+    const refModal = useRef()
     const configAxios = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -59,14 +64,49 @@ const Users = () => {
             })
     },[])
 
+    const openModal = (id) => {
+      setLineId(id)
+      refModal.current.openModal()
+    }
+
+    const deleteItem = () => {
+      const configAxios = {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      }
+
+      axios.get(`${BASE_URL_BACK}/users/`,configAxios)
+        .then(resp => {
+            const users = resp.data
+            const user = _.filter(resp.data, {'id': lineId})
+            const email = user[0].email
+            axios.delete(`${BASE_URL_BACK}/users/${email}`,configAxios)
+                .then(resp => {
+                    if(resp.data.message == 'user deleted'){
+                        toast.success(messages(resp.data.message))
+                        const filtered = _.filter(users, (o) => {
+                          return o.email != email
+                        })           
+                        setData(filtered)
+                        refModal.current.openModal()
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        })
+
+  }
+
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>
                     <td>{line.name}</td>
                     <td className="text-center">{line.email}</td>
                     <td className="text-center">{line.permission == 0 ? 'Admin' : 'User'}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
-                    <td className="text-center"><i className="fas fa-trash-alt click"></i></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/edituser/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )
         )
@@ -111,7 +151,14 @@ const Users = () => {
             </div>
           </div>
         </div>
-
+        <Modals 
+            title='Exclusão de card'
+            body='Tem certeza que deseja excluir este usuário? Se excluir a coleção dele também será excluída'
+            nameButton='Excluir'
+            deleteItem={deleteItem}
+            ref={refModal}
+        />
+      <ToastContainer />
       </section>
     )
 }

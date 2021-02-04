@@ -12,6 +12,7 @@ import EditEditionCards from '../../components/EditEditionCards'
 import AddEditionCards from '../../components/AddEditionCards'
 import DashboardAdmin from '../../components/DashboardAdmin'
 import Users from '../../components/Users'
+import EditUser from '../../components/EditUser'
 
 const UserCollection = (props) => {
 
@@ -36,6 +37,7 @@ const UserCollection = (props) => {
                         <Route path={`${props.match.path}/addeditioncards`} exact component={AddEditionCards} />
                         <Route path={`${props.match.path}/editioncards/:id`} component={EditEditionCards} />
                         <Route path={`${props.match.path}/users`} component={Users} />
+                        <Route path={`${props.match.path}/edituser/:id`} component={EditUser} />
                         <Redirect from={`${props.match.path}*`} to={`${props.match.path}/cards`} />
                     </Switch>
                 </div>
