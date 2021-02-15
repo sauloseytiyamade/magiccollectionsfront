@@ -160,11 +160,11 @@ const EditEditionCards = (props) => {
         evt.preventDefault()
 
         const objAddCard = {
-            cardName: evt.target.cardName.value,
-            cardColor_id: refCardColor.current.value,
-            cardEdition_id: refCardEdition.current.value,
-            cardType_id: refCardType.current.value,
-            cardRarity_id: refCardRarity.current.value
+            cardName: evt.target.cardName.value.trim(),
+            cardColor_id: refCardColor.current.value.trim(),
+            cardEdition_id: refCardEdition.current.value.trim(),
+            cardType_id: refCardType.current.value.trim(),
+            cardRarity_id: refCardRarity.current.value.trim()
         }
 
         axios.put(`${BASE_URL_BACK}/cards/${id}`,objAddCard,configAxios)
@@ -207,7 +207,7 @@ const EditEditionCards = (props) => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className="btn btn-dark mr-2">Atualizar</button>
-                        <Link className="btn btn-dark mr-2" to='/usercollection/editioncards'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/editioncards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

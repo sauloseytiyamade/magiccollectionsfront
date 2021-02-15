@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import Loading from '../Loading'
 import './index.css'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {Link, Redirect} from 'react-router-dom'
+import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
@@ -16,6 +18,7 @@ const DashboardAdmin = () => {
     const [dataChart, setDataChart] = useState([])
     const [threeCollection, setThreeCollection] = useState([])
     const refLoading = useRef()
+    let {isAdmin} = useContext(AuthContext)
 
     const configAxios = {
         headers: {
@@ -62,11 +65,15 @@ const DashboardAdmin = () => {
     },[])
 
     useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/cards`,configAxios)
+        if(!isAdmin){
+            return null
+        }else{
+            axios.get(`${BASE_URL_BACK}/cards`,configAxios)
             .then(resp => {
                 setCard(resp.data.length)
                 refLoading.current.executeLoading()
             })
+        }
     },[])
 
     useEffect(() => {
@@ -87,10 +94,24 @@ const DashboardAdmin = () => {
                     arrModify.push(_.valuesIn(arrOrderBy[index]))
                 }
 
+                console.log(arrModify);
+
                 setThreeCollection(arrModify)
 
             })
     },[])
+    
+    if(isAdmin == false){
+        return (
+            <Redirect to='/usercollection' />
+        )
+    }else{
+        
+    }
+
+    if(isAdmin == false){
+        return null
+    }
 
     return(
         <section className="content">
@@ -193,8 +214,8 @@ const DashboardAdmin = () => {
                 </div>
             </div>
                 <Loading
-                    ref={refLoading}
-                />
+                ref={refLoading}
+                />            
         </section>
     )
 }

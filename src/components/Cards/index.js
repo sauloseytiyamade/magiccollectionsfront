@@ -133,8 +133,8 @@ const Cards = () => {
                     <td className="text-center">{line.quality}</td>
                     <td className="text-center">{line.language}</td>
                     <td className="text-center">{line.quantity}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/cardview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`cardview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )
@@ -169,7 +169,7 @@ const Cards = () => {
                             </div>
                         </div>
                         <div className="col-lg-3 mb-2 mr-0">
-                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/usercollection/addcard'>Adicionar</Link></button>
+                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/addcard'>Adicionar</Link></button>
                             <button type="button" className="btn btn-dark mr-1" id='exportPdf'>PDF</button>
                             <button type="button" className="btn btn-dark mr-1" id='exportExcel'>Excel</button>
                         </div>

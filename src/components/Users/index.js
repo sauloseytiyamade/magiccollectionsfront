@@ -1,9 +1,10 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {Link, useHistory} from 'react-router-dom'
+import React, {useEffect, useState, useRef, useContext} from 'react';
+import {Link, useHistory, Redirect} from 'react-router-dom'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
 import Modals from '../Modals'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
+import {AuthContext} from '../../utils/auth'
 import _ from 'lodash'
 import $ from 'jquery'
 import axios from 'axios';
@@ -18,6 +19,7 @@ const Users = () => {
             Authorization: `Bearer ${token}`
         }
     }
+    let {isAdmin} = useContext(AuthContext)
 
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
@@ -98,6 +100,17 @@ const Users = () => {
         })
 
   }
+      if(isAdmin == false){
+        return (
+            <Redirect to='/usercollection' />
+        )
+    }else{
+        
+    }
+
+    if(isAdmin == false){
+        return null
+    }
 
     const renderRow = () => {
         return data.map(line => (
@@ -153,7 +166,7 @@ const Users = () => {
         </div>
         <Modals 
             title='Exclusão de card'
-            body='Tem certeza que deseja excluir este usuário? Se excluir a coleção dele também será excluída'
+            body='Tem certeza que deseja excluir este usuário? Se excluir, a coleção do usuário também será excluída'
             nameButton='Excluir'
             deleteItem={deleteItem}
             ref={refModal}

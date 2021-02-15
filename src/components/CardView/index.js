@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Loading from '../Loading'
 import axios from 'axios';
 import {BASE_URL_BACK, BASE_URL_API_MAGIC} from '../../utils/variaveisAmbiente'
+import BackCard from '../../img/backCard.png'
 import Birds from '../../img/aves_do_paraiso.png'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
@@ -58,7 +59,7 @@ const CardView = (props) => {
 
                     <div className="row">
                     <div className="col-lg-2">
-                        <img src={imageUrl} alt="" width='90%'/>
+                        <img src={imageUrl || BackCard} alt="" width='90%'/>
                     </div>
                     <div className="col-lg-10 mt-2">
                         <p><b>Nome da Carta:</b> {card[0]?.card_name}</p>

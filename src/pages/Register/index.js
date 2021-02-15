@@ -12,6 +12,7 @@ import './index.css'
 const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
     const [name, setName] = useState('')
 
     const onChangeMail = evt => {
@@ -22,6 +23,10 @@ const Login = (props) => {
         setPassword(evt.target.value)
     }
 
+    const onChangePassConfirm = evt => {
+        setPasswordConfirm(evt.target.value)
+    }
+
     const onChangeName = evt => {
         setName(evt.target.value)
     }
@@ -29,13 +34,14 @@ const Login = (props) => {
     const sendBack = (evt) => {
         evt.preventDefault()
 
-        const data = {
-            name,
-            email,
-            password
-        }
-
-        axios.get(`${BASE_URL_BACK}/users/${email}`)
+        if(password == passwordConfirm){
+            const data = {
+                name,
+                email,
+                password
+            }
+            
+            axios.get(`${BASE_URL_BACK}/users/${email}`)
             .then(resp => {
                 if(resp.data.message == true){
                     toast.info('Já existe um usuário cadastrado em nosso sistema com este e-mail')
@@ -57,6 +63,10 @@ const Login = (props) => {
                     })
                 }
             })
+        }else{
+            toast.info('As senhas não coincidem')
+        }
+            
     }
 
     return(
@@ -67,24 +77,30 @@ const Login = (props) => {
             <form onSubmit={sendBack}>
                 <div className='row'>
                     <div className='col-md-6 offset-md-3 col-10 offset-1'>
-                    <div className='input-group mb-3'>
-                        <input type='text' name='name' value={name} onChange={onChangeName} className='form-control' placeholder='Nome completo' autoFocus required />
-                        <div className='input-group-prepend'>
-                        <span className='input-group-text'><i className='fas fa-user'></i></span>
+                        <div className='input-group mb-3'>
+                            <input type='text' name='name' value={name} onChange={onChangeName} className='form-control' placeholder='Nome completo' autoFocus required />
+                            <div className='input-group-prepend'>
+                            <span className='input-group-text'><i className='fas fa-user'></i></span>
+                            </div>
                         </div>
-                    </div>
-                    <div className='input-group mb-3'>
-                        <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
-                        <div className='input-group-prepend'>
-                        <span className='input-group-text'><i className='fas fa-envelope'></i></span>
+                        <div className='input-group mb-3'>
+                            <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
+                            <div className='input-group-prepend'>
+                            <span className='input-group-text'><i className='fas fa-envelope'></i></span>
+                            </div>
                         </div>
-                    </div>
-                    <div className='input-group mb-3'>
-                        <input type='password' value={password} onChange={onChangePass} className='form-control' placeholder='Senha' required/>
-                        <div className='input-group-prepend'>
-                        <span className='input-group-text'><i className='fas fa-unlock-alt'></i></span>
+                        <div className='input-group mb-3'>
+                            <input type='password' value={password} onChange={onChangePass} className='form-control' placeholder='Senha' required/>
+                            <div className='input-group-prepend'>
+                            <span className='input-group-text'><i className='fas fa-unlock-alt'></i></span>
+                            </div>
                         </div>
-                    </div>
+                        <div className='input-group mb-3'>
+                            <input type='password' value={passwordConfirm} onChange={onChangePassConfirm} className='form-control' placeholder='Confirme sua senha' required/>
+                            <div className='input-group-prepend'>
+                            <span className='input-group-text'><i className='fas fa-unlock-alt'></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type='submit' className='btn btn-dark mb-2'>Cadastrar-se</button>

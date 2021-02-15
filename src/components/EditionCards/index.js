@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import './index.css'
 import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import axios from 'axios';
 import {messages} from '../../utils/messages'
+import {AuthContext} from '../../utils/auth'
 import {toast, ToastContainer } from 'react-toastify'
 import Modals from '../Modals'
 import _ from 'lodash'
@@ -21,7 +22,7 @@ const EditionCards = () => {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }    
+    }
 
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
@@ -78,6 +79,20 @@ const EditionCards = () => {
             })
     
     }, [])
+
+    let {isAdmin} = useContext(AuthContext)
+
+    if(isAdmin == false){
+        return (
+            <Redirect to='/usercollection' />
+        )
+    }
+
+    if(isAdmin == false){
+        return null
+    }
+
+
 
     const handleChangeOptions = (e) => {
         const idEdition = refEdition.current.value
@@ -196,8 +211,8 @@ const EditionCards = () => {
     const saveNewEdition = (evt) => {
         evt.preventDefault()
         const objAddEdtion = {
-            'edition': evt.target.newEdition.value,
-            'code': evt.target.codeNewEdition.value
+            'edition': evt.target.newEdition.value.trim(),
+            'code': evt.target.codeNewEdition.value.trim()
         }
 
         axios.post(`${BASE_URL_BACK}/cardeditions`,objAddEdtion,configAxios)
@@ -247,7 +262,7 @@ const EditionCards = () => {
                         <div className="col-lg-4">
                             <div className="collapse multi-collapse" id="addNewEdition">
                                 <button type="submit" className="btn btn-dark mr-2">Salvar</button>
-                                <a href="https://en.wikipedia.org/wiki/List_of_Magic:_The_Gathering_sets" target='_blank'><i className="fas fa-question-circle text-primary helpme" title='Código da edição'></i></a>
+                                <a href="https://pt.wikipedia.org/wiki/Expans%C3%B5es_de_Magic:_The_Gathering" target='_blank'><i className="fas fa-question-circle text-primary helpme" title='Código da edição'></i></a>
                             </div>
                         </div>
                     </div>
@@ -272,7 +287,7 @@ const EditionCards = () => {
                         </div>
                     </div>
                     <div className="col-lg-1 mb-2">
-                        <Link className="btn btn-dark" to='/usercollection/addeditioncards'>Adicionar</Link>
+                        <Link className="btn btn-dark" to='/addeditioncards'>Adicionar</Link>
                     </div>
                 </div>
                 <div className="row">

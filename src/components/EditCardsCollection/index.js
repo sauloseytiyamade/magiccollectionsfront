@@ -72,7 +72,7 @@ const EditCardsCollection = (props) => {
                 if(resp.data.message = "card collection updated"){
                     toast.success(messages('card collection updated'))
                     setTimeout(() => {
-                        history.push('/usercollection/cards')
+                        history.push('/cards')
                     }, 5000);
                 }
             })
@@ -142,7 +142,7 @@ const EditCardsCollection = (props) => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className="btn btn-dark mr-2">Atualizar</button>
-                        <Link className="btn btn-dark mr-2" to='/usercollection/cards'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/cards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

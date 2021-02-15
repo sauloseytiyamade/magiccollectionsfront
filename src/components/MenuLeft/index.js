@@ -1,22 +1,42 @@
 import React, { useEffect, useState, useContext } from 'react';
-import ImgGui from '../../img/guilherme_souza.png'
+import ImgDefault from '../../img/imgDefault.png'
 import jwt from 'jsonwebtoken'
 import {Link} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
+import { toast, ToastContainer } from 'react-toastify'
+import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {messages} from '../../utils/messages'
+import axios from 'axios';
+import _ from 'lodash'
 
 const MenuLeft = () => {
-    const [userName, setUserName] = useState('')
+    const [userName, setUserName] = useState('User')
+    const [photo, setPhoto] = useState('')
     const token = localStorage.getItem('token')
     const user = jwt.decode(token) || 0
     let {isAdmin} = useContext(AuthContext)
 
-    useEffect(() => {
-        if(Object.keys(user).length > 0){
-            setUserName(user.name)
-        }else{
-            setUserName('User')
+    const configAxios = {
+        headers: {
+            Authorization: `Bearer ${token}`
         }
-    })
+    }
+
+    useEffect(() => {
+        axios.get(`${BASE_URL_BACK}/users`,configAxios)
+        .then(resp => {
+            const userFilter = _.filter(resp.data, {'id': user.id})
+            const userNameFilter = userFilter[0].name
+            const photoFilter = userFilter[0].photo
+            setPhoto(photoFilter)
+            setUserName(userNameFilter)
+            
+        })
+        .catch(err => {
+            //Caso dê algum erro é enviada uma mensagem para o usuário
+            toast.info(messages(err.response.data.message))
+        })
+    },[userName])
     
     return(
         <>
@@ -29,12 +49,12 @@ const MenuLeft = () => {
             </nav>
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <a href="#" className="brand-link">
-                    <span className="brand-text font-weight-bold">
+                    <span className="brand-text font-weight-bold ml-2">
                         MAGIC COLLECTIONS
                     </span>
                 </a>
                 <div className="sidebar text-center mt-3">
-                    <img src={ImgGui} className="img-circle mb-2" alt="Guilherme Souza" />
+                    <img src={photo || ImgDefault} className="img-circle mb-2" alt="Guilherme Souza" />
                     <div className="text-white ml-2 text-bold">
                         {isAdmin &&
                             <i className="far fa-gem text-warning"></i> 
@@ -44,28 +64,28 @@ const MenuLeft = () => {
                     <nav>
                         <ul className="nav nav-pills nav-sidebar flex-column">
                             <li className="nav-item">
-                                <Link to='/usercollection/dashboard' className="nav-link">
+                                <Link to='/dashboard' className="nav-link">
                                     <i className="fas fa-tachometer-alt text-white mr-2"></i>
                                     <p className="text-white text-bold">Dashboard</p>
                                 </Link>
                             </li>
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/usercollection/dashboardadmin' className="nav-link">                                    
+                                    <Link to='/dashboardadmin' className="nav-link">                                    
                                         <i className="fas fa-tachometer-alt text-white mr-2"></i>
                                         <p className="text-white text-bold">Dashboard Admin</p>
                                     </Link>
                                 </li>
                             }
                             <li className="nav-item">
-                                <Link to='/usercollection/cards' className="nav-link">                                    
+                                <Link to='/cards' className="nav-link">                                    
                                     <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
                                     <p className="text-white text-bold">Minha Coleção</p>
                                 </Link>
                             </li>
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/usercollection/editioncards' className="nav-link">                                    
+                                    <Link to='/editioncards' className="nav-link">                                    
                                         <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro edição / cards</p>
                                     </Link>
@@ -73,15 +93,22 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/usercollection/users' className="nav-link">                                    
+                                    <Link to='/users' className="nav-link">                                    
                                         <i className="fas fa-users text-white mr-2"></i>
                                         <p className="text-white text-bold">Administrar Usuários</p>
                                     </Link>
                                 </li>
                             }
+                            <li className="nav-item">
+                                <Link to='/configuser' className="nav-link">                                    
+                                    <i className="fas fa-user text-white mr-2"></i>
+                                    <p className="text-white text-bold">Configuração do usuário</p>
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
                 </div>
+                <ToastContainer />
             </aside>
         </>
     )

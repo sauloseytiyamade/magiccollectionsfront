@@ -13,6 +13,7 @@ import AddEditionCards from '../../components/AddEditionCards'
 import DashboardAdmin from '../../components/DashboardAdmin'
 import Users from '../../components/Users'
 import EditUser from '../../components/EditUser'
+import ConfigUser from '../../components/ConfigUser'
 
 const UserCollection = (props) => {
 
@@ -27,18 +28,18 @@ const UserCollection = (props) => {
                 <MenuLeft />
                 <div className="content-wrapper p-2">
                     <Switch>
-                        <Route path={`${props.match.path}/cards`} component={Cards} />
-                        <Route path={`${props.match.path}/addcard`} exact component={AddCardsCollection} />
-                        <Route path={`${props.match.path}/dashboard`} exact component={Dashboard} />
-                        <Route path={`${props.match.path}/dashboardadmin`} exact component={DashboardAdmin} />
-                        <Route path={`${props.match.path}/editcard/:id`} exact component={EditCardsCollection} />
-                        <Route path={`${props.match.path}/cardview/:id`} exact component={CardView} />
-                        <Route path={`${props.match.path}/editioncards`} exact component={EditionCards} />
-                        <Route path={`${props.match.path}/addeditioncards`} exact component={AddEditionCards} />
-                        <Route path={`${props.match.path}/editioncards/:id`} component={EditEditionCards} />
-                        <Route path={`${props.match.path}/users`} component={Users} />
-                        <Route path={`${props.match.path}/edituser/:id`} component={EditUser} />
-                        <Redirect from={`${props.match.path}*`} to={`${props.match.path}/cards`} />
+                        <Route path={`/cards`} component={Cards} />
+                        <Route path={`/addcard`} exact component={AddCardsCollection} />
+                        <Route path={`/dashboard`} exact component={Dashboard} />
+                        <Route path={`/dashboardadmin`} component={DashboardAdmin} />
+                        <Route path={`/editcard/:id`} exact component={EditCardsCollection} />
+                        <Route path={`/cardview/:id`} exact component={CardView} />
+                        <Route path={`/editioncards`} exact component={EditionCards} />
+                        <Route path={`/addeditioncards`} exact component={AddEditionCards} />
+                        <Route path={`/editioncards/:id`} component={EditEditionCards} />
+                        <Route path={`/users`} component={Users} />
+                        <Route path={`/edituser/:id`} component={EditUser} />
+                        <Route path={`/configuser`} component={ConfigUser} />
                     </Switch>
                 </div>
                 <footer className="main-footer">

@@ -135,11 +135,11 @@ const AddEditionCards = () => {
         evt.preventDefault()
 
         const objAddCard = {
-            cardName: evt.target.cardName.value,
-            cardColor_id: refCardColor.current.value,
-            cardEdition_id: refCardEdition.current.value,
-            cardType_id: refCardType.current.value,
-            cardRarity_id: refCardRarity.current.value
+            cardName: evt.target.cardName.value.trim(),
+            cardColor_id: refCardColor.current.value.trim(),
+            cardEdition_id: refCardEdition.current.value.trim(),
+            cardType_id: refCardType.current.value.trim(),
+            cardRarity_id: refCardRarity.current.value.trim()
         }
 
         axios.post(`${BASE_URL_BACK}/cards`,objAddCard,configAxios)
@@ -147,7 +147,7 @@ const AddEditionCards = () => {
                 if(resp.data.message == 'card created'){
                     toast.success(messages(resp.data.message))
                     setTimeout(() => {
-                        history.push('/usercollection/editioncards')
+                        history.push('/editioncards')
                     }, 5000);
                 }
             })
@@ -171,7 +171,7 @@ const AddEditionCards = () => {
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>Nome da Carta</label>
-                            <input type="text" name='cardName' className="form-control" placeholder="Digite a quantidade de cartas" required />
+                            <input type="text" name='cardName' className="form-control" placeholder="Digite o nome da carta" required />
                         </div>
                     </div>
                     {renderCardType()}
@@ -182,7 +182,7 @@ const AddEditionCards = () => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className="btn btn-dark mr-2">Cadastrar</button>
-                        <Link className="btn btn-dark mr-2" to='/usercollection/editioncards'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/editioncards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

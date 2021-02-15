@@ -9,7 +9,7 @@ export default props => (
         <Switch>
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
-            <Route path='/usercollection' component={UserCollection} />
+            <Route path='/' component={UserCollection} />
             <Redirect from='*' to='/login' />
         </Switch>
     </Router>

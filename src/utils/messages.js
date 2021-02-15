@@ -34,6 +34,8 @@ const messages = (error) => {
             return 'Usuário deletado com sucesso'
         case 'user updated':
             return 'Usuário atualizado com sucesso'
+        case 'file not supported':
+            return 'Arquivo não suportado. Apenas imagens são suportadas'
         default:
             break;
     }
