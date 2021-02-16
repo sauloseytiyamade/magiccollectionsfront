@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import Loading from '../Loading'
+import {Link, Redirect} from 'react-router-dom'
 import './index.css'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
+import {messages} from '../../utils/messages'
 import SwampImage from '../../img/pantano_branco.svg'
 import PlainsImage from '../../img/planicie_branco.svg'
 import MountainImage from '../../img/montanha_branco.svg'
@@ -9,14 +11,17 @@ import IslandImage from '../../img/ilha_branco.svg'
 import FlorestImage from '../../img/floresta_branco.svg'
 import MultiColorImage from '../../img/multicolor_branco.svg'
 import ArtifactImage from '../../img/artefato_branco.svg'
+import {AuthContext} from '../../utils/auth'
+import { toast, ToastContainer } from 'react-toastify'
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import { Chart } from "react-google-charts";
 
 const Dashboard = () => {
+    let {isAuth} = useContext(AuthContext)
     const token = localStorage.getItem('token')
-    const {id} = jwt.decode(token)
+    const {id} = jwt.decode(token) || 'error'
     const [cardsBlack, setCardsBlack] = useState(0)
     const [cardsYellow, setCardsYellow] = useState(0)
     const [cardsRed, setCardsRed] = useState(0)
@@ -137,7 +142,27 @@ const Dashboard = () => {
 
             refLoading.current.executeLoading()
         })
+        .catch(err => {
+            toast.info(messages(err.response.data.message))
+            if(err.response.data.message == 'Token invalid'){
+                setTimeout(() => {
+                    window.location.href = `${BASE_URL_LOGIN}`
+                }, 5000);
+            }
+        })
     },[id])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     return(
         <section className="content">
@@ -354,6 +379,7 @@ const Dashboard = () => {
                 <Loading
                     ref={refLoading}
                 />
+                <ToastContainer />
         </section>
     )
 }

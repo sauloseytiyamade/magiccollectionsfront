@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef, useContext} from 'react';
 import {Link, useHistory, Redirect} from 'react-router-dom'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import Modals from '../Modals'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
@@ -19,6 +19,7 @@ const Users = () => {
             Authorization: `Bearer ${token}`
         }
     }
+    let {isAuth} = useContext(AuthContext)
     let {isAdmin} = useContext(AuthContext)
 
     useEffect(() => {
@@ -64,6 +65,14 @@ const Users = () => {
                     })
                 })
             })
+            .catch(err => {
+              toast.info(messages(err.response.data.message))
+              if(err.response.data.message == 'Token invalid'){
+                  setTimeout(() => {
+                      window.location.href = `${BASE_URL_LOGIN}`
+                  }, 5000);
+              }
+            })
     },[])
 
     const openModal = (id) => {
@@ -95,15 +104,28 @@ const Users = () => {
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                  toast.info(messages(err.response.data.message))
                 })
         })
 
   }
-      if(isAdmin == false){
-        return (
-            <Redirect to='/usercollection' />
-        )
+
+    if(isAuth == false){
+      return (
+          window.location.href = `${BASE_URL_LOGIN}`
+      )
+    }else{
+        
+    }
+
+    if(isAuth == false){
+        return null
+    }
+    
+    if(isAdmin == false){
+      return (
+          <Redirect to='/usercollection' />
+      )
     }else{
         
     }
@@ -118,7 +140,7 @@ const Users = () => {
                     <td>{line.name}</td>
                     <td className="text-center">{line.email}</td>
                     <td className="text-center">{line.permission == 0 ? 'Admin' : 'User'}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/edituser/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/edituser/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )

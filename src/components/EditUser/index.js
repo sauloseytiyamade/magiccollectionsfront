@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
-import { useHistory, useParams, Link } from 'react-router-dom'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import { useHistory, useParams, Link, Redirect } from 'react-router-dom'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
+import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
 import _ from 'lodash'
 
 const EditUser = (props) => {
-
+    let {isAuth} = useContext(AuthContext)
     const {id} = props.match.params
     const token = localStorage.getItem('token')
     const [nameUser, setNameUser] = useState('')
@@ -30,7 +31,27 @@ const EditUser = (props) => {
                setEmailUser(user[0].email)
                setPermissionId(user[0].permission)
             })
+            .catch(err => {
+                toast.info(messages(err.response.data.error))
+                if(err.response.data.error == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
+            })
     },[id])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
 
     const saveCard = (evt) => {
@@ -125,7 +146,7 @@ const EditUser = (props) => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className="btn btn-dark mr-2">Atualizar</button>
-                        <Link className="btn btn-dark mr-2" to='/usercollection/users'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/users'>Voltar</Link>
                     </div>
                     </div>
                 </form>

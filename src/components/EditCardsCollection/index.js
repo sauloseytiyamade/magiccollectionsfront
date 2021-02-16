@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import { toast, ToastContainer } from 'react-toastify'
+import {AuthContext} from '../../utils/auth'
 import {messages} from '../../utils/messages'
 import _ from 'lodash'
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useHistory, useParams, Link, Redirect } from 'react-router-dom';
 
 const EditCardsCollection = (props) => {
+    let {isAuth} = useContext(AuthContext)
     const token = localStorage.getItem('token')
     const {id} = useParams()
     const history = useHistory()
@@ -52,6 +54,18 @@ const EditCardsCollection = (props) => {
                     setCardQuality(resp.data.quality)
             })
     },[qualityId])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     const cardQuantity = evt => {
         setQuantity(evt.target.value)

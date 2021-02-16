@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useHistory, useParams, Link, Redirect } from 'react-router-dom';
+import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
 import _ from 'lodash'
 
 const EditEditionCards = (props) => {
-
+    let {isAuth} = useContext(AuthContext)
     const [card, setCard] = useState([])
     const [cardName, setCardName] = useState('')
     const [typeId, setTypeId] = useState([])
@@ -82,6 +83,18 @@ const EditEditionCards = (props) => {
                 toast.info(messages(err.response.data.message))
             })
     },[card.rarity_id])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     const renderCardType = () => {
         return(

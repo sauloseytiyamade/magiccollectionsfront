@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import jwt from 'jsonwebtoken'
-import {useHistory, Link} from 'react-router-dom'
-import {BASE_URL_BACK, BASE_URL_PHOTO} from '../../utils/variaveisAmbiente'
+import {useHistory, Link, Redirect} from 'react-router-dom'
+import {BASE_URL_BACK, BASE_URL_PHOTO, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
+import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
 import _ from 'lodash'
 
 const ConfigUser = () => {
+    
+    let {isAuth} = useContext(AuthContext)
     const token = localStorage.getItem('token')
-    const {id} = jwt.decode(token)
+    const {id} = jwt.decode(token) || 'error'
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
 
@@ -29,10 +32,26 @@ const ConfigUser = () => {
             setEmail(email)
         })
         .catch(err => {
-            //Caso dê algum erro é enviada uma mensagem para o usuário
             toast.info(messages(err.response.data.message))
+            if(err.response.data.message == 'Token invalid'){
+                setTimeout(() => {
+                    window.location.href = `${BASE_URL_LOGIN}`
+                }, 5000);
+            }
         })
     },[id])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     const changeName = evt => {
         setName(evt.target.value)

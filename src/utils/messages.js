@@ -9,7 +9,7 @@ const messages = (error) => {
         case 'user not found':
             return 'Este usuário não está cadastrado'
         case 'Token invalid':
-            return 'Opss!! Houve algum problema de autenticação'
+            return 'Opss!! Houve algum problema no sistema'
         case 'card exist collection':
             return 'Opss!! Este card já existe na sua coleção'
         case 'card collection created':
@@ -36,6 +36,8 @@ const messages = (error) => {
             return 'Usuário atualizado com sucesso'
         case 'file not supported':
             return 'Arquivo não suportado. Apenas imagens são suportadas'
+        case 'No token provided':
+            return 'Houve algum problema no sistema!!!'
         default:
             break;
     }

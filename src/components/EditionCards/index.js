@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import './index.css'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {Link, Redirect} from 'react-router-dom'
 import axios from 'axios';
 import {messages} from '../../utils/messages'
@@ -12,6 +12,8 @@ import $ from 'jquery'
 
 
 const EditionCards = () => {
+    let {isAuth} = useContext(AuthContext)
+    let {isAdmin} = useContext(AuthContext)
     const [cardEditions, setCardEditions] = useState([])
     const [cardFilterEdition, setCardFilterEdition] = useState([])
     const [lineId, setLineId] = useState()
@@ -74,13 +76,27 @@ const EditionCards = () => {
                 })
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
             })
     
     }, [])
 
-    let {isAdmin} = useContext(AuthContext)
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     if(isAdmin == false){
         return (

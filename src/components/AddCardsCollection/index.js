@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import './index.css'
 import { Typeahead} from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
-import {useHistory, Link} from 'react-router-dom'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
+import {AuthContext} from '../../utils/auth'
+import {useHistory, Link, Redirect} from 'react-router-dom'
 import axios from 'axios';
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
 
 const AddCardsCollection = () => {
 
+    let {isAuth} = useContext(AuthContext)
     const history = useHistory()
     const [allcards, setAllCards] = useState([])
     const [cardName, setCardName] = useState([]);
@@ -57,8 +59,12 @@ const AddCardsCollection = () => {
                 setCardLanguage(resp.data.language)
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
             })
     }, [])
 
@@ -135,6 +141,18 @@ const AddCardsCollection = () => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
             })
+    }
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
     }
 
 

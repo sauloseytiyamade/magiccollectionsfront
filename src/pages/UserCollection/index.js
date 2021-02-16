@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import './index.css'
 import Cards from '../../components/Cards'
@@ -14,13 +14,27 @@ import DashboardAdmin from '../../components/DashboardAdmin'
 import Users from '../../components/Users'
 import EditUser from '../../components/EditUser'
 import ConfigUser from '../../components/ConfigUser'
+import {AuthContext} from '../../utils/auth'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 
 const UserCollection = (props) => {
+
+    let {isAuth} = useContext(AuthContext)
 
     useEffect(() => {
         const body = document.querySelector('body')
         body.classList.remove('login')
     })
+
+    if(isAuth == false){
+        window.location.href = `${BASE_URL_LOGIN}`        
+    }else{
+        
+    }
+
+    if(isAuth == false){
+        return null
+    }
 
     return(
         <div>

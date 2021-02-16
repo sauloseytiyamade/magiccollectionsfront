@@ -1,7 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import Loading from '../Loading'
 import axios from 'axios';
-import {BASE_URL_BACK, BASE_URL_API_MAGIC} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_API_MAGIC, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
+import {Link, Redirect} from 'react-router-dom'
+import {AuthContext} from '../../utils/auth'
 import BackCard from '../../img/backCard.png'
 import Birds from '../../img/aves_do_paraiso.png'
 import jwt from 'jsonwebtoken'
@@ -9,6 +11,7 @@ import _ from 'lodash'
 
 const CardView = (props) => {
 
+    let {isAuth} = useContext(AuthContext)
     const urlId = props.match.params.id
     const token = localStorage.getItem('token')
     const {id} = jwt.decode(token)
@@ -45,8 +48,25 @@ const CardView = (props) => {
 
             })
         })
+        .catch(err => {
+            if(err.response.data.message == 'token invalid'){
+                window.location.href = `${BASE_URL_LOGIN}`
+            }
+        })
         
     },[urlId])
+
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     return(
         <section className="content">

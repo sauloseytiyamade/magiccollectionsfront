@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import './index.css'
 import axios from 'axios'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
 import {AuthContext} from '../../utils/auth'
@@ -21,14 +21,13 @@ const Cards = () => {
     const refLoading = useRef()
     
     useEffect(() => {
-        try{
             const configAxios = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
     
-            const {id} = jwt.decode(token)
+            const {id} = jwt.decode(token) || 'error'
     
             axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
                 .then(resp => {
@@ -83,20 +82,17 @@ const Cards = () => {
                     })
                 })
                 .catch(err => {
-                    if(err.response.data.error == 'token invalid'){
-                        history.push('/login')
+                    toast.info(messages(err.response.data.message))
+                    if(err.response.data.message == 'Token invalid'){
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_LOGIN}`
+                        }, 5000);
                     }
                 })
-                    
-
-        }catch(err){
-            history.push('/login')
-        }
-
     },[])
 
     if(isAuth == false){
-        history.push('/login')
+        window.location.href = `${BASE_URL_LOGIN}`
     }
 
     const deleteItem = () => {

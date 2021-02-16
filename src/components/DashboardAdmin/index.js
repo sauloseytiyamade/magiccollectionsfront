@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import Loading from '../Loading'
 import './index.css'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {Link, Redirect} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
+import {messages} from '../../utils/messages'
+import { toast, ToastContainer } from 'react-toastify'
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
@@ -19,6 +21,7 @@ const DashboardAdmin = () => {
     const [threeCollection, setThreeCollection] = useState([])
     const refLoading = useRef()
     let {isAdmin} = useContext(AuthContext)
+    let {isAuth} = useContext(AuthContext)
 
     const configAxios = {
         headers: {
@@ -31,6 +34,14 @@ const DashboardAdmin = () => {
             .then(resp => {
                 setCardEdtionLen(resp.data.edition.length)
                 setCardEdition(_.map(resp.data.edition, i => _.pick(i, 'id', 'edition')))
+            })
+            .catch(err => {
+                toast.info(messages(err.response.data.message))
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
             })
     },[])
 
@@ -100,6 +111,18 @@ const DashboardAdmin = () => {
 
             })
     },[])
+    
+    if(isAuth == false){
+        return (
+            window.location.href = `${BASE_URL_LOGIN}`
+        )
+    }else{
+        
+    }
+
+    if(isAuth == false){
+        return null
+    }
     
     if(isAdmin == false){
         return (
@@ -215,7 +238,8 @@ const DashboardAdmin = () => {
             </div>
                 <Loading
                 ref={refLoading}
-                />            
+                />   
+            <ToastContainer />         
         </section>
     )
 }

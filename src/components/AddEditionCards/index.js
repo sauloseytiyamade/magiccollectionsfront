@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
-import {useHistory, Link} from 'react-router-dom'
+import {useHistory, Link, Redirect} from 'react-router-dom'
+import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
 
 const AddEditionCards = () => {
 
+    let {isAuth} = useContext(AuthContext)
     const [cardType, setCardType] = useState([])
     const [cardColor, setCardColor] = useState([])
     const [cardEdition, setCardEdition] = useState([])
@@ -48,8 +50,12 @@ const AddEditionCards = () => {
                 setCardEdition(resp.data.edition)
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
             })
 
         axios.get(`${BASE_URL_BACK}/cardrarities`,configAxios)
@@ -61,6 +67,18 @@ const AddEditionCards = () => {
                 toast.info(messages(err.response.data.message))
             })
     },[])
+
+    if(isAuth == false){
+        return (
+            <Redirect to='/login' />
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
 
     const renderCardType = () => {
         return(

@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 import ImgDefault from '../../img/imgDefault.png'
 import jwt from 'jsonwebtoken'
-import {Link} from 'react-router-dom'
+import {Link, Redirect, useHistory} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
 import { toast, ToastContainer } from 'react-toastify'
-import {BASE_URL_BACK} from '../../utils/variaveisAmbiente'
+import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import axios from 'axios';
 import _ from 'lodash'
 
 const MenuLeft = () => {
+    const history = useHistory()
     const [userName, setUserName] = useState('User')
     const [photo, setPhoto] = useState('')
     const token = localStorage.getItem('token')
     const user = jwt.decode(token) || 0
     let {isAdmin} = useContext(AuthContext)
+    let {isAuth} = useContext(AuthContext)
 
     const configAxios = {
         headers: {
@@ -37,6 +39,26 @@ const MenuLeft = () => {
             toast.info(messages(err.response.data.message))
         })
     },[userName])
+
+    if(isAuth == false){
+        return (
+            <Redirect to='/login' />
+        )
+    }else{
+        
+    }
+    
+    if(isAuth == false){
+        return null
+    }
+
+    const sair = () => {
+        localStorage.removeItem('token')
+        toast.info('Tchauzinho Planeswalker!!!')
+        setTimeout(() => {
+            window.location.href = `${BASE_URL_LOGIN}`
+        }, 5000);
+    }
     
     return(
         <>
@@ -103,6 +125,12 @@ const MenuLeft = () => {
                                 <Link to='/configuser' className="nav-link">                                    
                                     <i className="fas fa-user text-white mr-2"></i>
                                     <p className="text-white text-bold">Configuração do usuário</p>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="#" onClick={sair} className="nav-link">                                    
+                                    <i className="fas fa-sign-out-alt text-white mr-2"></i>
+                                    <p className="text-white text-bold">sair</p>
                                 </Link>
                             </li>
                         </ul>
