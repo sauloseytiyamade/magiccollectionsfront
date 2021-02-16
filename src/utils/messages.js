@@ -9,7 +9,7 @@ const messages = (error) => {
         case 'user not found':
             return 'Este usuário não está cadastrado'
         case 'Token invalid':
-            return 'Opss!! Houve algum problema no sistema'
+            return 'Opss!! Houve algum problema na autenticação, você será redirecionado para a página de login'
         case 'card exist collection':
             return 'Opss!! Este card já existe na sua coleção'
         case 'card collection created':
@@ -38,6 +38,22 @@ const messages = (error) => {
             return 'Arquivo não suportado. Apenas imagens são suportadas'
         case 'No token provided':
             return 'Houve algum problema no sistema!!!'
+        case 'color created':
+            return 'Cor criada com sucesso'
+        case 'color exist':
+            return 'Cor já existe'
+        case 'color updated':
+            return 'Cor atualizada com sucesso'
+        case 'color deleted':
+            return 'Cor excluída com sucesso'
+        case 'language created':
+            return 'Linguagem criada com sucesso'
+        case 'language exist':
+            return 'Linguagem já existe'
+        case 'language updated':
+            return 'Linguagem atualizada com sucesso'
+        case 'language deleted':
+            return 'Linguagem excluída com sucesso'
         default:
             break;
     }

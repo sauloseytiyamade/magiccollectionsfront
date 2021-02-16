@@ -100,7 +100,7 @@ const EditionCards = () => {
 
     if(isAdmin == false){
         return (
-            <Redirect to='/usercollection' />
+            <Redirect to='/cards' />
         )
     }
 
@@ -194,7 +194,7 @@ const EditionCards = () => {
                     <td className="text-center">{line.card_color}</td>
                     <td className="text-center">{line.edition}</td>
                     <td className="text-center">{line.rarity}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )

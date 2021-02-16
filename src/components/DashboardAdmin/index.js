@@ -105,8 +105,6 @@ const DashboardAdmin = () => {
                     arrModify.push(_.valuesIn(arrOrderBy[index]))
                 }
 
-                console.log(arrModify);
-
                 setThreeCollection(arrModify)
 
             })
@@ -126,7 +124,7 @@ const DashboardAdmin = () => {
     
     if(isAdmin == false){
         return (
-            <Redirect to='/usercollection' />
+            <Redirect to='/cards' />
         )
     }else{
         

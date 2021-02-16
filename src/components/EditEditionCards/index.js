@@ -9,6 +9,7 @@ import _ from 'lodash'
 
 const EditEditionCards = (props) => {
     let {isAuth} = useContext(AuthContext)
+    let {isAdmin} = useContext(AuthContext)
     const [card, setCard] = useState([])
     const [cardName, setCardName] = useState('')
     const [typeId, setTypeId] = useState([])
@@ -88,13 +89,23 @@ const EditEditionCards = (props) => {
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
-    
+
     if(isAuth == false){
         return null
     }
+
+    if(isAdmin == false){
+        return (
+            <Redirect to='/cards' />
+        )
+    }
+
+    if(isAdmin == false){
+        return null
+    }
+
+    
 
     const renderCardType = () => {
         return(

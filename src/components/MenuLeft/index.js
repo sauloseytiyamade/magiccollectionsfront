@@ -8,6 +8,7 @@ import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import axios from 'axios';
 import _ from 'lodash'
+import './index.css'
 
 const MenuLeft = () => {
     const history = useHistory()
@@ -75,9 +76,9 @@ const MenuLeft = () => {
                         MAGIC COLLECTIONS
                     </span>
                 </a>
-                <div className="sidebar text-center mt-3">
-                    <img src={photo || ImgDefault} className="img-circle mb-2" alt="Guilherme Souza" />
-                    <div className="text-white ml-2 text-bold">
+                <div className="sidebar">
+                    <img src={photo || ImgDefault} className="img-circle mx-auto d-block image_avatar" alt="Guilherme Souza" />
+                    <div className="text-white text-center ml-2 text-bold">
                         {isAdmin &&
                             <i className="far fa-gem text-warning"></i> 
                         } {userName}
@@ -109,7 +110,23 @@ const MenuLeft = () => {
                                 <li className="nav-item">
                                     <Link to='/editioncards' className="nav-link">                                    
                                         <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
-                                        <p className="text-white text-bold">Cadastro edição / cards</p>
+                                        <p className="text-white text-bold">Cadastro de cards</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/colors' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Cadastro de cores</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/languages' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Cadastro de idiomas</p>
                                     </Link>
                                 </li>
                             }
