@@ -10,6 +10,8 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import { Chart } from "react-google-charts";
+import $ from 'jquery'
+import moment from 'moment'
 
 const DashboardAdmin = () => {
     const token = localStorage.getItem('token')
@@ -19,6 +21,7 @@ const DashboardAdmin = () => {
     const [card, setCard] = useState(0)
     const [dataChart, setDataChart] = useState([])
     const [threeCollection, setThreeCollection] = useState([])
+    const [logs, setLogs] = useState([])
     const refLoading = useRef()
     let {isAdmin} = useContext(AuthContext)
     let {isAuth} = useContext(AuthContext)
@@ -30,10 +33,40 @@ const DashboardAdmin = () => {
     }
 
     useEffect(() => {
+        axios.get(`${BASE_URL_BACK}/logs`,configAxios)
+            .then(resp => {
+                setLogs(resp.data.logs)
+            })
+    }, [])
+
+    useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
                 setCardEdtionLen(resp.data.edition.length)
                 setCardEdition(_.map(resp.data.edition, i => _.pick(i, 'id', 'edition')))
+                $(document).ready(function(){
+                    let dataTable = $('#dataTable').DataTable({
+                        "order": [[ 5, "desc" ]],
+                        "responsive": true,
+                        "autoWidth": false,
+                        "lengthChange": false,
+                        "pageLength": 10,
+                        "bInfo" : false,
+                        "language": {
+                            "paginate": {
+                              "previous": "Anterior",
+                              "next": "Próxima"
+                            },
+                            "emptyTable": "Não existe dados para serem carregados"
+                        }
+                    })
+    
+                    $('#searchBarTec').on('keyup change', function () {
+                        dataTable.search(this.value).draw();
+                    })
+
+                    refLoading.current.executeLoading()
+                })
             })
             .catch(err => {
                 toast.info(messages(err.response.data.message))
@@ -82,7 +115,6 @@ const DashboardAdmin = () => {
             axios.get(`${BASE_URL_BACK}/cards`,configAxios)
             .then(resp => {
                 setCard(resp.data.length)
-                refLoading.current.executeLoading()
             })
         }
     },[])
@@ -109,6 +141,20 @@ const DashboardAdmin = () => {
 
             })
     },[])
+
+    const renderRow = () => {
+        return logs.map(line => (
+                <tr key={line.id}>
+                    <td>{line.user}</td>
+                    <td className="text-center">{line.logType}</td>
+                    <td className="text-center">{line.lineTableId}</td>
+                    <td className="text-center">{line.tableName}</td>
+                    <td className="text-center"><Link className='link_text_pen' to={`logview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
+                    <td className="text-center">{moment(line.dateTime).format('DD-MM-YYYY HH:mm:ss')}</td>
+                </tr>
+            )
+        )
+    }
     
     if(isAuth == false){
         return (
@@ -233,6 +279,37 @@ const DashboardAdmin = () => {
                     </div>
                 </div>
                 </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="input-group mb-3">
+                            <input type="email" className="form-control" id="searchBarTec" placeholder="Qual log você está procurando?" />
+                            <div className="input-group-append">
+                                <div className="input-group-text">
+                                    <i className="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                        <div className="col-lg-12">
+                            <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
+                                <thead className="text-center">
+                                    <tr>
+                                        <th>Usuário</th>                                        
+                                        <th>Ação</th>                                        
+                                        <th>Linha da tabela</th>                                        
+                                        <th>Nome da tabela</th>
+                                        <th>Último valor</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderRow()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
                 <Loading
                 ref={refLoading}

@@ -33,6 +33,7 @@ import AddTypesCard from '../../components/AddTypesCard'
 import EditTypesCard from '../../components/EditTypesCard'
 import EditionsCard from '../../components/EditionsCards'
 import EditEditionsCards from '../../components/EditEditionsCards'
+import LogView from '../../components/LogView'
 
 
 const UserCollection = (props) => {
@@ -87,6 +88,7 @@ const UserCollection = (props) => {
                         <Route path={`/users`} component={Users} />
                         <Route path={`/edituser/:id`} component={EditUser} />
                         <Route path={`/configuser`} component={ConfigUser} />
+                        <Route path={`/logview/:id`} component={LogView} />
                     </Switch>
                 </div>
                 <footer className="main-footer">
