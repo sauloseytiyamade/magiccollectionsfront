@@ -196,7 +196,7 @@ const EditEditionCards = (props) => {
                 if(resp.data.message == 'card updated'){
                     toast.success(messages(resp.data.message))
                     setTimeout(() => {
-                        history.push('/usercollection/editioncards')
+                        history.push('/editioncards')
                     }, 5000);
                 }
             })

@@ -9,7 +9,7 @@ import Loading from '../Loading'
 import Modals from '../Modals'
 import $ from 'jquery'
 
-const ColorsCard = () => {
+const RaritiesCard = () => {
     const [data, setData] = useState([])
     const [lineId, setLineId] = useState()
     const token = localStorage.getItem('token')
@@ -27,9 +27,9 @@ const ColorsCard = () => {
         if(!isAdmin){
             return null
         }
-        axios.get(`${BASE_URL_BACK}/cardcolors`, configAxios)
+        axios.get(`${BASE_URL_BACK}/cardrarities`, configAxios)
         .then(resp => {
-            setData(resp.data.color)
+            setData(resp.data.rarity)
             $(document).ready(function(){
                 let dataTable = $('#dataTable').DataTable({
                     "responsive": true,
@@ -66,8 +66,8 @@ const ColorsCard = () => {
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>
-                    <td>{line.color}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`editcolorscard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td>{line.rarity}</td>
+                    <td className="text-center"><Link className='link_text_pen' to={`editraritiescard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )
@@ -80,12 +80,12 @@ const ColorsCard = () => {
     }
 
     const deleteItem = () => {
-        axios.delete(`${BASE_URL_BACK}/cardcolors/${lineId}`,configAxios)
+        axios.delete(`${BASE_URL_BACK}/cardrarities/${lineId}`,configAxios)
             .then(resp => {
-                if(resp.data.message == 'color deleted'){
+                if(resp.data.message == 'rarity deleted'){
                     toast.success(messages(resp.data.message))
-                    const filtered = data.filter(color => {
-                        return color.id != lineId
+                    const filtered = data.filter(rarity => {
+                        return rarity.id != lineId
                     })            
                     setData(filtered)
                     refModal.current.openModal()
@@ -122,14 +122,14 @@ const ColorsCard = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-2">
-                            <h1>Cores das cartas</h1>
+                            <h1>Raridade das cartas</h1>
                         </div>
                     </div>
 
                     <div className="row">
                         <div className="col-lg-9">
                             <div className="input-group mb-3">
-                                <input type="email" className="form-control" id="searchBarTec" placeholder="Qual cor você está procurando?" />
+                                <input type="email" className="form-control" id="searchBarTec" placeholder="Qual raridade você está procurando?" />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <i className="fas fa-search"></i>
@@ -138,7 +138,7 @@ const ColorsCard = () => {
                             </div>
                         </div>
                         <div className="col-lg-3 mb-2 mr-0">
-                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/addcolorscard'>Adicionar</Link></button>
+                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/addraritiescard'>Adicionar</Link></button>
                         </div>
                     </div>
                     <div className="row">
@@ -146,7 +146,7 @@ const ColorsCard = () => {
                             <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
                                 <thead>
                                     <tr>
-                                        <th>Cor</th>
+                                        <th>Qualitdade</th>
                                         <th className="text-center">Editar</th>
                                         <th className="text-center">Remover</th>
                                     </tr>
@@ -162,7 +162,7 @@ const ColorsCard = () => {
             <ToastContainer />
             <Modals
                 title='Exclusão de card'
-                body='Deseja realmente excluir esta cor? Se excluir, todo os cards desta cor serão removidos automaticamente'
+                body='Deseja realmente excluir esta raridade? Se excluir, todo os cards com esta raridade serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}
                 ref={refModal}
@@ -174,4 +174,4 @@ const ColorsCard = () => {
     )
 }
 
-export default ColorsCard
+export default RaritiesCard

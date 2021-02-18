@@ -132,6 +132,38 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
+                                    <Link to='/qualities' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Cadastro da Qualidade</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/rarities' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Cadastro de Raridade</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/types' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Cadastro de Tipo</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
+                                    <Link to='/editions' className="nav-link">                                    
+                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <p className="text-white text-bold">Alterar edições</p>
+                                    </Link>
+                                </li>
+                            }
+                            {isAdmin &&
+                                <li className="nav-item">
                                     <Link to='/users' className="nav-link">                                    
                                         <i className="fas fa-users text-white mr-2"></i>
                                         <p className="text-white text-bold">Administrar Usuários</p>

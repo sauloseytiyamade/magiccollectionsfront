@@ -7,10 +7,10 @@ import axios from 'axios'
 import {messages} from '../../utils/messages'
 import _ from 'lodash'
 
-const EditColorsCard = (props) => {
+const EditTypesCard = (props) => {
     let {isAuth} = useContext(AuthContext)
     let {isAdmin} = useContext(AuthContext)
-    const [color, setColor] = useState('')
+    const [type, setType] = useState('')
     const token = localStorage.getItem('token')
     const history = useHistory()
     const {id} = props.match.params
@@ -22,35 +22,33 @@ const EditColorsCard = (props) => {
     }
 
     useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/cardcolors`,configAxios)
+        axios.get(`${BASE_URL_BACK}/cardtypes`,configAxios)
             .then(resp => {
-                // console.log(resp.data.color);
-                const colorFilter = _.filter(resp.data.color, {'id': parseInt(id)})
-                setColor(colorFilter[0].color)
+                const colorFilter = _.filter(resp.data.type, {'id': parseInt(id)})
+                setType(colorFilter[0].type)
             })
     },[id])
 
-    const changeColor = evt => {
-        setColor(evt.target.value)
+    const changeType = evt => {
+        setType(evt.target.value)
     }
 
-    const saveColor = evt => {
+    const saveType = evt => {
         evt.preventDefault()
 
-        const objColorCard ={
-            color
+        const objType ={
+            type 
         }
 
-        axios.put(`${BASE_URL_BACK}/cardcolors/${id}`,objColorCard,configAxios)
+        axios.put(`${BASE_URL_BACK}/cardtypes/${id}`,objType,configAxios)
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
-                    history.push('/colors')
+                    history.push('/types')
                 }, 5000);
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
-                console.log({err});
                 toast.info(messages(err.response.data.message))
             })
         
@@ -86,23 +84,23 @@ const EditColorsCard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-3">
-                            <h1>Editar cor</h1>
+                            <h1>Raridade</h1>
                         </div>
                     </div>
 
-                    <form onSubmit={saveColor}>
+                    <form onSubmit={saveType}>
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
-                                    <label>Cor</label>
-                                    <input type="text" className="form-control" value={color} placeholder="Digite a cor" onChange={changeColor} required />
+                                    <label>Tipo</label>
+                                    <input type="text" className="form-control" value={type} placeholder="Digite o tipo" onChange={changeType} required />
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Alterar</button>
-                                <Link className="btn btn-dark mr-2" to='/colors'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/types'>Voltar</Link>
                             </div>
                         </div>
                     </form>
@@ -113,4 +111,4 @@ const EditColorsCard = (props) => {
     )
 }
 
-export default EditColorsCard
+export default EditTypesCard

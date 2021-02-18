@@ -209,7 +209,7 @@ const EditionCards = () => {
     const deleteItem = () => {
         axios.delete(`${BASE_URL_BACK}/cards/${lineId}`,configAxios)
             .then(resp => {
-                if(resp.data.message == 'cards deleted'){
+                if(resp.data.message == 'card deleted'){
                     toast.success(messages(resp.data.message))
                     const filtered = cardFilterEdition.filter(cards => {
                         return cards.id != lineId

@@ -7,10 +7,11 @@ import axios from 'axios'
 import {messages} from '../../utils/messages'
 import _ from 'lodash'
 
-const EditColorsCard = (props) => {
+const EditEditionsCards = (props) => {
     let {isAuth} = useContext(AuthContext)
     let {isAdmin} = useContext(AuthContext)
-    const [color, setColor] = useState('')
+    const [edition, setEdition] = useState('')
+    const [code, setCode] = useState('')
     const token = localStorage.getItem('token')
     const history = useHistory()
     const {id} = props.match.params
@@ -22,30 +23,36 @@ const EditColorsCard = (props) => {
     }
 
     useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/cardcolors`,configAxios)
+        axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
-                // console.log(resp.data.color);
-                const colorFilter = _.filter(resp.data.color, {'id': parseInt(id)})
-                setColor(colorFilter[0].color)
+                const colorFilter = _.filter(resp.data.edition, {'id': parseInt(id)})
+                const code = _.filter(resp.data.edition, {'id': parseInt(id)})
+                setEdition(colorFilter[0].edition)
+                setCode(colorFilter[0].code)
             })
     },[id])
 
-    const changeColor = evt => {
-        setColor(evt.target.value)
+    const changeEdition = evt => {
+        setEdition(evt.target.value)
+    }
+
+    const changeCode = evt => {
+        setCode(evt.target.value)
     }
 
     const saveColor = evt => {
         evt.preventDefault()
 
-        const objColorCard ={
-            color
+        const objLanguage ={
+            edition,
+            code
         }
 
-        axios.put(`${BASE_URL_BACK}/cardcolors/${id}`,objColorCard,configAxios)
+        axios.put(`${BASE_URL_BACK}/cardeditions/${id}`,objLanguage,configAxios)
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
-                    history.push('/colors')
+                    history.push('/editions')
                 }, 5000);
             })
             .catch(err => {
@@ -86,7 +93,7 @@ const EditColorsCard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-3">
-                            <h1>Editar cor</h1>
+                            <h1>Editar edição</h1>
                         </div>
                     </div>
 
@@ -94,15 +101,21 @@ const EditColorsCard = (props) => {
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
-                                    <label>Cor</label>
-                                    <input type="text" className="form-control" value={color} placeholder="Digite a cor" onChange={changeColor} required />
+                                    <label>Edição</label>
+                                    <input type="text" className="form-control" value={edition} placeholder="Digite a linguagem" onChange={changeEdition} required />
+                                </div>
+                            </div>
+                            <div className="col-lg-4">
+                                <div className="form-group">
+                                    <label>Código</label>
+                                    <input type="text" className="form-control" value={code} placeholder="Digite a linguagem" onChange={changeCode} required />
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Alterar</button>
-                                <Link className="btn btn-dark mr-2" to='/colors'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/editions'>Voltar</Link>
                             </div>
                         </div>
                     </form>
@@ -113,4 +126,4 @@ const EditColorsCard = (props) => {
     )
 }
 
-export default EditColorsCard
+export default EditEditionsCards

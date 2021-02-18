@@ -22,6 +22,17 @@ import EditColorsCard from '../../components/EditColorsCard'
 import LanguageCard from '../../components/LanguageCard'
 import AddLanguagesCard from '../../components/AddLanguagesCard'
 import EditLanguagesCard from '../../components/EditLanguagesCard'
+import QualitiesCard from '../../components/QualitiesCard'
+import AddQualityCard from '../../components/AddQualityCard'
+import EditQualitiesCard from '../../components/EditQualitiesCard'
+import RaritiesCard from '../../components/RaritiesCard'
+import AddRarityCard from '../../components/AddRarityCard'
+import EditRaritiesCard from '../../components/EditRaritiesCard'
+import TypesCard from '../../components/TypesCard'
+import AddTypesCard from '../../components/AddTypesCard'
+import EditTypesCard from '../../components/EditTypesCard'
+import EditionsCard from '../../components/EditionsCards'
+import EditEditionsCards from '../../components/EditEditionsCards'
 
 
 const UserCollection = (props) => {
@@ -56,12 +67,23 @@ const UserCollection = (props) => {
                         <Route path={`/editioncards`} exact component={EditionCards} />
                         <Route path={`/addeditioncards`} exact component={AddEditionCards} />
                         <Route path={`/editioncards/:id`} component={EditEditionCards} />
+                        <Route path={`/editions`} component={EditionsCard} />
+                        <Route path={`/editeditionscards/:id`} component={EditEditionsCards} />
                         <Route path={`/colors`} component={ColorsCard} />
                         <Route path={`/addcolorscard`} component={AddColorsCard} />
                         <Route path={`/editcolorscard/:id`} component={EditColorsCard} />
                         <Route path={`/languages`} component={LanguageCard} />
                         <Route path={`/addlanguagescard`} component={AddLanguagesCard} />
                         <Route path={`/editlanguagescard/:id`} component={EditLanguagesCard} />
+                        <Route path={`/qualities`} component={QualitiesCard} />
+                        <Route path={`/addqualitiescard`} component={AddQualityCard} />
+                        <Route path={`/editqualitiescard/:id`} component={EditQualitiesCard} />
+                        <Route path={`/rarities`} component={RaritiesCard} />
+                        <Route path={`/addraritiescard`} component={AddRarityCard} />
+                        <Route path={`/editraritiescard/:id`} component={EditRaritiesCard} />
+                        <Route path={`/types`} component={TypesCard} />
+                        <Route path={`/addtypescard`} component={AddTypesCard} />
+                        <Route path={`/edittypescard/:id`} component={EditTypesCard} />
                         <Route path={`/users`} component={Users} />
                         <Route path={`/edituser/:id`} component={EditUser} />
                         <Route path={`/configuser`} component={ConfigUser} />

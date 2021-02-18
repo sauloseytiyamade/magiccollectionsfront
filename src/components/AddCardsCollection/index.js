@@ -188,7 +188,7 @@ const AddCardsCollection = () => {
                     <div className="col-lg-4">
                         <div className="form-group">
                         <label>Quantidade de Carta</label>
-                        <input type="number" className="form-control" value={quantity} placeholder="Digite a quantidade de cartas" onChange={cardQuantity} required />
+                        <input type="number" className="form-control" value={quantity} placeholder="Digite a quantidade de cartas" onChange={cardQuantity} required min="1" />
                         </div>
                     </div>
                     </div>

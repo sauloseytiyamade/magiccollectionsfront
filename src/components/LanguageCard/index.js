@@ -122,7 +122,7 @@ const LanguageCard = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-2">
-                            <h1>Meus Idiomas</h1>
+                            <h1>Idiomas das cartas</h1>
                         </div>
                     </div>
 
@@ -146,7 +146,7 @@ const LanguageCard = () => {
                             <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
                                 <thead>
                                     <tr>
-                                        <th>Cor</th>
+                                        <th>Linguagem</th>
                                         <th className="text-center">Editar</th>
                                         <th className="text-center">Remover</th>
                                     </tr>
@@ -162,7 +162,7 @@ const LanguageCard = () => {
             <ToastContainer />
             <Modals
                 title='Exclusão de card'
-                body='Deseja realmente excluir este idicioma? Se excluir, todo os cards com este idioma serão removidos automaticamente'
+                body='Deseja realmente excluir este idioma? Se excluir, todo os cards com este idioma serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}
                 ref={refModal}

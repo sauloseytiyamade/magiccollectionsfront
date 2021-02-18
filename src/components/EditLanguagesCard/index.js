@@ -36,11 +36,11 @@ const EditLanguagesCard = (props) => {
     const saveColor = evt => {
         evt.preventDefault()
 
-        const objColorCard ={
+        const objLanguage ={
             language 
         }
 
-        axios.put(`${BASE_URL_BACK}/cardlanguages/${id}`,objColorCard,configAxios)
+        axios.put(`${BASE_URL_BACK}/cardlanguages/${id}`,objLanguage,configAxios)
             .then(resp => {
                 console.log(resp.data);
                 toast.success(messages(resp.data.message))
@@ -86,7 +86,7 @@ const EditLanguagesCard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-3">
-                            <h1>Cadastro de cartas na sua coleção</h1>
+                            <h1>Editar linguagem</h1>
                         </div>
                     </div>
 
@@ -94,8 +94,8 @@ const EditLanguagesCard = (props) => {
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
-                                    <label>Nome da cor</label>
-                                    <input type="text" className="form-control" value={language} placeholder="Digite a cor" onChange={changeColor} required />
+                                    <label>Linguagem</label>
+                                    <input type="text" className="form-control" value={language} placeholder="Digite a linguagem" onChange={changeColor} required />
                                 </div>
                             </div>
                         </div>

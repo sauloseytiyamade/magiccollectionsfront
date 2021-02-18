@@ -124,7 +124,7 @@ const Users = () => {
     
     if(isAdmin == false){
       return (
-          <Redirect to='/usercollection' />
+          <Redirect to='/users' />
       )
     }else{
         

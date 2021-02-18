@@ -69,7 +69,7 @@ const EditUser = (props) => {
                 if(resp.data.message == 'user updated'){
                     toast.success(messages(resp.data.message))
                     setTimeout(() => {
-                        history.push('/usercollection/users')
+                        history.push('/users')
                     }, 5000);
                 }
             })

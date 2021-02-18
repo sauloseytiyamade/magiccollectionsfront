@@ -26,11 +26,11 @@ const AddLanguagesCard = () => {
     const saveLanguage = evt => {
         evt.preventDefault()
 
-        const objColorCard ={
+        const objLanguage ={
             language
         }
 
-        axios.post(`${BASE_URL_BACK}/cardlanguages`,objColorCard,configAxios)
+        axios.post(`${BASE_URL_BACK}/cardlanguages`,objLanguage,configAxios)
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
@@ -59,7 +59,7 @@ const AddLanguagesCard = () => {
 
     if(isAdmin == false){
         return (
-            <Redirect to='/usercollection' />
+            <Redirect to='/cards' />
         )
     }else{
         
@@ -83,7 +83,7 @@ const AddLanguagesCard = () => {
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
-                                    <label>Nome da cor</label>
+                                    <label>Nome da idioma</label>
                                     <input type="text" className="form-control" value={language} placeholder="Digite o idioma" onChange={changeLanguage} required />
                                 </div>
                             </div>

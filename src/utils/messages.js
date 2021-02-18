@@ -54,6 +54,40 @@ const messages = (error) => {
             return 'Linguagem atualizada com sucesso'
         case 'language deleted':
             return 'Linguagem excluída com sucesso'
+        case 'quality created':
+            return 'Qualitdade criada com sucesso'
+        case 'quality exist':
+            return 'Qualitdade já existe'
+        case 'quality updated':
+            return 'Qualitdade atualizada com sucesso'
+        case 'quality deleted':
+            return 'Qualitdade excluída com sucesso'
+        case 'rarity created':
+            return 'Raridade criada com sucesso'
+        case 'rarity exist':
+            return 'Raridade já existe'
+        case 'rarity updated':
+            return 'Raridade atualizada com sucesso'
+        case 'rarity deleted':
+            return 'Raridade excluída com sucesso'
+        case 'type created':
+            return 'Tipo criado com sucesso'
+        case 'type exist':
+            return 'Tipo já existe'
+        case 'type updated':
+            return 'Tipo atualizado com sucesso'
+        case 'type deleted':
+            return 'Tipo excluído com sucesso'
+        case 'edition created':
+            return 'Edição criada com sucesso'
+        case 'edition exist':
+            return 'Edição já existe'
+        case 'edition updated':
+            return 'Edição atualizada com sucesso'
+        case 'edition deleted':
+            return 'Edição excluída com sucesso'
+        case 'Unauthorized':
+            return 'Opss!!! Você não é autorizado'
         default:
             break;
     }

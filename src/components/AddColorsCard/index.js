@@ -59,7 +59,7 @@ const AddColorsCard = () => {
 
     if(isAdmin == false){
         return (
-            <Redirect to='/usercollection' />
+            <Redirect to='/colors' />
         )
     }else{
         
