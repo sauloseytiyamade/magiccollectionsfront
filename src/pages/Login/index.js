@@ -64,7 +64,7 @@ const Login = (props) => {
             if(resp.data.message == true){
                 const data = {
                     email,
-                    password: googleId
+                    password: googleId,
                 }
                 //Se existir um usuário cadastrado no sistema ele tenta fazer o login
                 //Como existe três sistemas de login, optei por apresentar uma mensagem de erro genérica.
@@ -88,7 +88,8 @@ const Login = (props) => {
                const data = {
                    name,
                    email,
-                   password: googleId
+                   password: googleId,
+                   external_login: 1,
                } 
 
                //Criação do usuário no backend
@@ -161,7 +162,8 @@ const Login = (props) => {
                 const data = {
                     name,
                     email,
-                    password: id
+                    password: id,
+                    external_login: 1,
                 } 
                 //Criação do usuário no backend
                axios.post(`${BASE_URL_BACK}/users`,data)
@@ -241,7 +243,8 @@ const Login = (props) => {
                     cssClass="my-facebook-button-class mb-2"
                     />
                 </div>
-                <p>Não tem uma conta? <Link to='/register'>Crie sua conta agora!</Link></p>
+                <p className="mb-1">Não tem uma conta? <Link to='/register'>Crie sua conta agora!</Link></p>
+                <p className="mb-1">Esqueceu a senha? <Link to='/forgot'>Esqueci minha senha</Link></p>
             </form>
             <ToastContainer />
         </div>

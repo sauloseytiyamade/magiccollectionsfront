@@ -9,16 +9,10 @@ import {messages} from '../../utils/messages'
 import 'react-toastify/dist/ReactToastify.min.css';
 import './index.css'
 
-const Register = (props) => {
-    const [email, setEmail] = useState('')
+const Reset = (props) => {
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [name, setName] = useState('')
-
-    //Pega os valores de e-mail e adiciona no estado
-    const onChangeMail = evt => {
-        setEmail(evt.target.value)
-    }
 
     //Pega os valores de password e adiciona no estado
     const onChangePass = evt => {
@@ -30,48 +24,31 @@ const Register = (props) => {
         setPasswordConfirm(evt.target.value)
     }
 
-    //Pega os valores de nome e adiciona no estado
-    const onChangeName = evt => {
-        setName(evt.target.value)
-    }
-
     //Envia os dados para o backend validar
     const sendBack = (evt) => {
         evt.preventDefault()
+        const uuid = props.location.pathname.split('/')[2]
 
         //Verifica se as senhas informadas são iguais
         if(password == passwordConfirm){
             const data = {
-                name,
-                email,
                 password,
-                external_login: 0,
+                hashUrl: uuid
             }
-            //Verifica se existe algum usuário com o e-mail cadastrado no sistema
-            axios.get(`${BASE_URL_BACK}/users/${email}`)
-            .then(resp => {
-                if(resp.data.message == true){
-                    //Caso o usuário tente fazer o login com uma conta que já exista os sitema informa que já existe este usuário
-                    toast.info('Já existe um usuário cadastrado em nosso sistema com este e-mail')
-                    setTimeout(() => {
-                        window.location.href = `${BASE_URL_FRONT}/login`
-                    }, 5000)
-                }else{
-                    //Criação do usuário no backend
-                    axios.post(`${BASE_URL_BACK}/users`,data)
-                    .then(resp => {
-                        if(resp.data.message == 'user created'){
-                            toast.success('Cadastro realizado com sucesso!! Seja Bem-Vindo(a)!!')
-                            setTimeout(() => {
-                                window.location.href = `${BASE_URL_FRONT}/login`
-                            }, 5000)
-                        }
-                    })
-                    .catch(err => {
-                        toast.info(messages(err.response.data.message))
-                    })
-                }
-            })
+           
+           axios.post(`${BASE_URL_BACK}/reset`,data)
+           .then(resp => {   
+                toast.success(messages(resp.data.message))
+                setTimeout(() => {
+                    window.location.href = `${BASE_URL_FRONT}/login`
+                }, 5000)
+           })
+           .catch(err => {
+               toast.info(messages(err.response.data.message))
+               setTimeout(() => {
+                window.location.href = `${BASE_URL_FRONT}/login`
+            }, 5000)
+           })
         }else{
             //Caso a senha não sejam iguais é apresentada a mensagem
             toast.info('As senhas não coincidem')
@@ -88,18 +65,6 @@ const Register = (props) => {
                 <div className='row'>
                     <div className='col-md-6 offset-md-3 col-10 offset-1'>
                         <div className='input-group mb-3'>
-                            <input type='text' name='name' value={name} onChange={onChangeName} className='form-control' placeholder='Nome completo' autoFocus required />
-                            <div className='input-group-prepend'>
-                            <span className='input-group-text'><i className='fas fa-user'></i></span>
-                            </div>
-                        </div>
-                        <div className='input-group mb-3'>
-                            <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
-                            <div className='input-group-prepend'>
-                            <span className='input-group-text'><i className='fas fa-envelope'></i></span>
-                            </div>
-                        </div>
-                        <div className='input-group mb-3'>
                             <input type='password' value={password} onChange={onChangePass} className='form-control' placeholder='Senha' required/>
                             <div className='input-group-prepend'>
                             <span className='input-group-text'><i className='fas fa-unlock-alt'></i></span>
@@ -113,7 +78,7 @@ const Register = (props) => {
                         </div>
                     </div>
                 </div>
-                <button type='submit' className='btn btn-dark mb-2'>Cadastrar-se</button>
+                <button type='submit' className='btn btn-dark mb-2'>Alterar Senha</button>
             </form>
             <ToastContainer />
         </div>
@@ -122,4 +87,4 @@ const Register = (props) => {
     )
 }
 
-export default Register
+export default Reset

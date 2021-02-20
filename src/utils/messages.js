@@ -9,9 +9,9 @@ const messages = (error) => {
         case 'user not found':
             return 'Este usuário não está cadastrado'
         case 'Token invalid':
-            return 'Opss!! Houve algum problema na autenticação, você será redirecionado para a página de login'
+            return 'Houve algum problema na autenticação, você será redirecionado para a página de login'
         case 'card exist collection':
-            return 'Opss!! Este card já existe na sua coleção'
+            return 'Este card já existe na sua coleção'
         case 'card collection created':
             return 'Card criado com sucesso!!'
         case 'card collection updated':
@@ -19,13 +19,13 @@ const messages = (error) => {
         case 'edition created':
             return 'Edição criada com sucesso'
         case 'edition exist':
-            return 'Opss!! Esta edição já existe'
+            return 'Esta edição já existe'
         case 'card deleted':
             return 'Card excluído com sucesso'
         case 'card collection deleted':
             return 'Card excluído com sucesso'
         case 'card exist':
-            return 'Opss!! Este card já existe'
+            return 'Este card já existe'
         case 'card created':
             return 'Card criado com sucess'
         case 'card updated':
@@ -87,7 +87,19 @@ const messages = (error) => {
         case 'edition deleted':
             return 'Edição excluída com sucesso'
         case 'Unauthorized':
-            return 'Opss!!! Você não é autorizado'
+            return 'Você não é autorizado'
+        case 'external login':
+            return 'Este usuário é gerenciado pelo google ou facebook'
+        case 'email sent':
+            return 'Um email foi enviado com o link da recuperação de senha. Por favor verifique seu e-mail!'
+        case 'email not sent':
+            return 'Houve algum problema no envio do e-mail. Por favor tente novamente mais tarde!'
+        case 'password not changed':
+            return 'Não foi possível alterar sua senha. Por favor tente novamente mais tarde!'
+        case 'password changed':
+            return 'Sua senha foi alterada com sucesso'
+        case 'date expired':
+            return 'Prazo de mudança de senha foi expirado.'
         default:
             break;
     }
