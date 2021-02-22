@@ -16,7 +16,9 @@ const EditionCards = () => {
     let {isAdmin} = useContext(AuthContext)
     const [cardEditions, setCardEditions] = useState([])
     const [cardFilterEdition, setCardFilterEdition] = useState([])
+    const [idEdition, setIdEdition] = useState()
     const [lineId, setLineId] = useState()
+    const [hiddenCards, setHiddensCard] = useState(true)
     const token = localStorage.getItem('token')
     const refEdition = useRef()
     const refModal = useRef()
@@ -108,14 +110,17 @@ const EditionCards = () => {
         return null
     }
 
-
-
     const handleChangeOptions = (e) => {
-        const idEdition = refEdition.current.value
-
-        axios.get(`${BASE_URL_BACK}/cards`,configAxios)
+        if(e.target.value == 'Selecione uma edição'){
+            setIdEdition(null)
+            setHiddensCard(true)
+        }else{
+            setHiddensCard(false)
+            const idEdition = refEdition.current.value
+            setIdEdition(idEdition)
+            axios.get(`${BASE_URL_BACK}/cards`,configAxios)
             .then(resp => {
-                $('#dataTableEditionCards').DataTable().destroy();
+                $('#dataTableEditionCards').DataTable().destroy()
                 setCardFilterEdition(_.filter(resp.data, {'edition_id': parseInt(idEdition)}))
                 let dataTable = $('#dataTableEditionCards').DataTable({
                     "responsive": true,
@@ -166,6 +171,7 @@ const EditionCards = () => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
             })
+        }
     }
 
     const renderEditions = () => {
@@ -267,10 +273,10 @@ const EditionCards = () => {
                             <div className="collapse multi-collapse" id="addNewEdition">
                                 <div className="row">
                                     <div className="col-lg-6">
-                                        <input type="text" name='newEdition' className="form-control mb-3" placeholder="Qual o nome da edição?" />
+                                        <input type="text" name='newEdition' className="form-control mb-3" placeholder="Qual o nome da edição?" required />
                                     </div>
                                     <div className="col-lg-6">
-                                        <input type="text" name='codeNewEdition' className="form-control mb-3" placeholder="Qual o código da edição?" />
+                                        <input type="text" name='codeNewEdition' className="form-control mb-3" placeholder="Qual o código da edição?" required />
                                     </div>
                                 </div>
                             </div>
@@ -286,46 +292,48 @@ const EditionCards = () => {
 
                 <hr className="mb-4"></hr>
 
-                <div className="row">
-                    <div className="col-12 mt-2 mb-3">
-                    <h1>Cards</h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-11">
-                        <div className="input-group mb-3">
-                            <input type="email" className="form-control" id="searchBarTec" placeholder="Qual carta você está procurando?" />
-                            <div className="input-group-append">
-                            <div className="input-group-text">
-                                <i className="fas fa-search"></i>
-                            </div>
-                            </div>
+                <div hidden={hiddenCards}>
+                    <div className="row">
+                        <div className="col-12 mt-2 mb-3">
+                        <h1>Cards</h1>
                         </div>
                     </div>
-                    <div className="col-lg-1 mb-2">
-                        <Link className="btn btn-dark" to='/addeditioncards'>Adicionar</Link>
+                    <div className="row">
+                        <div className="col-lg-11">
+                            <div className="input-group mb-3">
+                                <input type="email" className="form-control" id="searchBarTec" placeholder="Qual carta você está procurando?" />
+                                <div className="input-group-append">
+                                <div className="input-group-text">
+                                    <i className="fas fa-search"></i>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-1 mb-2">
+                            <Link className={idEdition ? 'btn btn-dark' : 'btn btn-dark disabled'} to={`/addeditioncards/${idEdition}`}>Adicionar</Link>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-12">
-                    <div className="col-lg-12">
-                        <table id="dataTableEditionCards" className="table table-bordered table-responsive-sm table-responsive-md">
-                        <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th className="text-center">Tipo</th>
-                            <th className="text-center">Cor</th>
-                            <th className="text-center">Edição</th>
-                            <th className="text-center">Raridade</th>
-                            <th className="text-center">Editar</th>
-                            <th className="text-center">Remover</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {renderRow()}
-                        </tbody>
-                        </table>
-                    </div>
+                    <div className="row">
+                        <div className="col-lg-12">
+                        <div className="col-lg-12">
+                            <table id="dataTableEditionCards" className="table table-bordered table-responsive-sm table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th className="text-center">Tipo</th>
+                                <th className="text-center">Cor</th>
+                                <th className="text-center">Edição</th>
+                                <th className="text-center">Raridade</th>
+                                <th className="text-center">Editar</th>
+                                <th className="text-center">Remover</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {renderRow()}
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
                     </div>
                 </div>
            </div>

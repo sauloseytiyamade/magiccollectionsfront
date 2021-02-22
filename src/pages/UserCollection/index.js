@@ -66,7 +66,7 @@ const UserCollection = (props) => {
                         <Route path={`/dashboardadmin`} component={DashboardAdmin} />
                         <Route path={`/cardview/:id`} exact component={CardView} />
                         <Route path={`/editioncards`} exact component={EditionCards} />
-                        <Route path={`/addeditioncards`} exact component={AddEditionCards} />
+                        <Route path={`/addeditioncards/:id`} exact component={AddEditionCards} />
                         <Route path={`/editioncards/:id`} component={EditEditionCards} />
                         <Route path={`/editions`} component={EditionsCard} />
                         <Route path={`/editeditionscards/:id`} component={EditEditionsCards} />

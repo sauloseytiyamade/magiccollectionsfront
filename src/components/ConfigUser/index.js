@@ -32,7 +32,9 @@ const ConfigUser = () => {
             setEmail(email)
         })
         .catch(err => {
-            toast.info(messages(err.response.data.message))
+            if(token != 'sair'){
+                toast.info(messages(err.response.data.message))
+            }
             if(err.response.data.message == 'Token invalid'){
                 setTimeout(() => {
                     window.location.href = `${BASE_URL_LOGIN}`

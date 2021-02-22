@@ -5,8 +5,9 @@ import {messages} from '../../utils/messages'
 import {useHistory, Link, Redirect} from 'react-router-dom'
 import {AuthContext} from '../../utils/auth'
 import axios from 'axios';
+import _ from 'lodash'
 
-const AddEditionCards = () => {
+const AddEditionCards = (props) => {
 
     let {isAuth} = useContext(AuthContext)
     const [cardType, setCardType] = useState([])
@@ -47,7 +48,8 @@ const AddEditionCards = () => {
 
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
-                setCardEdition(resp.data.edition)
+                const filterEdition = _.filter(resp.data.edition, {'id': parseInt(props.match.params.id)})
+                setCardEdition(filterEdition[0].edition)
             })
             .catch(err => {
                 toast.info(messages(err.response.data.message))
@@ -114,23 +116,6 @@ const AddEditionCards = () => {
         )
     }
 
-    const renderEdition = () => {
-        return(
-            <div className="col-lg-4 mb-5">
-                <div className="form-group">
-                <label>Edição da Carta</label>
-                <select className="form-control" ref={refCardEdition} required>
-                   {cardEdition.map(edition => {
-                        return(
-                            <option key={edition.id} value={edition.id}>{edition.edition}</option>
-                        )
-                   })}
-                </select>
-                </div>
-            </div>
-        )
-    }
-
     const renderRarity = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -155,7 +140,7 @@ const AddEditionCards = () => {
         const objAddCard = {
             cardName: evt.target.cardName.value.trim(),
             cardColor_id: refCardColor.current.value.trim(),
-            cardEdition_id: refCardEdition.current.value.trim(),
+            cardEdition_id: parseInt(props.match.params.id),
             cardType_id: refCardType.current.value.trim(),
             cardRarity_id: refCardRarity.current.value.trim()
         }
@@ -170,6 +155,7 @@ const AddEditionCards = () => {
                 }
             })
             .catch(err => {
+                console.log({err});
                 //Caso dê algum erro é enviada uma mensagem para o usuário
                 toast.info(messages(err.response.data.message))
             })
@@ -194,7 +180,12 @@ const AddEditionCards = () => {
                     </div>
                     {renderCardType()}
                     {renderCardColor()}
-                    {renderEdition()}
+                    <div className="col-lg-4 mb-5">
+                        <div className="form-group">
+                        <label>Edição da Carta</label>
+                            <input type="text" name='cardEdition' value={cardEdition} className="form-control" disabled />
+                        </div>
+                    </div>
                     {renderRarity()}
                     </div>
                     <div className="row">

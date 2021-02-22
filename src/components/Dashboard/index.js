@@ -4,6 +4,7 @@ import {Link, Redirect} from 'react-router-dom'
 import './index.css'
 import {BASE_URL_BACK, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
+import {colors} from '../../utils/colors'
 import SwampImage from '../../img/pantano_branco.svg'
 import PlainsImage from '../../img/planicie_branco.svg'
 import MountainImage from '../../img/montanha_branco.svg'
@@ -40,6 +41,16 @@ const Dashboard = () => {
     const [SP, setSP] = useState(0)
     const [HP, setHP] = useState(0)
     const [DM, setDM] = useState(0)
+    const [cardRarity, setCardRarity] = useState([])
+    const [cardCollection, setCardCollection] = useState([])
+    const [cardQuality, setCardQuality] = useState([])
+    const [cardColors, setCardColors] = useState([])
+    const [cardTypes, setCardTypes] = useState([])
+    const [chartPercerntType, setChartPercentType] = useState([])
+    const [chartRarityVsQuality, setChartRarityVsQuality] = useState([])
+    const [chartQualityVsQuantity, setQualityVsQuantity] = useState([])
+    const [chartPercentColor, setChartPercentColor] = useState([])
+    const [arrayColor, setArrayColor] = useState([])
     const [comum, setComum] = useState(0)
     const [incomum, setIncomum] = useState(0)
     const [rara, setRara] = useState(0)
@@ -52,10 +63,94 @@ const Dashboard = () => {
         }
     }
 
+    
+    useEffect(() => {
+        axios.get(`${BASE_URL_BACK}/cardrarities/`,configAxios)
+        .then(resp => {
+                setCardRarity(resp.data.rarity)
+            })
+
+        axios.get(`${BASE_URL_BACK}/cardqualities/`,configAxios)
+        .then(resp => {
+                setCardQuality(resp.data.quality)
+            })
+
+        axios.get(`${BASE_URL_BACK}/cardcolors/`,configAxios)
+        .then(resp => {
+                setCardColors(resp.data.color)
+            })
+
+        axios.get(`${BASE_URL_BACK}/cardtypes/`,configAxios)
+        .then(resp => {
+                setCardTypes(resp.data.type)
+            })
+        
+        axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
+        .then(resp => {
+                setCardCollection(resp.data)
+            })
+    },[])
+
+    useEffect(() => {
+        const arrTypes = []
+        _.map(cardTypes, data => {
+            const count = _.reduce(_.map(_.filter(cardCollection, {'card_type': data.type}), 'quantity'), (sum,n) => {
+                return sum + n
+            }) || 0
+            arrTypes.push([data.type, count])
+        })
+
+        setChartPercentType(_.sortBy(arrTypes, data => {
+            return -data[1]
+        }))
+    }, [cardCollection, cardTypes])
+
+    useEffect(() => {
+        const arrColors = []
+        const colorPicker = []
+        _.map(cardColors, data => {
+            const count = _.reduce(_.map(_.filter(cardCollection, {'card_color': data.color}), 'quantity'), (sum,n) => {
+                return sum + n
+            }) || 0
+            arrColors.push([data.color, count])
+        })
+        setChartPercentColor(_.sortBy(arrColors, data => {
+            return -data[1]
+        }))
+    }, [cardCollection, cardColors])
+
+    useEffect(() => {
+        const arrQuality = []
+        _.map(cardQuality, data => {
+            const count = _.reduce(_.map(_.filter(cardCollection, {'quality': data.quality}), 'quantity'), (sum,n) => {
+                return sum + n
+            }) || 0
+            arrQuality.push([data.quality, count])
+            
+        })
+            setQualityVsQuantity(_.sortBy(arrQuality, data => {
+                return -data[1]
+            }))
+
+    }, [cardCollection, cardQuality])
+
+    useEffect(() => {
+        const arrRarity = []
+        _.map(cardRarity, data => {
+            const count = _.reduce(_.map(_.filter(cardCollection, {'rarity': data.rarity}), 'quantity'), (sum,n) => {
+                return sum + n
+            }) || 0
+            arrRarity.push([data.rarity, count])       
+        })
+
+        setChartRarityVsQuality(_.sortBy(arrRarity, data => {
+            return -data[1]
+        }))
+    }, [cardCollection, cardRarity])
+
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
         .then(resp => {
-
             setCardsBlack(_.reduce(_.map(_.filter(resp.data, {'card_color':'Preto'}), 'quantity'), (sum,n) => {
                 return sum + n
             }) || 0)
@@ -84,62 +179,6 @@ const Dashboard = () => {
                 return sum + n
             }) || 0)
 
-            setCardsCreature(_.reduce(_.map(_.filter(resp.data, {'card_type':'Criatura'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsInstant(_.reduce(_.map(_.filter(resp.data, {'card_type':'Mágica Instântanea'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsSorcery(_.reduce(_.map(_.filter(resp.data, {'card_type':'Feitiço'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsEnchantment(_.reduce(_.map(_.filter(resp.data, {'card_type':'Encantamento'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsPlaneswalker(_.reduce(_.map(_.filter(resp.data, {'card_type':'Planeswalker'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setM(_.reduce(_.map(_.filter(resp.data, {'quality':'M'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setNM(_.reduce(_.map(_.filter(resp.data, {'quality':'NM'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setSP(_.reduce(_.map(_.filter(resp.data, {'quality':'SP'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setHP( _.reduce(_.map(_.filter(resp.data, {'quality':'HP'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setDM(_.reduce(_.map(_.filter(resp.data, {'quality':'DM'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setComum(_.reduce(_.map(_.filter(resp.data, {'rarity':'Comum'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setIncomum(_.reduce(_.map(_.filter(resp.data, {'rarity':'Incomum'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setRara(_.reduce(_.map(_.filter(resp.data, {'rarity':'Rara'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setLendaria(_.reduce(_.map(_.filter(resp.data, {'rarity':'Lendaria'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
             refLoading.current.executeLoading()
         })
         .catch(err => {
@@ -162,6 +201,14 @@ const Dashboard = () => {
     
     if(isAuth == false){
         return null
+    }
+
+    const modifyColors = (arr) => {
+        const arrColorsModify = []
+        _.map(arr, data => {
+            arrColorsModify.push(colors(data[0]))
+        })
+        return arrColorsModify
     }
 
     return(
@@ -254,16 +301,12 @@ const Dashboard = () => {
                                     loader={<div>Carregando o gráfico</div>}
                                     data={[
                                         ['Card Type', 'Number'],
-                                        ['Criatura', cardsCreature],
-                                        ['Mágica Instântanea', cardsInstant],
-                                        ['Feitiço', cardsSorcery],
-                                        ['Encanamento', cardsEnchantment],
-                                        ['Planeswalker', cardsPlaneswalker],
+                                        ...chartPercerntType
                                     ]}
                                     options={{
                                         chartArea: { left: 0, top: 0, right: 0, bottom: 10 },
                                         legend: {position: 'right', textStyle: {fontSize: 20}}, 
-                                        is3D: true,                                       
+                                        is3D: true,                         
                                     }}
                                     rootProps={{ 'data-testid': '1' }}
                                     />
@@ -287,13 +330,7 @@ const Dashboard = () => {
                                     loader={<div>Carregando o gráfico</div>}
                                     data={[
                                         ['Card Type', 'Number'],
-                                        ['Preto', cardsBlack],
-                                        ['Branco', cardsYellow],
-                                        ['Vermelho', cardsRed],
-                                        ['Azul', cardsBlue],
-                                        ['Verde', cardsGreen],
-                                        ['Multicolorida', cardsMultiColor],
-                                        ['Artefato', cardsColorLess],
+                                        ...chartPercentColor
                                     ]}
                                     options={{
                                         chartArea: { left: 0, top: 0, right: 0, bottom: 10 },
@@ -303,8 +340,8 @@ const Dashboard = () => {
                                             scrollArrows: { inactiveColor: "black", activeColor: "black" },
                                             pagingTextStyle: { color: 'black'},
                                         },
-                                        colors: ['black','#ffc107', '#dc3545', '#007bff', '#28a745', '#a69b00', '#6c757d'],
                                         is3D: true,
+                                        colors: modifyColors(chartPercentColor)
                                     }}
                                     rootProps={{ 'data-testid': '2' }}
                                     />
@@ -330,11 +367,7 @@ const Dashboard = () => {
                             loader={<div>Carregando o gráfico</div>}
                             data={[
                             ['Qualidade', 'Quantidade'],
-                            ['M', M],
-                            ['NM', NM],
-                            ['SP', SP],
-                            ['HP', HP],
-                            ['DM', DM],
+                            ...chartQualityVsQuantity
                             ]}
                             options={{
                                 legend: {
@@ -360,10 +393,11 @@ const Dashboard = () => {
                             loader={<div>Carregando o gráfico</div>}
                             data={[
                             ['Raridade', 'Quantidade'],
-                            ['Comum', comum],
-                            ['Incomum', incomum],
-                            ['Rara', rara],
-                            ['Lendária', lendaria]
+                            ...chartRarityVsQuality
+                            // ['Comum', comum]
+                            // ['Incomum', incomum],
+                            // ['Rara', rara],
+                            // ['Lendária', lendaria]
                             ]}
                             options={{
                                 legend: {

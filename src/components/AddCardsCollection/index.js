@@ -20,6 +20,7 @@ const AddCardsCollection = () => {
     const [cardSelected, setCardSelected] = useState('')
     const [cardQuality, setCardQuality] = useState([])
     const [cardLanguage, setCardLanguage] = useState([])
+    const [cadastrar, setCadastrar] = useState(false)
     const refQuality = useRef()
     const refLanguage = useRef()
     const [quantity, setQuantity] = useState('')
@@ -36,7 +37,7 @@ const AddCardsCollection = () => {
             .then(resp => {
                 setAllCards(resp.data)
                 const data = resp.data.map((cards, index, array) => {                    
-                        return `${cards.card_name} - ${cards.edition}`
+                        return `${cards.card_name} | ${cards.edition}`
                 })
                 setCardName(data)
             })
@@ -70,6 +71,14 @@ const AddCardsCollection = () => {
 
     const handleChange = (selected) => {
         setCardSelected(selected)
+    }
+
+    const handleOnBlur = (selected) => {
+        if(selected.target.value.indexOf('|') == -1){
+            setCadastrar(false)
+        }else{
+            setCadastrar(true)
+        }
     }
 
     const renderQuality = () => {
@@ -112,8 +121,8 @@ const AddCardsCollection = () => {
 
     const saveCard = evt => {
         evt.preventDefault()
-
-        const nameArr = cardSelected[0].split('-')
+        
+        const nameArr = cardSelected[0].split('|')
         const nameArrTrim = nameArr.map(name => {
             return name.trim()
         })
@@ -176,6 +185,10 @@ const AddCardsCollection = () => {
                                 onChange={(selected) => {
                                     handleChange(selected)
                                 }}
+
+                                onBlur={(selected) => {
+                                    handleOnBlur(selected)
+                                }}
                                 options={cardName}
                                 minLength={2}
                                 inputProps={{ required: true }}
@@ -194,7 +207,7 @@ const AddCardsCollection = () => {
                     </div>
                     <div className="row">
                     <div className="col-lg-12">
-                        <button type="submit" className="btn btn-dark mr-2">Cadastrar</button>
+                        <button type="submit" className={cadastrar ? 'btn btn-dark mr-2' : 'btn btn-dark mr-2 disabled'}>Cadastrar</button>
                         <Link className="btn btn-dark mr-2" to='/cards'>Voltar</Link>
                     </div>
                     </div>

@@ -54,7 +54,7 @@ const MenuLeft = () => {
     }
 
     const sair = () => {
-        localStorage.removeItem('token')
+        localStorage.setItem('token', 'sair')
         toast.info('Tchauzinho Planeswalker!!!')
         setTimeout(() => {
             window.location.href = `${BASE_URL_LOGIN}`
@@ -95,7 +95,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/dashboardadmin' className="nav-link">                                    
-                                        <i className="fas fa-tachometer-alt text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Dashboard Admin</p>
                                     </Link>
                                 </li>
@@ -109,7 +109,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/editioncards' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de cards</p>
                                     </Link>
                                 </li>
@@ -117,7 +117,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/colors' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de cores</p>
                                     </Link>
                                 </li>
@@ -125,7 +125,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/languages' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de idiomas</p>
                                     </Link>
                                 </li>
@@ -133,7 +133,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/qualities' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro da Qualidade</p>
                                     </Link>
                                 </li>
@@ -141,7 +141,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/rarities' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de Raridade</p>
                                     </Link>
                                 </li>
@@ -149,7 +149,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/types' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de Tipo</p>
                                     </Link>
                                 </li>
@@ -157,7 +157,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/editions' className="nav-link">                                    
-                                        <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Alterar edições</p>
                                     </Link>
                                 </li>
@@ -165,7 +165,7 @@ const MenuLeft = () => {
                             {isAdmin &&
                                 <li className="nav-item">
                                     <Link to='/users' className="nav-link">                                    
-                                        <i className="fas fa-users text-white mr-2"></i>
+                                        <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Administrar Usuários</p>
                                     </Link>
                                 </li>
