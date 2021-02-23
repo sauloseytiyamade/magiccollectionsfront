@@ -12,6 +12,7 @@ import IslandImage from '../../img/ilha_branco.svg'
 import FlorestImage from '../../img/floresta_branco.svg'
 import MultiColorImage from '../../img/multicolor_branco.svg'
 import ArtifactImage from '../../img/artefato_branco.svg'
+import GenereciImage from '../../img/generic_image.svg'
 import {AuthContext} from '../../utils/auth'
 import { toast, ToastContainer } from 'react-toastify'
 import axios from 'axios';
@@ -22,25 +23,7 @@ import { Chart } from "react-google-charts";
 const Dashboard = () => {
     let {isAuth} = useContext(AuthContext)
     const token = localStorage.getItem('token')
-    const {id} = jwt.decode(token) || 'error'
-    const [cardsBlack, setCardsBlack] = useState(0)
-    const [cardsYellow, setCardsYellow] = useState(0)
-    const [cardsRed, setCardsRed] = useState(0)
-    const [cardsBlue, setCardsBlue] = useState(0)
-    const [cardsGreen, setCardsGreen] = useState(0)
-    const [cardsMultiColor, setCardsMultiColor] = useState(0)
-    const [cardsColorLess, setCardsColorLess] = useState(0)
-    
-    const [cardsCreature, setCardsCreature] = useState(0)
-    const [cardsInstant, setCardsInstant] = useState(0)
-    const [cardsSorcery, setCardsSorcery] = useState(0)
-    const [cardsEnchantment, setCardsEnchantment] = useState(0)
-    const [cardsPlaneswalker, setCardsPlaneswalker] = useState(0)
-    const [M, setM] = useState(0)
-    const [NM, setNM] = useState(0)
-    const [SP, setSP] = useState(0)
-    const [HP, setHP] = useState(0)
-    const [DM, setDM] = useState(0)
+    const {id} = jwt.decode(token) || 'error'    
     const [cardRarity, setCardRarity] = useState([])
     const [cardCollection, setCardCollection] = useState([])
     const [cardQuality, setCardQuality] = useState([])
@@ -50,11 +33,6 @@ const Dashboard = () => {
     const [chartRarityVsQuality, setChartRarityVsQuality] = useState([])
     const [chartQualityVsQuantity, setQualityVsQuantity] = useState([])
     const [chartPercentColor, setChartPercentColor] = useState([])
-    const [arrayColor, setArrayColor] = useState([])
-    const [comum, setComum] = useState(0)
-    const [incomum, setIncomum] = useState(0)
-    const [rara, setRara] = useState(0)
-    const [lendaria, setLendaria] = useState(0)
     const refLoading = useRef()
 
     const configAxios = {
@@ -62,7 +40,6 @@ const Dashboard = () => {
             Authorization: `Bearer ${token}`
         }
     }
-
     
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardrarities/`,configAxios)
@@ -89,6 +66,14 @@ const Dashboard = () => {
         .then(resp => {
                 setCardCollection(resp.data)
             })
+        .catch(err => {
+            toast.info(messages(err.response.data.message))
+            if(err.response.data.message == 'Token invalid'){
+                setTimeout(() => {
+                    window.location.href = `${BASE_URL_LOGIN}`
+                }, 5000);
+            }
+        })
     },[])
 
     useEffect(() => {
@@ -146,50 +131,9 @@ const Dashboard = () => {
         setChartRarityVsQuality(_.sortBy(arrRarity, data => {
             return -data[1]
         }))
+
+        refLoading.current.executeLoading()
     }, [cardCollection, cardRarity])
-
-    useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
-        .then(resp => {
-            setCardsBlack(_.reduce(_.map(_.filter(resp.data, {'card_color':'Preto'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsYellow(_.reduce(_.map(_.filter(resp.data, {'card_color':'Branco'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsRed(_.reduce(_.map(_.filter(resp.data, {'card_color':'Vermelho'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsBlue(_.reduce(_.map(_.filter(resp.data, {'card_color':'Azul'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsGreen(_.reduce(_.map(_.filter(resp.data, {'card_color':'Verde'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsMultiColor(_.reduce(_.map(_.filter(resp.data, {'card_color':'Multicolor'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            setCardsColorLess(_.reduce(_.map(_.filter(resp.data, {'card_color':'Incolor'}), 'quantity'), (sum,n) => {
-                return sum + n
-            }) || 0)
-
-            refLoading.current.executeLoading()
-        })
-        .catch(err => {
-            toast.info(messages(err.response.data.message))
-            if(err.response.data.message == 'Token invalid'){
-                setTimeout(() => {
-                    window.location.href = `${BASE_URL_LOGIN}`
-                }, 5000);
-            }
-        })
-    },[id])
 
     if(isAuth == false){
         return (
@@ -211,6 +155,89 @@ const Dashboard = () => {
         return arrColorsModify
     }
 
+    const renderColors = () => {
+        return chartPercentColor.map((cardColor, index) => (
+            <div className="col-lg-3 col-12" key={index}>
+                    <div className="info-box mb-3" style={{background: colors(cardColor[0])}}>
+                    <div className="info-box-content">
+                        <span className="info-box-number"><h1 className="text-white text-bold">{cardColor[1]}</h1></span>
+                        <span className="info-box-text"><h4 className="text-white text-bold">{cardColor[1] > 1 ? 'Cartas' : 'Carta'}</h4></span>
+                    </div>
+                        {(cardColor[0] == 'Vermelho') || (cardColor[0] == 'Vermelha') || (cardColor[0] == 'Red') 
+                            ?
+                            <span className="info-box-icon"><img src={MountainImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Preto') || (cardColor[0] == 'Preta') || (cardColor[0] == 'Black') 
+                            ?
+                            <span className="info-box-icon"><img src={SwampImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Branco') || (cardColor[0] == 'Branca') || (cardColor[0] == 'Amarelo') || (cardColor[0] == 'Amarela') || (cardColor[0] == 'Yellow')
+                            ?
+                            <span className="info-box-icon"><img src={PlainsImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Verde') || (cardColor[0] == 'Green')
+                            ?
+                            <span className="info-box-icon"><img src={FlorestImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Blue') || (cardColor[0] == 'Azul')
+                            ?
+                            <span className="info-box-icon"><img src={IslandImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Incolor') || (cardColor[0] == 'Incolores') || (cardColor[0] == 'Artefato')
+                            ?
+                            <span className="info-box-icon"><img src={ArtifactImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {(cardColor[0] == 'Multicolor') || (cardColor[0] == 'Muticolores') || (cardColor[0] == 'Muticoloridas')
+                            ?
+                            <span className="info-box-icon"><img src={MultiColorImage} alt=""/></span>
+                            :
+                            ''
+                        }
+                        {
+                            (cardColor[0] != 'Vermelho')    && 
+                            (cardColor[0] != 'Vermelha')    && 
+                            (cardColor[0] != 'Red')         &&
+                            (cardColor[0] != 'Preto')       && 
+                            (cardColor[0] != 'Preta')       && 
+                            (cardColor[0] != 'Black')       &&
+                            (cardColor[0] != 'Branco')      && 
+                            (cardColor[0] != 'Branca')      && 
+                            (cardColor[0] != 'Amarelo')     && 
+                            (cardColor[0] != 'Amarela')     && 
+                            (cardColor[0] != 'Yellow')      &&
+                            (cardColor[0] != 'Verde')       && 
+                            (cardColor[0] != 'Green')       &&
+                            (cardColor[0] != 'Blue')        && 
+                            (cardColor[0] != 'Azul')        &&
+                            (cardColor[0] != 'Incolor')     && 
+                            (cardColor[0] != 'Incolores')   && 
+                            (cardColor[0] != 'Artefato')    &&
+                            (cardColor[0] != 'Multicolor')  && 
+                            (cardColor[0] != 'Muticolores') && 
+                            (cardColor[0] != 'Muticoloridas')
+                            ?
+                            <span className="info-box-icon"><img src={GenereciImage} alt=""/></span>
+                            :
+                            ''
+                        }
+
+                    </div>
+            </div>
+        ))
+    }
+
     return(
         <section className="content">
             <div className="container-fluid">
@@ -221,69 +248,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="row">
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-black">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsBlack}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsBlack > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={SwampImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-warning">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsYellow}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsYellow > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={PlainsImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-danger">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsRed}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsRed > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={MountainImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-primary">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsBlue}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsBlue > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={IslandImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-success">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsGreen}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsGreen > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={FlorestImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bgMultiColor">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsMultiColor}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsMultiColor > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={MultiColorImage} alt=""/></span>
-                    </div>
-                </div>
-                <div className="col-lg-3 col-12">
-                    <div className="info-box mb-3 bg-secondary">
-                    <div className="info-box-content">
-                        <span className="info-box-number"><h1 className="text-white text-bold">{cardsColorLess}</h1></span>
-                        <span className="info-box-text"><h4 className="text-white text-bold">{cardsColorLess > 1 ? 'Cartas' : 'Carta'}</h4></span>
-                    </div>
-                        <span className="info-box-icon"><img src={ArtifactImage} alt=""/></span>
-                    </div>
-                </div>
+                {renderColors()}
                 </div>
                 <div className="row">
                     <div className="col-lg-6">
@@ -306,7 +271,8 @@ const Dashboard = () => {
                                     options={{
                                         chartArea: { left: 0, top: 0, right: 0, bottom: 10 },
                                         legend: {position: 'right', textStyle: {fontSize: 20}}, 
-                                        is3D: true,                         
+                                        is3D: true,  
+                                        colors: modifyColors(chartPercentColor)                       
                                     }}
                                     rootProps={{ 'data-testid': '1' }}
                                     />
@@ -394,10 +360,6 @@ const Dashboard = () => {
                             data={[
                             ['Raridade', 'Quantidade'],
                             ...chartRarityVsQuality
-                            // ['Comum', comum]
-                            // ['Incomum', incomum],
-                            // ['Rara', rara],
-                            // ['Lendária', lendaria]
                             ]}
                             options={{
                                 legend: {

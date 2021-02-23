@@ -77,7 +77,7 @@ const MenuLeft = () => {
                     </span>
                 </a>
                 <div className="sidebar">
-                    <img src={photo || ImgDefault} className="img-circle mx-auto d-block image_avatar" alt="Guilherme Souza" />
+                    <img src={photo || ImgDefault} className="img-circle mx-auto d-block image_avatar" alt="Meu Avatar" />
                     <div className="text-white text-center ml-2 text-bold">
                         {isAdmin &&
                             <i className="far fa-gem text-warning"></i> 
