@@ -84,7 +84,7 @@ const AddTypesCard = () => {
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Nome do Tipo</label>
-                                    <input type="text" className="form-control" value={type} placeholder="Digite o tipo" onChange={changeType} required />
+                                    <input type="text" className="form-control" value={type} placeholder="Digite o tipo" onChange={changeType} maxLength="45" required />
                                 </div>
                             </div>
                         </div>

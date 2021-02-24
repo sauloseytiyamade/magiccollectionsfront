@@ -84,7 +84,7 @@ const AddColorsCard = () => {
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Nome da cor</label>
-                                    <input type="text" className="form-control" value={color} placeholder="Digite a cor" onChange={changeColor} required />
+                                    <input type="text" className="form-control" value={color} placeholder="Digite a cor" onChange={changeColor} maxLength="45" required />
                                 </div>
                             </div>
                         </div>

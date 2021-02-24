@@ -175,7 +175,7 @@ const AddEditionCards = (props) => {
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>Nome da Carta</label>
-                            <input type="text" name='cardName' className="form-control" placeholder="Digite o nome da carta" required />
+                            <input type="text" name='cardName' className="form-control" placeholder="Digite o nome da carta" maxlength="200" required />
                         </div>
                     </div>
                     {renderCardType()}

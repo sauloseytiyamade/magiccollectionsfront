@@ -2,6 +2,7 @@ import {React, useState, useEffect} from 'react';
 import Logo from '../../img/logo.png'
 import axios from 'axios'
 import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
+import {Link, Redirect, useHistory} from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'; 
 import {messages} from '../../utils/messages'
@@ -58,7 +59,8 @@ const Forgot = (props) => {
                         </div>
                     </div>
                 </div>
-                <button type='submit' className='btn btn-dark mb-2'>Esqueci minha senha</button>
+                <button type='submit' className='btn btn-dark mb-2 mr-2'>Esqueci minha senha</button>
+                <p><Link className='btn btn-dark mb-2' to='/login'>Voltar</Link></p>
             </form>
             <ToastContainer />
         </div>

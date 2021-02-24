@@ -84,7 +84,7 @@ const AddQualityCard = () => {
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Nome da qualidade</label>
-                                    <input type="text" className="form-control" value={quality} placeholder="Digite a qualidade" onChange={changeQuality} required />
+                                    <input type="text" className="form-control" value={quality} placeholder="Digite a qualidade" onChange={changeQuality} maxLength="45" required />
                                 </div>
                             </div>
                         </div>

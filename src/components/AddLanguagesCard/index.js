@@ -84,7 +84,7 @@ const AddLanguagesCard = () => {
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Nome da idioma</label>
-                                    <input type="text" className="form-control" value={language} placeholder="Digite o idioma" onChange={changeLanguage} required />
+                                    <input type="text" className="form-control" value={language} placeholder="Digite o idioma" onChange={changeLanguage} maxLength="45" required />
                                 </div>
                             </div>
                         </div>

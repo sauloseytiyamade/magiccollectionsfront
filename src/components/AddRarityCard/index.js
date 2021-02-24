@@ -84,7 +84,7 @@ const AddRarityCard = () => {
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Nome da Raridade</label>
-                                    <input type="text" className="form-control" value={rarity} placeholder="Digite a raridade" onChange={changeRarity} required />
+                                    <input type="text" className="form-control" value={rarity} placeholder="Digite a raridade" onChange={changeRarity} maxLength="45" required />
                                 </div>
                             </div>
                         </div>

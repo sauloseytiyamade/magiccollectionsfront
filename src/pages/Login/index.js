@@ -54,11 +54,12 @@ const Login = (props) => {
         })
     }
 
-    //Esta função é utilizad para fazer login pelo google
+    //Esta função é utilizada para fazer login pelo google
     const responseGoogle = (resp) => {
-        const {profileObj: {email, name, googleId}} = resp
-
-        //Verifica se existe algum usuário com o e-mail cadastrado no sistema
+        console.log(resp)
+        if(resp.profileObj){
+            const {profileObj: {email, name, googleId}} = resp
+            //Verifica se existe algum usuário com o e-mail cadastrado no sistema
         axios.get(`${BASE_URL_BACK}/users/${email}`)
         .then(resp => {
             if(resp.data.message == true){
@@ -125,79 +126,86 @@ const Login = (props) => {
             //Caso dê algum problema aparece esta mensagem
             toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
         })
+        }else{
+            return null
+        }
         
     }
 
     //Esta função é utilizad para fazer login pelo facebook
     const responseFacebook = (resp) => {
-        const {email, name, id } = resp
+        if(resp.status != 'unknown'){
+            const {email, name, id } = resp
 
-        //Verifica se existe algum usuário com o e-mail cadastrado no sistema
-        axios.get(`${BASE_URL_BACK}/users/${email}`)
-        .then(resp => {
-            if(resp.data.message == true){
-                const data = {
-                    email,
-                    password: id
-                }
-                //Se existir um usuário cadastrado no sistema ele tenta fazer o login
-                //Como existe três sistemas de login, optei por apresentar uma mensagem de erro genérica.
-                axios.post(`${BASE_URL_BACK}/login`,data)
-                .then(resp => {
-                    toast.success('Seja Bem-Vindo(a)!!!')
-                    localStorage.setItem('token', resp.data.token)
-                    setTimeout(() => {
-                        window.location.href = `${BASE_URL_FRONT}/cards`
-                    }, 5000);
-                })
-                .catch(err => {
-                    //Caso o usuário tente fazer o login com uma conta do facebook e já exista um usuário com o mesmo e-mail
-                    // O sistema informa que já existe usuário cadastrado
-                    toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
-                })
-
-            }else{
-                //Se não existir nenhum e-mail cadastrado no sistema
-                //O sistema cadastra o novo e-mail e já efetiva o login
-                const data = {
-                    name,
-                    email,
-                    password: id,
-                    external_login: 1,
-                } 
-                //Criação do usuário no backend
-               axios.post(`${BASE_URL_BACK}/users`,data)
-                .then(resp => {
-                    if(resp.data.message == 'user created'){
-                        toast.success('Você foi cadastrado com sucesso!!! Aguarde um momento...')
-                        const data = {
-                            email,
-                            password: id
-                        }
-
-                        setTimeout(() => {
-                            //O sistema apresenta a mensagem do cadastro por 5 segundos e já executa o login
-                            axios.post(`${BASE_URL_BACK}/login`,data)
-                            .then(resp => {
-                                toast.success('Seja Bem-Vindo(a)!!!')
-                                localStorage.setItem('token', resp.data.token)
-                                setTimeout(() => {
-                                    window.location.href = `${BASE_URL_FRONT}/cards`
-                                }, 5000);
-                            })
-                            .catch(err => {
-                                //Caso dê algum problema aparece esta mensagem
-                                toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
-                            })
-                        }, 5000);
+            //Verifica se existe algum usuário com o e-mail cadastrado no sistema
+            axios.get(`${BASE_URL_BACK}/users/${email}`)
+            .then(resp => {
+                if(resp.data.message == true){
+                    const data = {
+                        email,
+                        password: id
                     }
-                })
-            }
-        })
-        .catch(err => {
-            //Caso dê algum problema aparece esta mensagem
-            toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
-        })
+                    //Se existir um usuário cadastrado no sistema ele tenta fazer o login
+                    //Como existe três sistemas de login, optei por apresentar uma mensagem de erro genérica.
+                    axios.post(`${BASE_URL_BACK}/login`,data)
+                    .then(resp => {
+                        toast.success('Seja Bem-Vindo(a)!!!')
+                        localStorage.setItem('token', resp.data.token)
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_FRONT}/cards`
+                        }, 5000);
+                    })
+                    .catch(err => {
+                        //Caso o usuário tente fazer o login com uma conta do facebook e já exista um usuário com o mesmo e-mail
+                        // O sistema informa que já existe usuário cadastrado
+                        toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                    })
+
+                }else{
+                    //Se não existir nenhum e-mail cadastrado no sistema
+                    //O sistema cadastra o novo e-mail e já efetiva o login
+                    const data = {
+                        name,
+                        email,
+                        password: id,
+                        external_login: 1,
+                    } 
+                    //Criação do usuário no backend
+                axios.post(`${BASE_URL_BACK}/users`,data)
+                    .then(resp => {
+                        if(resp.data.message == 'user created'){
+                            toast.success('Você foi cadastrado com sucesso!!! Aguarde um momento...')
+                            const data = {
+                                email,
+                                password: id
+                            }
+
+                            setTimeout(() => {
+                                //O sistema apresenta a mensagem do cadastro por 5 segundos e já executa o login
+                                axios.post(`${BASE_URL_BACK}/login`,data)
+                                .then(resp => {
+                                    toast.success('Seja Bem-Vindo(a)!!!')
+                                    localStorage.setItem('token', resp.data.token)
+                                    setTimeout(() => {
+                                        window.location.href = `${BASE_URL_FRONT}/cards`
+                                    }, 5000);
+                                })
+                                .catch(err => {
+                                    //Caso dê algum problema aparece esta mensagem
+                                    toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                                })
+                            }, 5000);
+                        }
+                    })
+                }
+            })
+            .catch(err => {
+                //Caso dê algum problema aparece esta mensagem
+                toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+            })
+        }else{
+            return null
+        }
     }
 
     return(

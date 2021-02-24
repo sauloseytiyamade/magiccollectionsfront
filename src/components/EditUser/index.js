@@ -130,13 +130,13 @@ const EditUser = (props) => {
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>Usuário</label>
-                            <input type="text" name='nameUser' value={nameUser} className="form-control" onChange={handleNameUser} placeholder="Digite o seu usuário" required />
+                            <input type="text" name='nameUser' value={nameUser} className="form-control" onChange={handleNameUser} placeholder="Digite o seu usuário" maxLength="200" required />
                         </div>
                     </div>
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>E-mail</label>
-                            <input type="text" name='emailUser' value={emailUser} className="form-control" onChange={handleEmailUser} placeholder="Digite seu e-mail" required />
+                            <input type="text" name='emailUser' value={emailUser} className="form-control" onChange={handleEmailUser} placeholder="Digite seu e-mail" maxLength="200" required />
                         </div>
                     </div>
 

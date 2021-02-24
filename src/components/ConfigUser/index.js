@@ -89,8 +89,12 @@ const ConfigUser = () => {
                     })
                 })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
+                if(err.response.data.indexOf('file not supported') != -1){
+                    toast.info('Arquivo não suportado')
+                }else{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }
             })
         }else{
             const objUser = {
@@ -125,7 +129,7 @@ const ConfigUser = () => {
                         <div className="col-lg-4 mb-5">
                             <div className="form-group">
                             <label>Nome</label>
-                                <input type="text" name='nameUser' value={name} onChange={changeName} className="form-control" placeholder="Digite o seu nome" required />
+                                <input type="text" name='nameUser' value={name} onChange={changeName} className="form-control" placeholder="Digite o seu nome" maxLength="200" required />
                             </div>
                         </div>
                         <div className="col-lg-4 mb-5">

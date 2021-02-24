@@ -2,11 +2,12 @@ import {React, useState, useEffect} from 'react';
 import Logo from '../../img/logo.png'
 import axios from 'axios'
 import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css'; 
+import { toast, ToastContainer } from 'react-toastify'
+import {Link, Redirect, useHistory} from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.min.css'
 import {messages} from '../../utils/messages'
 
-import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.min.css'
 import './index.css'
 
 const Register = (props) => {
@@ -114,6 +115,7 @@ const Register = (props) => {
                     </div>
                 </div>
                 <button type='submit' className='btn btn-dark mb-2'>Cadastrar-se</button>
+                <p><Link className='btn btn-dark mb-2' to='/login'>Voltar</Link></p>
             </form>
             <ToastContainer />
         </div>
