@@ -18,7 +18,7 @@ const Forgot = (props) => {
         setEmail(evt.target.value)
     }
 
-    //Envia os dados para o backend validar
+    // Esta é ação executada quando o usuário clica no botão esqueci minha senha
     const sendBack = (evt) => {
         evt.preventDefault()
 
@@ -26,7 +26,8 @@ const Forgot = (props) => {
             email
         }
 
-        //Criação do usuário no backend
+        // Nesta etapa o sistema envia as informações para o backend processar
+        // O usuário neste momento deverá receber um e-mail
         axios.post(`${BASE_URL_BACK}/forgot`,data)
         .then(resp => {
             toast.success(messages(resp.data.message))

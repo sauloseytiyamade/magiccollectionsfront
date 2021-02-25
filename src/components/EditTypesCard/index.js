@@ -21,6 +21,7 @@ const EditTypesCard = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardtypes`,configAxios)
             .then(resp => {
@@ -29,10 +30,12 @@ const EditTypesCard = (props) => {
             })
     },[id])
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeType = evt => {
         setType(evt.target.value)
     }
 
+    // Salva os dados cadastrado pelo usuário
     const saveType = evt => {
         evt.preventDefault()
 
@@ -54,24 +57,22 @@ const EditTypesCard = (props) => {
         
     }
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
         )
-    }else{
-        
     }
 
     if(isAdmin == false){

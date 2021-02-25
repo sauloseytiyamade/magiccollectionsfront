@@ -21,6 +21,7 @@ const EditQualitiesCard = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardqualities`,configAxios)
             .then(resp => {
@@ -29,11 +30,13 @@ const EditQualitiesCard = (props) => {
             })
     },[id])
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeQuality = evt => {
         setQuality(evt.target.value)
     }
 
-    const saveColor = evt => {
+    // Salva os dados cadastrado pelo usuário
+    const saveQuality = evt => {
         evt.preventDefault()
 
         const objQuality ={
@@ -88,7 +91,7 @@ const EditQualitiesCard = (props) => {
                         </div>
                     </div>
 
-                    <form onSubmit={saveColor}>
+                    <form onSubmit={saveQuality}>
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">

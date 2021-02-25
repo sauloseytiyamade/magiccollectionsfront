@@ -21,6 +21,7 @@ const EditLanguagesCard = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardlanguages`,configAxios)
             .then(resp => {
@@ -29,11 +30,13 @@ const EditLanguagesCard = (props) => {
             })
     },[id])
 
-    const changeColor = evt => {
+    // Verifica se existe alguma alteração no formulário para salvar no estado
+    const changeLanguage = evt => {
         setLanguage(evt.target.value)
     }
 
-    const saveColor = evt => {
+    // Salva as informações no backend
+    const saveLanguage = evt => {
         evt.preventDefault()
 
         const objLanguage ={
@@ -56,24 +59,22 @@ const EditLanguagesCard = (props) => {
         
     }
 
-    if(isAuth == false){
-        return (
-            window.location.href = `${BASE_URL_LOGIN}`
+   // Verifica se o usuário está autenticado
+   if(isAuth == false){
+    return (
+        window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
-    
+
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
         )
-    }else{
-        
     }
 
     if(isAdmin == false){
@@ -90,12 +91,12 @@ const EditLanguagesCard = (props) => {
                         </div>
                     </div>
 
-                    <form onSubmit={saveColor}>
+                    <form onSubmit={saveLanguage}>
                         <div className="row">
                             <div className="col-lg-4">
                                 <div className="form-group">
                                     <label>Linguagem</label>
-                                    <input type="text" className="form-control" value={language} placeholder="Digite a linguagem" onChange={changeColor} required />
+                                    <input type="text" className="form-control" value={language} placeholder="Digite a linguagem" onChange={changeLanguage} required />
                                 </div>
                             </div>
                         </div>

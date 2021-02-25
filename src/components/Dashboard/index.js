@@ -41,6 +41,7 @@ const Dashboard = () => {
         }
     }
     
+    // Carrega as informações do backend para montar a dashaboard
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardrarities/`,configAxios)
         .then(resp => {
@@ -76,6 +77,7 @@ const Dashboard = () => {
         })
     },[])
 
+    // Organiza as informações para montar o gráfico de Porcentagem por tipo de carta
     useEffect(() => {
         const arrTypes = []
         _.map(cardTypes, data => {
@@ -90,6 +92,7 @@ const Dashboard = () => {
         }))
     }, [cardCollection, cardTypes])
 
+    // Organiza as informações para montar o gráfico de Porcentagem por cor
     useEffect(() => {
         const arrColors = []
         const colorPicker = []
@@ -104,6 +107,7 @@ const Dashboard = () => {
         }))
     }, [cardCollection, cardColors])
 
+    // Organiza as informações para montar o gráfico de Qualidade vs Quantidade
     useEffect(() => {
         const arrQuality = []
         _.map(cardQuality, data => {
@@ -119,6 +123,7 @@ const Dashboard = () => {
 
     }, [cardCollection, cardQuality])
 
+    // Organiza as informações para montar o gráfico de Raridade vs Qualidade
     useEffect(() => {
         const arrRarity = []
         _.map(cardRarity, data => {
@@ -135,18 +140,18 @@ const Dashboard = () => {
         refLoading.current.executeLoading()
     }, [cardCollection, cardRarity])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Modifica as cores dos gráficos
     const modifyColors = (arr) => {
         const arrColorsModify = []
         _.map(arr, data => {
@@ -155,6 +160,7 @@ const Dashboard = () => {
         return arrColorsModify
     }
 
+    // Monta os cards com as suas respectivas cores
     const renderColors = () => {
         return chartPercentColor.map((cardColor, index) => (
             <div className="col-lg-3 col-12" key={index}>

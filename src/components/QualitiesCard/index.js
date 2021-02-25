@@ -23,6 +23,7 @@ const QualitiesCard = () => {
         }
     }
 
+    // Busca informações no backend para montar a tela
     useEffect(() => {
         if(!isAdmin){
             return null
@@ -63,6 +64,7 @@ const QualitiesCard = () => {
         })
     },[isAdmin])
 
+    // Renderiza as linhas da tabela
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>
@@ -74,11 +76,14 @@ const QualitiesCard = () => {
         )
     }
 
+    // Abre uma modal quando o usuário vai deletar uma carta
+    // A modal verifica se o usuário tem certeza que deseja executar a ação
     const openModal = (id) => {
         setLineId(id)
         refModal.current.openModal()
     }
 
+    // Deleta a carta do usuário
     const deleteItem = () => {
         axios.delete(`${BASE_URL_BACK}/cardqualities/${lineId}`,configAxios)
             .then(resp => {
@@ -97,6 +102,7 @@ const QualitiesCard = () => {
             })
     }
 
+    // Verifica se o usuário está autenticado
     if (isAuth == false) {
         window.location.href = `${BASE_URL_LOGIN}`
     }
@@ -105,6 +111,7 @@ const QualitiesCard = () => {
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />

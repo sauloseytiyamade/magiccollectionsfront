@@ -22,6 +22,7 @@ const ConfigUser = () => {
         }
     }
 
+    // Busca informações no backend para montar a tela
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
         .then(resp => {
@@ -43,27 +44,27 @@ const ConfigUser = () => {
         })
     },[id])
 
-    if(isAuth == false){
-        return (
-            window.location.href = `${BASE_URL_LOGIN}`
-        )
-    }else{
-        
+    // Verifica se o usuário está autenticado
+    if (isAuth == false) {
+        window.location.href = `${BASE_URL_LOGIN}`
     }
-    
-    if(isAuth == false){
+
+    if (isAuth == false) {
         return null
     }
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeName = evt => {
         setName(evt.target.value)
     }
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeNameFile = evt => {
         const label = document.querySelector('.custom-file-label')
         label.innerHTML = evt.target.files[0].name
     }
 
+    // Salva os dados cadastrado pelo usuário
     const saveUser = (evt) => {
         evt.preventDefault()
         if(evt.target[1].files[0]){

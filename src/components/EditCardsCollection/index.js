@@ -30,6 +30,7 @@ const EditCardsCollection = (props) => {
     }
     const jwtId = jwt.decode(token)
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/collections/${jwtId.id}`,configAxios)
         .then(resp => {
@@ -41,6 +42,7 @@ const EditCardsCollection = (props) => {
         })
     },[])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardlanguages`,configAxios)
             .then(resp => {
@@ -48,6 +50,7 @@ const EditCardsCollection = (props) => {
             })
     },[languageId])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardqualities`,configAxios)
             .then(resp => {
@@ -55,22 +58,23 @@ const EditCardsCollection = (props) => {
             })
     },[qualityId])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se há mudança no formulário
     const cardQuantity = evt => {
         setQuantity(evt.target.value)
     }
 
+    // Salva as informações no backend
     const saveCard = (evt) => {
         evt.preventDefault()
         const obj = {
@@ -92,6 +96,7 @@ const EditCardsCollection = (props) => {
             })
     }
 
+    // Renderiza o select do formulário
     const renderQuality = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -109,6 +114,7 @@ const EditCardsCollection = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderLanguage = () => {
         return(
             <div className="col-lg-4 mb-5">

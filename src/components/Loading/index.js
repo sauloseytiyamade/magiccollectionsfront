@@ -4,7 +4,8 @@ import './index.css'
 const Loading = forwardRef((props, ref) => {
 
     const [showLoading, setShowLoading] = useState(true)
-    
+
+    // Verifica se o loading está ativo e desativa
     useImperativeHandle(
         ref,
         () => ({

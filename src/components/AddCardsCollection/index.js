@@ -32,6 +32,7 @@ const AddCardsCollection = () => {
         }
     }
 
+    // Buscas as informações do banco de dados para montar a tela para adição de carta
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cards`,configAxios)
             .then(resp => {
@@ -69,10 +70,12 @@ const AddCardsCollection = () => {
             })
     }, [])
 
+    // Faz alteração no cardSelected caso haja alguma mudança no formulário
     const handleChange = (selected) => {
         setCardSelected(selected)
     }
 
+    // Ativa botão cadastrar quando o usuário clica fora do input
     const handleOnBlur = (selected) => {
         if(selected.target.value.indexOf('|') == -1){
             setCadastrar(false)
@@ -81,6 +84,7 @@ const AddCardsCollection = () => {
         }
     }
 
+    // Renderiza o select do formulário
     const renderQuality = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -98,6 +102,7 @@ const AddCardsCollection = () => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderLanguage = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -115,10 +120,12 @@ const AddCardsCollection = () => {
         )
     }
 
+    // Verifica se há mudança no formulário
     const cardQuantity = evt => {
         setQuantity(evt.target.value)
     }
 
+    // Salva as informações no backend
     const saveCard = evt => {
         evt.preventDefault()
         
@@ -152,12 +159,11 @@ const AddCardsCollection = () => {
             })
     }
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){

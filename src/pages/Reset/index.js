@@ -35,7 +35,8 @@ const Reset = (props) => {
                 password,
                 hashUrl: uuid
             }
-           
+            // Neste momento é enviado a senha para o backend
+            // O backend salvará a nova senha fornecida
            axios.post(`${BASE_URL_BACK}/reset`,data)
            .then(resp => {   
                 toast.success(messages(resp.data.message))

@@ -25,6 +25,7 @@ const MenuLeft = () => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
         .then(resp => {
@@ -41,18 +42,20 @@ const MenuLeft = () => {
         })
     },[userName])
 
-    if(isAuth == false){
-        return (
-            <Redirect to='/login' />
-        )
-    }else{
-        
+    // Verifica se o usuário está autenticado
+    if (isAuth == false) {
+        window.location.href = `${BASE_URL_LOGIN}`
+    }
+
+    if (isAuth == false) {
+        return null
     }
     
     if(isAuth == false){
         return null
     }
 
+    //Sai do sistema quando o usuário clica em sair
     const sair = () => {
         localStorage.setItem('token', 'sair')
         toast.info('Tchauzinho Planeswalker!!!')

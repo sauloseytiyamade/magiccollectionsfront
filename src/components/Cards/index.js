@@ -20,15 +20,18 @@ const Cards = () => {
     const refModal = useRef()
     const refLoading = useRef()
     
+    // Busca informações no backend para montar a tela
     useEffect(() => {
+            // Faz a configuração a autorização
             const configAxios = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
-    
+            // Pega o id do usuário
             const {id} = jwt.decode(token) || 'error'
-    
+
+            // Busca todas as cartas do usuário    
             axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
                 .then(resp => {
                     setData(resp.data)
@@ -78,10 +81,12 @@ const Cards = () => {
                             dataTable.button('.buttons-pdf').trigger();
                         });
 
+                        // Desativa o carregamento
                         refLoading.current.executeLoading()
                     })
                 })
                 .catch(err => {
+                    // Caso dê erro é gerada uma mensagem e o usuário é enviado para a página de login
                     toast.info(messages(err.response.data.message))
                     if(err.response.data.message == 'Token invalid'){
                         setTimeout(() => {
@@ -91,10 +96,16 @@ const Cards = () => {
                 })
     },[])
 
+    // Verifica se o usuário está autenticado
+    if(isAuth == false){
+        return null
+    }
+    
     if(isAuth == false){
         window.location.href = `${BASE_URL_LOGIN}`
     }
 
+    // Deleta a carta do usuário
     const deleteItem = () => {
         const configAxios = {
             headers: {
@@ -118,6 +129,7 @@ const Cards = () => {
             })
     }
 
+    // Renderiza as linhas da tabela
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>
@@ -137,6 +149,8 @@ const Cards = () => {
         )
     }
 
+    // Abre uma modal quando o usuário vai deletar uma carta
+    // A modal verifica se o usuário tem certeza que deseja executar a ação
     const openModal = (id) => {
         setLineId(id)
         refModal.current.openModal()

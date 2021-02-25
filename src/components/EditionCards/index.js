@@ -28,6 +28,7 @@ const EditionCards = () => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
@@ -88,18 +89,18 @@ const EditionCards = () => {
     
     }, [])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
@@ -110,6 +111,7 @@ const EditionCards = () => {
         return null
     }
 
+    // Verifica qual edição o usuário vai selecionar para apresentar para as cartas corretamente
     const handleChangeOptions = (e) => {
         if(e.target.value == 'Selecione uma edição'){
             setIdEdition(null)
@@ -174,6 +176,7 @@ const EditionCards = () => {
         }
     }
 
+    // Renderiza o select do formulário
     const renderEditions = () => {
         return(
             <div className="col-lg-4 mt-3">
@@ -192,6 +195,7 @@ const EditionCards = () => {
         )
     }
 
+    // Renderiza as linhas da tabela
     const renderRow = () => {
         return cardFilterEdition.map(line => (
                 <tr key={line.id}>
@@ -207,11 +211,13 @@ const EditionCards = () => {
         )
     }
 
+    // Abre a modal solicitando que o usuário tenha certeza que deseja excluir aquele card
     const openModal = (id) => {
         setLineId(id)
         refModal.current.openModal()
     }
 
+    // Exclui o card
     const deleteItem = () => {
         axios.delete(`${BASE_URL_BACK}/cards/${lineId}`,configAxios)
             .then(resp => {
@@ -230,6 +236,7 @@ const EditionCards = () => {
             })
     }
 
+    // Salva a nova edição que o usuário cadastrou
     const saveNewEdition = (evt) => {
         evt.preventDefault()
         const objAddEdtion = {

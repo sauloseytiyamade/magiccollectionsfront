@@ -32,6 +32,7 @@ const DashboardAdmin = () => {
         }
     }
 
+    // Busca no backend os dados de logs para montar a tabela de logs
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/logs`,configAxios)
             .then(resp => {
@@ -39,6 +40,7 @@ const DashboardAdmin = () => {
             })
     }, [])
 
+    // Busca informações no backend para montar os cards de edição
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
@@ -78,6 +80,7 @@ const DashboardAdmin = () => {
             })
     },[])
 
+    // Busca informação no backend para montar o gráfico de Cartas por edição
     useEffect(() => {
         const arrDataChart = []
         axios.get(`${BASE_URL_BACK}/cards`,configAxios)
@@ -101,6 +104,8 @@ const DashboardAdmin = () => {
         })
     },[cardEdition])
 
+
+    // Busca informações no backend para montar o card de usuário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
             .then(resp => {
@@ -108,6 +113,7 @@ const DashboardAdmin = () => {
             })
     },[])
 
+    // Busca informações no backend para montar o card do número total de cartas
     useEffect(() => {
         if(!isAdmin){
             return null
@@ -119,6 +125,7 @@ const DashboardAdmin = () => {
         }
     },[])
 
+    // Busca informações no backend para montar o gráfico de Top 3 maiores coleções
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/collections`,configAxios)
             .then(resp => {
@@ -142,6 +149,7 @@ const DashboardAdmin = () => {
             })
     },[])
 
+    // Renderiza as linhas da tabela de logs
     const renderRow = () => {
         return logs.map(line => (
                 <tr key={line.id}>
@@ -156,18 +164,18 @@ const DashboardAdmin = () => {
         )
     }
     
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
 
     if(isAuth == false){
         return null
     }
     
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
@@ -189,7 +197,7 @@ const DashboardAdmin = () => {
                 </div>
                 </div>
 
-                <div className="d-flex justify-content-center">
+                <div className="row d-flex justify-content-center">
                     <div className="col-lg-3 col-12">
                         <div className="info-box mb-3 bg-primary">
                         <div className="info-box-content">

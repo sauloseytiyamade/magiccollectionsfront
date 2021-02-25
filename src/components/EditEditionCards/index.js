@@ -31,6 +31,7 @@ const EditEditionCards = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
 
         axios.get(`${BASE_URL_BACK}/cards`,configAxios)
@@ -41,6 +42,7 @@ const EditEditionCards = (props) => {
             })
     },[id])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardtypes`,configAxios)
             .then(resp => {
@@ -52,6 +54,7 @@ const EditEditionCards = (props) => {
             })
     },[card.type_id])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardcolors`,configAxios)
             .then(resp => {
@@ -63,6 +66,7 @@ const EditEditionCards = (props) => {
             })
     }, [card.color_id])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
@@ -74,6 +78,7 @@ const EditEditionCards = (props) => {
             })
     }, [card.edition_id])
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardrarities`,configAxios)
             .then(resp => {
@@ -85,16 +90,18 @@ const EditEditionCards = (props) => {
             })
     },[card.rarity_id])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
     }
-
+    
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
@@ -107,6 +114,7 @@ const EditEditionCards = (props) => {
 
     
 
+    // Renderiza o select do formulário
     const renderCardType = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -124,6 +132,7 @@ const EditEditionCards = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderCardColor = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -141,6 +150,7 @@ const EditEditionCards = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderEdition = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -158,6 +168,7 @@ const EditEditionCards = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderRarity = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -175,11 +186,13 @@ const EditEditionCards = (props) => {
         )
     }
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const handleChangeName = (evt) => {
         setCardName(evt.target.value)
     }
 
 
+    // Salva os dados cadastrado pelo usuário
     const saveCard = (evt) => {
         evt.preventDefault()
 

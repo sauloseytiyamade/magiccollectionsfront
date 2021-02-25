@@ -9,6 +9,7 @@ import _ from 'lodash'
 
 const EditUser = (props) => {
     let {isAuth} = useContext(AuthContext)
+    let {isAdmin} = useContext(AuthContext)
     const {id} = props.match.params
     const token = localStorage.getItem('token')
     const [nameUser, setNameUser] = useState('')
@@ -22,6 +23,7 @@ const EditUser = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
 
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
@@ -41,15 +43,25 @@ const EditUser = (props) => {
             })
     },[id])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
+        return null
+    }
+
+    // Verifica se o usuário é administrador
+    if(isAdmin == false){
+        return (
+            <Redirect to='/cards' />
+        )
+    }
+
+    if(isAdmin == false){
         return null
     }
 

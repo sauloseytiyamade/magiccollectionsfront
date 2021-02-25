@@ -7,6 +7,7 @@ const Modals = forwardRef((props, ref) => {
     const handleClose = () => setShow(false)
     
 
+    // Verifica se a modal está aberta e fecha a modal
     useImperativeHandle(
         ref,
         () => ({

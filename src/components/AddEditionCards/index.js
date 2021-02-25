@@ -10,6 +10,7 @@ import _ from 'lodash'
 const AddEditionCards = (props) => {
 
     let {isAuth} = useContext(AuthContext)
+    let {isAdmin} = useContext(AuthContext)
     const [cardType, setCardType] = useState([])
     const [cardColor, setCardColor] = useState([])
     const [cardEdition, setCardEdition] = useState([])
@@ -27,6 +28,7 @@ const AddEditionCards = (props) => {
         }
     }
 
+    // Buscas as informações do banco de dados para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardtypes`,configAxios)
             .then(resp => {
@@ -70,18 +72,29 @@ const AddEditionCards = (props) => {
             })
     },[])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             <Redirect to='/login' />
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
+    if(isAdmin == false){
+        return (
+            <Redirect to='/cards' />
+        )
+    }
+
+    if(isAdmin == false){
+        return null
+    }
+
+    // Renderiza o select do formulário
     const renderCardType = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -99,6 +112,7 @@ const AddEditionCards = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderCardColor = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -116,6 +130,7 @@ const AddEditionCards = (props) => {
         )
     }
 
+    // Renderiza o select do formulário
     const renderRarity = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -133,7 +148,7 @@ const AddEditionCards = (props) => {
         )
     }
 
-
+    // Salva os dados que o usuário cadastrou
     const saveCard = (evt) => {
         evt.preventDefault()
 

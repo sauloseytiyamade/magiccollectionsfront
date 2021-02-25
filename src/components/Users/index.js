@@ -22,6 +22,7 @@ const Users = () => {
     let {isAuth} = useContext(AuthContext)
     let {isAdmin} = useContext(AuthContext)
 
+    // Busca informações no backend para montar a tela
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/users`,configAxios)
             .then(resp => {
@@ -75,11 +76,14 @@ const Users = () => {
             })
     },[])
 
+    // Abre uma modal quando o usuário vai deletar uma carta
+    // A modal verifica se o usuário tem certeza que deseja executar a ação
     const openModal = (id) => {
       setLineId(id)
       refModal.current.openModal()
     }
 
+    // Deleta a carta do usuário
     const deleteItem = () => {
       const configAxios = {
           headers: {
@@ -110,30 +114,27 @@ const Users = () => {
 
   }
 
-    if(isAuth == false){
-      return (
-          window.location.href = `${BASE_URL_LOGIN}`
-      )
-    }else{
-        
+    // Verifica se o usuário está autenticado
+    if (isAuth == false) {
+      window.location.href = `${BASE_URL_LOGIN}`
     }
 
-    if(isAuth == false){
+    if (isAuth == false) {
         return null
     }
-    
+
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
-      return (
-          <Redirect to='/users' />
-      )
-    }else{
-        
+        return (
+            <Redirect to='/cards' />
+        )
     }
 
     if(isAdmin == false){
         return null
     }
 
+    // Renderiza as linhas da tabela
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>

@@ -56,7 +56,7 @@ const Login = (props) => {
 
     //Esta função é utilizada para fazer login pelo google
     const responseGoogle = (resp) => {
-        console.log(resp)
+        // Verifica se o usuário fechou a janela da autorização
         if(resp.profileObj){
             const {profileObj: {email, name, googleId}} = resp
             //Verifica se existe algum usuário com o e-mail cadastrado no sistema
@@ -134,6 +134,7 @@ const Login = (props) => {
 
     //Esta função é utilizad para fazer login pelo facebook
     const responseFacebook = (resp) => {
+        // Verifica se o usuário fechou a janela da autorização
         if(resp.status != 'unknown'){
             const {email, name, id } = resp
 

@@ -22,6 +22,7 @@ const EditEditionsCards = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
@@ -32,14 +33,17 @@ const EditEditionsCards = (props) => {
             })
     },[id])
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeEdition = evt => {
         setEdition(evt.target.value)
     }
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeCode = evt => {
         setCode(evt.target.value)
     }
 
+    // Salva os dados cadastrado pelo usuário
     const saveColor = evt => {
         evt.preventDefault()
 
@@ -63,24 +67,22 @@ const EditEditionsCards = (props) => {
         
     }
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
         )
-    }else{
-        
     }
 
     if(isAdmin == false){

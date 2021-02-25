@@ -25,6 +25,7 @@ const LogView = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o LogView
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/logs`,configAxios)
         .then(resp => {
@@ -42,12 +43,11 @@ const LogView = (props) => {
         
     },[urlId])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){

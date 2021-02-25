@@ -25,6 +25,7 @@ const CardView = (props) => {
         }
     }
 
+    // Busca informações no backend e também na API do Magic The gathering para montar a tela
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/collections/${id}`,configAxios)
         .then(resp => {
@@ -56,6 +57,7 @@ const CardView = (props) => {
         
     },[urlId])
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`

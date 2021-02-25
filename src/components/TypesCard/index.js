@@ -23,6 +23,7 @@ const TypesCard = () => {
         }
     }
 
+    // Busca informações no backend para montar a tela
     useEffect(() => {
         if(!isAdmin){
             return null
@@ -63,6 +64,7 @@ const TypesCard = () => {
         })
     },[isAdmin])
 
+    // Renderiza as linhas da tabela
     const renderRow = () => {
         return data.map(line => (
                 <tr key={line.id}>
@@ -74,11 +76,14 @@ const TypesCard = () => {
         )
     }
 
+    // Abre uma modal quando o usuário vai deletar uma carta
+    // A modal verifica se o usuário tem certeza que deseja executar a ação
     const openModal = (id) => {
         setLineId(id)
         refModal.current.openModal()
     }
 
+    // Deleta a carta do usuário
     const deleteItem = () => {
         axios.delete(`${BASE_URL_BACK}/cardtypes/${lineId}`,configAxios)
             .then(resp => {
@@ -97,18 +102,24 @@ const TypesCard = () => {
             })
     }
 
-    if (isAuth == false) {
-        window.location.href = `${BASE_URL_LOGIN}`
+   // Verifica se o usuário está autenticado
+   if (isAuth == false) {
+    window.location.href = `${BASE_URL_LOGIN}`
     }
 
     if (isAuth == false) {
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
         )
+    }
+
+    if(isAdmin == false){
+        return null
     }
 
     if(isAdmin == false){

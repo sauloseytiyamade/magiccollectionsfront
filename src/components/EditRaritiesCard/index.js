@@ -21,6 +21,7 @@ const EditRaritiesCard = (props) => {
         }
     }
 
+    // Busca informações no backend para montar o formulário
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardrarities`,configAxios)
             .then(resp => {
@@ -29,10 +30,12 @@ const EditRaritiesCard = (props) => {
             })
     },[id])
 
+    // Verifica se existe alguma alteração no formulário para salvar no estado
     const changeRarity = evt => {
         setRarity(evt.target.value)
     }
 
+    // Salva os dados cadastrado pelo usuário
     const saveRarity = evt => {
         evt.preventDefault()
 
@@ -54,24 +57,22 @@ const EditRaritiesCard = (props) => {
         
     }
 
+    // Verifica se o usuário está autenticado
     if(isAuth == false){
         return (
             window.location.href = `${BASE_URL_LOGIN}`
         )
-    }else{
-        
     }
     
     if(isAuth == false){
         return null
     }
 
+    // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
             <Redirect to='/cards' />
         )
-    }else{
-        
     }
 
     if(isAdmin == false){
