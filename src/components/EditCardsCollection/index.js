@@ -56,6 +56,20 @@ const EditCardsCollection = (props) => {
             .then(resp => {
                     setCardQuality(resp.data.quality)
             })
+            .catch(err => {
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                    if(err.response.data.message == 'Token invalid'){
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_LOGIN}`
+                        }, 5000);
+                    }
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
+            })
     },[qualityId])
 
     // Verifica se o usuário está autenticado

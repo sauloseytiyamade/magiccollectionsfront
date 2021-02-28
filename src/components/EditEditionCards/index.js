@@ -48,10 +48,6 @@ const EditEditionCards = (props) => {
             .then(resp => {
                 setCardType(resp.data.type)
             })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
-            })
     },[card.type_id])
 
     // Busca informações no backend para montar o formulário
@@ -60,10 +56,6 @@ const EditEditionCards = (props) => {
             .then(resp => {
                 setCardColor(resp.data.color)
             })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
-            })
     }, [card.color_id])
 
     // Busca informações no backend para montar o formulário
@@ -71,10 +63,6 @@ const EditEditionCards = (props) => {
         axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
             .then(resp => {
                 setCardEdition(resp.data.edition)
-            })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
             })
     }, [card.edition_id])
 
@@ -85,8 +73,13 @@ const EditEditionCards = (props) => {
                 setCardRarity(resp.data.rarity)
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
             })
     },[card.rarity_id])
 

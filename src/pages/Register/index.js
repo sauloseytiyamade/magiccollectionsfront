@@ -39,6 +39,8 @@ const Register = (props) => {
     //Envia os dados para o backend validar
     const sendBack = (evt) => {
         evt.preventDefault()
+        const sendButton = document.querySelector('.sendButton')
+        sendButton.innerHTML = 'Aguarde...'
 
         //Verifica se as senhas informadas são iguais
         if(password == passwordConfirm){
@@ -69,7 +71,13 @@ const Register = (props) => {
                         }
                     })
                     .catch(err => {
-                        toast.info(messages(err.response.data.message))
+                        try{
+                            //Caso dê algum erro é enviada uma mensagem para o usuário
+                            toast.info(messages(err.response.data.message))
+                        }catch(err){
+                            //Caso dê algum erro é enviada uma mensagem para o usuário
+                            toast.info(messages('Ops'))
+                        }
                     })
                 }
             })
@@ -114,7 +122,7 @@ const Register = (props) => {
                         </div>
                     </div>
                 </div>
-                <button type='submit' className='btn btn-dark mb-2'>Cadastrar-se</button>
+                <button type='submit' className='btn btn-dark mb-2 sendButton'>Cadastrar-se</button>
                 <p><Link className='btn btn-dark mb-2' to='/login'>Voltar</Link></p>
             </form>
             <ToastContainer />

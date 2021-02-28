@@ -49,8 +49,13 @@ const Login = (props) => {
             }, 5000);
         })
         .catch(err => {
-            //Caso dê algum erro é enviada uma mensagem para o usuário
-            toast.info(messages(err.response.data.message))
+            try{
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+            }catch(err){
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages('Ops'))
+            }
         })
     }
 
@@ -80,7 +85,13 @@ const Login = (props) => {
                 .catch(err => {
                     //Caso o usuário tente fazer o login com uma conta do google e já exista um usuário com o mesmo e-mail
                     // O sistema informa que já existe usuário cadastrado
-                    toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                    try{
+                        //Caso dê algum erro é enviada uma mensagem para o usuário
+                        toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                    }catch(err){
+                        //Caso dê algum erro é enviada uma mensagem para o usuário
+                        toast.info(messages('Ops'))
+                    }
                 })
 
             }else{
@@ -114,8 +125,14 @@ const Login = (props) => {
                                 }, 5000);
                             })
                             .catch(err => {
-                                //Caso dê algum problema aparece esta mensagem
-                                toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+                                try{
+                                    //Caso dê algum problema aparece esta mensagem
+                                    toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+                                }catch(err){
+                                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                                    toast.info(messages('Ops'))
+                                }
+                                
                             })
                         }, 5000);
                     }
@@ -123,8 +140,13 @@ const Login = (props) => {
             }
         })
         .catch(err => {
-            //Caso dê algum problema aparece esta mensagem
-            toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+            try{
+                //Caso dê algum problema aparece esta mensagem
+                toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+            }catch(err){
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages('Ops'))
+            }
         })
         }else{
             return null
@@ -157,9 +179,14 @@ const Login = (props) => {
                         }, 5000);
                     })
                     .catch(err => {
-                        //Caso o usuário tente fazer o login com uma conta do facebook e já exista um usuário com o mesmo e-mail
+                        try{
+                           //Caso o usuário tente fazer o login com uma conta do facebook e já exista um usuário com o mesmo e-mail
                         // O sistema informa que já existe usuário cadastrado
                         toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                        }catch(err){
+                            //Caso dê algum erro é enviada uma mensagem para o usuário
+                            toast.info(messages('Ops'))
+                        }
                     })
 
                 }else{
@@ -192,8 +219,13 @@ const Login = (props) => {
                                     }, 5000);
                                 })
                                 .catch(err => {
-                                    //Caso dê algum problema aparece esta mensagem
-                                    toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                                    try{
+                                        //Caso dê algum problema aparece esta mensagem
+                                        toast.info('Existe um usuário em nosso sistema com este e-mail, por favor faça o login através do sistema')
+                                     }catch(err){
+                                         //Caso dê algum erro é enviada uma mensagem para o usuário
+                                         toast.info(messages('Ops'))
+                                     }
                                 })
                             }, 5000);
                         }
@@ -201,8 +233,13 @@ const Login = (props) => {
                 }
             })
             .catch(err => {
-                //Caso dê algum problema aparece esta mensagem
-                toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+                try{
+                    //Caso dê algum problema aparece esta mensagem
+                    toast.info('Opsss!! Algo deu errado, tente novamente mais tarde')
+                 }catch(err){
+                     //Caso dê algum erro é enviada uma mensagem para o usuário
+                     toast.info(messages('Ops'))
+                 }
             })
         }else{
             return null

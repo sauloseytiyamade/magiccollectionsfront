@@ -51,8 +51,13 @@ const EditQualitiesCard = (props) => {
                 }, 5000);
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
             })
         
     }

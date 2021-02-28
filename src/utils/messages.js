@@ -100,7 +100,10 @@ const messages = (error) => {
             return 'Sua senha foi alterada com sucesso'
         case 'date expired':
             return 'Prazo de mudança de senha foi expirado.'
+        case 'password not strength':
+            return 'A senha precisa de ter mais de 6 caracteres'
         default:
+            return 'Houve algum problema no sistema! Descupe-nos pelo transtorno.'
             break;
     }
 }

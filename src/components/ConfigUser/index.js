@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import jwt from 'jsonwebtoken'
 import {useHistory, Link, Redirect} from 'react-router-dom'
 import {BASE_URL_BACK, BASE_URL_PHOTO, BASE_URL_LOGIN} from '../../utils/variaveisAmbiente'
 import {messages} from '../../utils/messages'
 import { toast, ToastContainer } from 'react-toastify'
 import {AuthContext} from '../../utils/auth'
+import Loading from '../Loading'
 import axios from 'axios';
 import _ from 'lodash'
 
@@ -15,6 +16,7 @@ const ConfigUser = () => {
     const {id} = jwt.decode(token) || 'error'
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const refLoading = useRef()
 
     const configAxios = {
         headers: {
@@ -31,15 +33,21 @@ const ConfigUser = () => {
             const email = user[0].email
             setName(name)
             setEmail(email)
+            refLoading.current.executeLoading()
         })
         .catch(err => {
-            if(token != 'sair'){
-                toast.info(messages(err.response.data.message))
-            }
-            if(err.response.data.message == 'Token invalid'){
-                setTimeout(() => {
-                    window.location.href = `${BASE_URL_LOGIN}`
-                }, 5000);
+            try{
+                if(token != 'sair'){
+                    toast.info(messages(err.response.data.message))
+                }
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
+            }catch(err){
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages('Ops'))
             }
         })
     },[id])
@@ -67,12 +75,14 @@ const ConfigUser = () => {
     // Salva os dados cadastrado pelo usuário
     const saveUser = (evt) => {
         evt.preventDefault()
+        refLoading.current.executeLoading()
         if(evt.target[1].files[0]){
             const formData = new FormData()
             formData.append('img', evt.target[1].files[0])
 
             axios.post(`${BASE_URL_BACK}/upload`,formData,configAxios)
             .then(resp => {
+                    refLoading.current.executeLoading()
                     const objUser = {
                         name,
                         photo: `${BASE_URL_PHOTO}/${resp.data.filename}`,                    
@@ -103,7 +113,8 @@ const ConfigUser = () => {
             }
             axios.put(`${BASE_URL_BACK}/users/${email}`,objUser,configAxios)
             .then(resp => {
-                toast.success(messages(resp.data.message))
+                refLoading.current.executeLoading()
+                toast.success(messages(resp.data.message))                
                 setTimeout(() => {
                     document.location.reload()
                 }, 5000);
@@ -153,6 +164,9 @@ const ConfigUser = () => {
                 </form>
             </div>
             <ToastContainer />
+            <Loading
+                ref={refLoading}
+            />
         </section>
     )
 }

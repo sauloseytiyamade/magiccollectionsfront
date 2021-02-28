@@ -7,6 +7,8 @@ import {AuthContext} from '../../utils/auth'
 import BackCard from '../../img/backCard.png'
 import Birds from '../../img/aves_do_paraiso.png'
 import jwt from 'jsonwebtoken'
+import {messages} from '../../utils/messages'
+import { toast, ToastContainer } from 'react-toastify'
 import _ from 'lodash'
 
 const CardView = (props) => {
@@ -50,9 +52,16 @@ const CardView = (props) => {
             })
         })
         .catch(err => {
-            if(err.response.data.message == 'token invalid'){
-                window.location.href = `${BASE_URL_LOGIN}`
+            try{
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                if(err.response.data.message == 'token invalid'){
+                    window.location.href = `${BASE_URL_LOGIN}`
+                }
+            }catch(err){
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages('Ops'))
             }
+            
         })
         
     },[urlId])
@@ -95,6 +104,7 @@ const CardView = (props) => {
                 <Loading 
                     ref={refLoading}
                 />
+                <ToastContainer />
             </section>
 
     )

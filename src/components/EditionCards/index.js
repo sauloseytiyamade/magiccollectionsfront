@@ -6,6 +6,7 @@ import axios from 'axios';
 import {messages} from '../../utils/messages'
 import {AuthContext} from '../../utils/auth'
 import {toast, ToastContainer } from 'react-toastify'
+import Loading from '../Loading'
 import Modals from '../Modals'
 import _ from 'lodash'
 import $ from 'jquery'
@@ -22,6 +23,7 @@ const EditionCards = () => {
     const token = localStorage.getItem('token')
     const refEdition = useRef()
     const refModal = useRef()
+    const refLoading = useRef()
     const configAxios = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -77,13 +79,21 @@ const EditionCards = () => {
                 $('#exportPdf').on('click', function() {
                     dataTable.button('.buttons-pdf').trigger()
                 })
+
+                refLoading.current.executeLoading()
             })
             .catch(err => {
-                toast.info(messages(err.response.data.message))
-                if(err.response.data.message == 'Token invalid'){
-                    setTimeout(() => {
-                        window.location.href = `${BASE_URL_LOGIN}`
-                    }, 5000);
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                    if(err.response.data.message == 'Token invalid'){
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_LOGIN}`
+                        }, 5000);
+                    }
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
                 }
             })
     
@@ -351,6 +361,9 @@ const EditionCards = () => {
                 nameButton='Excluir'
                 deleteItem={deleteItem}
                 ref={refModal}
+            />
+            <Loading
+                ref={refLoading}
             />
         </section>
     )

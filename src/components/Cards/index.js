@@ -86,12 +86,17 @@ const Cards = () => {
                     })
                 })
                 .catch(err => {
-                    // Caso dê erro é gerada uma mensagem e o usuário é enviado para a página de login
-                    toast.info(messages(err.response.data.message))
-                    if(err.response.data.message == 'Token invalid'){
-                        setTimeout(() => {
-                            window.location.href = `${BASE_URL_LOGIN}`
-                        }, 5000);
+                    try{
+                        // Caso dê erro é gerada uma mensagem e o usuário é enviado para a página de login
+                        toast.info(messages(err.response.data.message))
+                        if(err.response.data.message == 'Token invalid'){
+                            setTimeout(() => {
+                                window.location.href = `${BASE_URL_LOGIN}`
+                            }, 5000);
+                        }
+                    }catch(err){
+                        //Caso dê algum erro é enviada uma mensagem para o usuário
+                        toast.info(messages('Ops'))
                     }
                 })
     },[])
@@ -125,7 +130,13 @@ const Cards = () => {
                 }
             })
             .catch(err => {
-                console.log(err);
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
             })
     }
 

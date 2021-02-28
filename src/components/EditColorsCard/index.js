@@ -25,7 +25,6 @@ const EditColorsCard = (props) => {
     useEffect(() => {
         axios.get(`${BASE_URL_BACK}/cardcolors`,configAxios)
             .then(resp => {
-                // console.log(resp.data.color);
                 const colorFilter = _.filter(resp.data.color, {'id': parseInt(id)})
                 setColor(colorFilter[0].color)
             })
@@ -52,9 +51,13 @@ const EditColorsCard = (props) => {
                 }, 5000);
             })
             .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                console.log({err});
-                toast.info(messages(err.response.data.message))
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
             })
         
     }

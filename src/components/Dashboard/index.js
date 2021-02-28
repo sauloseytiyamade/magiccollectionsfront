@@ -68,11 +68,22 @@ const Dashboard = () => {
                 setCardCollection(resp.data)
             })
         .catch(err => {
-            toast.info(messages(err.response.data.message))
-            if(err.response.data.message == 'Token invalid'){
-                setTimeout(() => {
-                    window.location.href = `${BASE_URL_LOGIN}`
-                }, 5000);
+            try{
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+                if(err.response.data.message == 'Token invalid'){
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_LOGIN}`
+                    }, 5000);
+                }
+            }catch(err){
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
             }
         })
     },[])
@@ -205,7 +216,7 @@ const Dashboard = () => {
                             :
                             ''
                         }
-                        {(cardColor[0] == 'Multicolor') || (cardColor[0] == 'Muticolores') || (cardColor[0] == 'Muticoloridas')
+                        {(cardColor[0] == 'Multicolor') || (cardColor[0] == 'Muticolores') || (cardColor[0] == 'Muticoloridas') || (cardColor[0] == 'Multicolorido')
                             ?
                             <span className="info-box-icon"><img src={MultiColorImage} alt=""/></span>
                             :
@@ -232,7 +243,8 @@ const Dashboard = () => {
                             (cardColor[0] != 'Artefato')    &&
                             (cardColor[0] != 'Multicolor')  && 
                             (cardColor[0] != 'Muticolores') && 
-                            (cardColor[0] != 'Muticoloridas')
+                            (cardColor[0] != 'Muticoloridas') &&
+                            (cardColor[0] != 'Multicolorido')
                             ?
                             <span className="info-box-icon"><img src={GenereciImage} alt=""/></span>
                             :

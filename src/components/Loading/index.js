@@ -11,6 +11,7 @@ const Loading = forwardRef((props, ref) => {
         () => ({
             executeLoading(){
                 {showLoading == false ? setShowLoading(true) : setShowLoading(false)}
+                
             }
         })
     )
@@ -37,7 +38,7 @@ const Loading = forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="d-flex justify-content-center loading-text">
-                <h5>Carregando...</h5>
+                <h5>{props.title ? props.title : 'Carregando...'}</h5>
             </div>
         </>
     )

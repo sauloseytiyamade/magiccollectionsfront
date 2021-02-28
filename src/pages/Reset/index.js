@@ -45,10 +45,16 @@ const Reset = (props) => {
                 }, 5000)
            })
            .catch(err => {
-               toast.info(messages(err.response.data.message))
-               setTimeout(() => {
-                window.location.href = `${BASE_URL_FRONT}/login`
-            }, 5000)
+                try{
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages(err.response.data.message))
+                    setTimeout(() => {
+                        window.location.href = `${BASE_URL_FRONT}/login`
+                    }, 5000)
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
            })
         }else{
             //Caso a senha não sejam iguais é apresentada a mensagem

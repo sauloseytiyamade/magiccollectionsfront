@@ -42,18 +42,10 @@ const AddCardsCollection = () => {
                 })
                 setCardName(data)
             })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
-            })
 
         axios.get(`${BASE_URL_BACK}/cardqualities`,configAxios)
             .then(resp => {
                 setCardQuality(resp.data.quality)
-            })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
             })
 
         axios.get(`${BASE_URL_BACK}/cardlanguages`,configAxios)
@@ -61,11 +53,16 @@ const AddCardsCollection = () => {
                 setCardLanguage(resp.data.language)
             })
             .catch(err => {
-                toast.info(messages(err.response.data.message))
-                if(err.response.data.message == 'Token invalid'){
-                    setTimeout(() => {
-                        window.location.href = `${BASE_URL_LOGIN}`
-                    }, 5000);
+                try{
+                    toast.info(messages(err.response.data.message))
+                    if(err.response.data.message == 'Token invalid'){
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_LOGIN}`
+                        }, 5000);
+                    }
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
                 }
             })
     }, [])
@@ -152,10 +149,6 @@ const AddCardsCollection = () => {
                 setTimeout(() => {
                     history.push('/cards')
                 }, 5000);
-            })
-            .catch(err => {
-                //Caso dê algum erro é enviada uma mensagem para o usuário
-                toast.info(messages(err.response.data.message))
             })
     }
 

@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import {React, useState, useEffect, useRef} from 'react';
 import Logo from '../../img/logo.png'
 import axios from 'axios'
 import {BASE_URL_BACK, BASE_URL_FRONT} from '../../utils/variaveisAmbiente'
@@ -22,6 +22,9 @@ const Forgot = (props) => {
     const sendBack = (evt) => {
         evt.preventDefault()
 
+        const sendButton = document.querySelector('.sendButton')
+        sendButton.innerHTML = 'Aguarde...'
+
         const data = {
             email
         }
@@ -36,10 +39,16 @@ const Forgot = (props) => {
             }, 5000)
         })
         .catch(err => {
-            toast.info(messages(err.response.data.message))
-            setTimeout(() => {
-                window.location.href = `${BASE_URL_FRONT}/login`
-            }, 5000)
+            try{
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages(err.response.data.message))
+                setTimeout(() => {
+                    window.location.href = `${BASE_URL_FRONT}/login`
+                }, 5000)
+            }catch(err){
+                //Caso dê algum erro é enviada uma mensagem para o usuário
+                toast.info(messages('Ops'))
+            }
         })
             
     }
@@ -60,7 +69,7 @@ const Forgot = (props) => {
                         </div>
                     </div>
                 </div>
-                <button type='submit' className='btn btn-dark mb-2 mr-2'>Esqueci minha senha</button>
+                <button type='submit' className='btn btn-dark mb-2 mr-2 sendButton'>Esqueci minha senha</button>
                 <p><Link className='btn btn-dark mb-2' to='/login'>Voltar</Link></p>
             </form>
             <ToastContainer />
