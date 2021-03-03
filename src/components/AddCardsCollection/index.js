@@ -147,7 +147,7 @@ const AddCardsCollection = () => {
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
-                    history.push('/cards')
+                    history.push('/usercollection/cards')
                 }, 5000);
             })
     }
@@ -207,7 +207,7 @@ const AddCardsCollection = () => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className={cadastrar ? 'btn btn-dark mr-2' : 'btn btn-dark mr-2 disabled'}>Cadastrar</button>
-                        <Link className="btn btn-dark mr-2" to='/cards'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/usercollection/cards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

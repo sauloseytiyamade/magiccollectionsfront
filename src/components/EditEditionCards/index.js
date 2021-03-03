@@ -97,7 +97,7 @@ const EditEditionCards = (props) => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }
 
@@ -202,7 +202,7 @@ const EditEditionCards = (props) => {
                 if(resp.data.message == 'card updated'){
                     toast.success(messages(resp.data.message))
                     setTimeout(() => {
-                        history.push('/editioncards')
+                        history.push('/usercollection/editioncards')
                     }, 5000);
                 }
             })
@@ -237,7 +237,7 @@ const EditEditionCards = (props) => {
                     <div className="row">
                     <div className="col-lg-12">
                         <button type="submit" className="btn btn-dark mr-2">Atualizar</button>
-                        <Link className="btn btn-dark mr-2" to='/editioncards'>Voltar</Link>
+                        <Link className="btn btn-dark mr-2" to='/usercollection/editioncards'>Voltar</Link>
                     </div>
                     </div>
                 </form>

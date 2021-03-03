@@ -59,36 +59,36 @@ const UserCollection = (props) => {
                 <MenuLeft />
                 <div className="content-wrapper p-2">
                     <Switch>
-                        <Route path={`/cards`} component={Cards} />
-                        <Route path={`/addcard`} exact component={AddCardsCollection} />
-                        <Route path={`/editcard/:id`} exact component={EditCardsCollection} />
-                        <Route path={`/dashboard`} exact component={Dashboard} />
-                        <Route path={`/dashboardadmin`} component={DashboardAdmin} />
-                        <Route path={`/cardview/:id`} exact component={CardView} />
-                        <Route path={`/editioncards`} exact component={EditionCards} />
-                        <Route path={`/addeditioncards/:id`} exact component={AddEditionCards} />
-                        <Route path={`/editioncards/:id`} component={EditEditionCards} />
-                        <Route path={`/editions`} component={EditionsCard} />
-                        <Route path={`/editeditionscards/:id`} component={EditEditionsCards} />
-                        <Route path={`/colors`} component={ColorsCard} />
-                        <Route path={`/addcolorscard`} component={AddColorsCard} />
-                        <Route path={`/editcolorscard/:id`} component={EditColorsCard} />
-                        <Route path={`/languages`} component={LanguageCard} />
-                        <Route path={`/addlanguagescard`} component={AddLanguagesCard} />
-                        <Route path={`/editlanguagescard/:id`} component={EditLanguagesCard} />
-                        <Route path={`/qualities`} component={QualitiesCard} />
-                        <Route path={`/addqualitiescard`} component={AddQualityCard} />
-                        <Route path={`/editqualitiescard/:id`} component={EditQualitiesCard} />
-                        <Route path={`/rarities`} component={RaritiesCard} />
-                        <Route path={`/addraritiescard`} component={AddRarityCard} />
-                        <Route path={`/editraritiescard/:id`} component={EditRaritiesCard} />
-                        <Route path={`/types`} component={TypesCard} />
-                        <Route path={`/addtypescard`} component={AddTypesCard} />
-                        <Route path={`/edittypescard/:id`} component={EditTypesCard} />
-                        <Route path={`/users`} component={Users} />
-                        <Route path={`/edituser/:id`} component={EditUser} />
-                        <Route path={`/configuser`} component={ConfigUser} />
-                        <Route path={`/logview/:id`} component={LogView} />
+                        <Route path={`/usercollection/cards`} component={Cards} />
+                        <Route path={`/usercollection/addcard`} exact component={AddCardsCollection} />
+                        <Route path={`/usercollection/editcard/:id`} exact component={EditCardsCollection} />
+                        <Route path={`/usercollection/dashboard`} exact component={Dashboard} />
+                        <Route path={`/usercollection/dashboardadmin`} component={DashboardAdmin} />
+                        <Route path={`/usercollection/cardview/:id`} exact component={CardView} />
+                        <Route path={`/usercollection/editioncards`} exact component={EditionCards} />
+                        <Route path={`/usercollection/addeditioncards/:id`} exact component={AddEditionCards} />
+                        <Route path={`/usercollection/editioncards/:id`} component={EditEditionCards} />
+                        <Route path={`/usercollection/editions`} component={EditionsCard} />
+                        <Route path={`/usercollection/editeditionscards/:id`} component={EditEditionsCards} />
+                        <Route path={`/usercollection/colors`} component={ColorsCard} />
+                        <Route path={`/usercollection/addcolorscard`} component={AddColorsCard} />
+                        <Route path={`/usercollection/editcolorscard/:id`} component={EditColorsCard} />
+                        <Route path={`/usercollection/languages`} component={LanguageCard} />
+                        <Route path={`/usercollection/addlanguagescard`} component={AddLanguagesCard} />
+                        <Route path={`/usercollection/editlanguagescard/:id`} component={EditLanguagesCard} />
+                        <Route path={`/usercollection/qualities`} component={QualitiesCard} />
+                        <Route path={`/usercollection/addqualitiescard`} component={AddQualityCard} />
+                        <Route path={`/usercollection/editqualitiescard/:id`} component={EditQualitiesCard} />
+                        <Route path={`/usercollection/rarities`} component={RaritiesCard} />
+                        <Route path={`/usercollection/addraritiescard`} component={AddRarityCard} />
+                        <Route path={`/usercollection/editraritiescard/:id`} component={EditRaritiesCard} />
+                        <Route path={`/usercollection/types`} component={TypesCard} />
+                        <Route path={`/usercollection/addtypescard`} component={AddTypesCard} />
+                        <Route path={`/usercollection/edittypescard/:id`} component={EditTypesCard} />
+                        <Route path={`/usercollection/users`} component={Users} />
+                        <Route path={`/usercollection/edituser/:id`} component={EditUser} />
+                        <Route path={`/usercollection/configuser`} component={ConfigUser} />
+                        <Route path={`/usercollection/logview/:id`} component={LogView} />
                     </Switch>
                 </div>
                 <footer className="main-footer">

@@ -45,7 +45,7 @@ const Login = (props) => {
             toast.success('Seja Bem-Vindo(a)!!!')
             localStorage.setItem('token', resp.data.token)
             setTimeout(() => {
-                window.location.href = `${BASE_URL_FRONT}/cards`
+                window.location.href = `${BASE_URL_FRONT}/usercollection/cards`
             }, 5000);
         })
         .catch(err => {
@@ -79,7 +79,7 @@ const Login = (props) => {
                     toast.success('Seja Bem-Vindo(a)!!!')
                     localStorage.setItem('token', resp.data.token)
                     setTimeout(() => {
-                        window.location.href = `${BASE_URL_FRONT}/cards`
+                        window.location.href = `${BASE_URL_FRONT}/usercollection/cards`
                     }, 5000);
                 })
                 .catch(err => {
@@ -121,7 +121,7 @@ const Login = (props) => {
                                 toast.success('Seja Bem-Vindo(a)!!!')
                                 localStorage.setItem('token', resp.data.token)
                                 setTimeout(() => {
-                                    window.location.href = `${BASE_URL_FRONT}/cards`
+                                    window.location.href = `${BASE_URL_FRONT}/usercollection/cards`
                                 }, 5000);
                             })
                             .catch(err => {
@@ -175,7 +175,7 @@ const Login = (props) => {
                         toast.success('Seja Bem-Vindo(a)!!!')
                         localStorage.setItem('token', resp.data.token)
                         setTimeout(() => {
-                            window.location.href = `${BASE_URL_FRONT}/cards`
+                            window.location.href = `${BASE_URL_FRONT}/usercollection/cards`
                         }, 5000);
                     })
                     .catch(err => {
@@ -215,7 +215,7 @@ const Login = (props) => {
                                     toast.success('Seja Bem-Vindo(a)!!!')
                                     localStorage.setItem('token', resp.data.token)
                                     setTimeout(() => {
-                                        window.location.href = `${BASE_URL_FRONT}/cards`
+                                        window.location.href = `${BASE_URL_FRONT}/usercollection/cards`
                                     }, 5000);
                                 })
                                 .catch(err => {

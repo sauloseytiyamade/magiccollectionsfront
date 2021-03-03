@@ -190,7 +190,7 @@ const Cards = () => {
                             </div>
                         </div>
                         <div className="col-lg-3 mb-2 mr-0">
-                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/addcard'>Adicionar</Link></button>
+                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/usercollection/addcard'>Adicionar</Link></button>
                             <button type="button" className="btn btn-dark mr-1" id='exportPdf'>PDF</button>
                             <button type="button" className="btn btn-dark mr-1" id='exportExcel'>Excel</button>
                         </div>

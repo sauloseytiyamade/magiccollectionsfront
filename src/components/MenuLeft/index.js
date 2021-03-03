@@ -95,28 +95,28 @@ const MenuLeft = () => {
                     <nav>
                         <ul className="nav nav-pills nav-sidebar flex-column">
                             <li className="nav-item">
-                                <Link to='/dashboard' className="nav-link">
+                                <Link to='/usercollection/dashboard' className="nav-link">
                                     <i className="fas fa-tachometer-alt text-white mr-2"></i>
                                     <p className="text-white text-bold">Dashboard</p>
                                 </Link>
                             </li>
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/dashboardadmin' className="nav-link">                                    
+                                    <Link to='/usercollection/dashboardadmin' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Dashboard Admin</p>
                                     </Link>
                                 </li>
                             }
                             <li className="nav-item">
-                                <Link to='/cards' className="nav-link">                                    
+                                <Link to='/usercollection/cards' className="nav-link">                                    
                                     <i className="fab fa-wizards-of-the-coast text-white mr-2"></i>
                                     <p className="text-white text-bold">Minha Coleção</p>
                                 </Link>
                             </li>
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/editioncards' className="nav-link">                                    
+                                    <Link to='/usercollection/editioncards' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de cards</p>
                                     </Link>
@@ -124,7 +124,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/colors' className="nav-link">                                    
+                                    <Link to='/usercollection/colors' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de cores</p>
                                     </Link>
@@ -132,7 +132,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/languages' className="nav-link">                                    
+                                    <Link to='/usercollection/languages' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de idiomas</p>
                                     </Link>
@@ -140,7 +140,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/qualities' className="nav-link">                                    
+                                    <Link to='/usercollection/qualities' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro da Qualidade</p>
                                     </Link>
@@ -148,7 +148,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/rarities' className="nav-link">                                    
+                                    <Link to='/usercollection/rarities' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de Raridade</p>
                                     </Link>
@@ -156,7 +156,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/types' className="nav-link">                                    
+                                    <Link to='/usercollection/types' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Cadastro de Tipo</p>
                                     </Link>
@@ -164,7 +164,7 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/editions' className="nav-link">                                    
+                                    <Link to='/usercollection/editions' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Alterar edições</p>
                                     </Link>
@@ -172,14 +172,14 @@ const MenuLeft = () => {
                             }
                             {isAdmin &&
                                 <li className="nav-item">
-                                    <Link to='/users' className="nav-link">                                    
+                                    <Link to='/usercollection/users' className="nav-link">                                    
                                         <i className="fas fa-user-shield text-white mr-2"></i>
                                         <p className="text-white text-bold">Administrar Usuários</p>
                                     </Link>
                                 </li>
                             }
                             <li className="nav-item">
-                                <Link to='/configuser' className="nav-link">                                    
+                                <Link to='/usercollection/configuser' className="nav-link">                                    
                                     <i className="fas fa-user text-white mr-2"></i>
                                     <p className="text-white text-bold">Configuração do usuário</p>
                                 </Link>

@@ -36,7 +36,7 @@ const AddQualityCard = () => {
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
-                    history.push('/qualities')
+                    history.push('/usercollection/qualities')
                 }, 5000);
             })
             .catch(err => {
@@ -65,7 +65,7 @@ const AddQualityCard = () => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }
 
@@ -95,7 +95,7 @@ const AddQualityCard = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Cadastrar</button>
-                                <Link className="btn btn-dark mr-2" to='/languages'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/usercollection/languages'>Voltar</Link>
                             </div>
                         </div>
                     </form>

@@ -158,7 +158,7 @@ const ConfigUser = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <button type="submit" className="btn btn-dark mr-2">Alterar</button>
-                            <Link className="btn btn-dark mr-2" to='/dashboard'>Voltar</Link>
+                            <Link className="btn btn-dark mr-2" to='/usercollection/dashboard'>Voltar</Link>
                         </div>
                     </div>
                 </form>

@@ -184,7 +184,7 @@ const DashboardAdmin = () => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }else{
         

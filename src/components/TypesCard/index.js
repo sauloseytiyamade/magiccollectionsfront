@@ -124,7 +124,7 @@ const TypesCard = () => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }
 
@@ -159,7 +159,7 @@ const TypesCard = () => {
                             </div>
                         </div>
                         <div className="col-lg-3 mb-2 mr-0">
-                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/addtypescard'>Adicionar</Link></button>
+                            <button type="button" className="btn btn-dark mr-1"><Link className='link_text' to='/usercollection/addtypescard'>Adicionar</Link></button>
                         </div>
                     </div>
                     <div className="row">

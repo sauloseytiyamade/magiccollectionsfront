@@ -138,7 +138,7 @@ const Users = () => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+          <Redirect to='/usercollection/cards' />
         )
     }
 
@@ -153,7 +153,7 @@ const Users = () => {
                     <td>{line.name}</td>
                     <td className="text-center">{line.email}</td>
                     <td className="text-center">{line.permission == 0 ? 'Admin' : 'User'}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/edituser/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/edituser/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )

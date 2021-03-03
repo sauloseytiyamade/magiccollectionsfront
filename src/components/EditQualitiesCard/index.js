@@ -47,7 +47,7 @@ const EditQualitiesCard = (props) => {
             .then(resp => {
                 toast.success(messages(resp.data.message))
                 setTimeout(() => {
-                    history.push('/qualities')
+                    history.push('/usercollection/qualities')
                 }, 5000);
             })
             .catch(err => {
@@ -76,7 +76,7 @@ const EditQualitiesCard = (props) => {
 
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }else{
         
@@ -108,7 +108,7 @@ const EditQualitiesCard = (props) => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Alterar</button>
-                                <Link className="btn btn-dark mr-2" to='/languages'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/usercollection/languages'>Voltar</Link>
                             </div>
                         </div>
                     </form>

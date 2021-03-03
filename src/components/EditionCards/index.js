@@ -113,7 +113,7 @@ const EditionCards = () => {
     // Verifica se o usuário é administrador
     if(isAdmin == false){
         return (
-            <Redirect to='/cards' />
+            <Redirect to='/usercollection/cards' />
         )
     }
 
@@ -214,7 +214,7 @@ const EditionCards = () => {
                     <td className="text-center">{line.card_color}</td>
                     <td className="text-center">{line.edition}</td>
                     <td className="text-center">{line.rarity}</td>
-                    <td className="text-center"><Link className='link_text_pen' to={`/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
+                    <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
                     <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
                 </tr>
             )
@@ -327,7 +327,7 @@ const EditionCards = () => {
                             </div>
                         </div>
                         <div className="col-lg-1 mb-2">
-                            <Link className={idEdition ? 'btn btn-dark' : 'btn btn-dark disabled'} to={`/addeditioncards/${idEdition}`}>Adicionar</Link>
+                            <Link className={idEdition ? 'btn btn-dark' : 'btn btn-dark disabled'} to={`/usercollection/addeditioncards/${idEdition}`}>Adicionar</Link>
                         </div>
                     </div>
                     <div className="row">
