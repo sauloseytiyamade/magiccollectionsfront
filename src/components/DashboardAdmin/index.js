@@ -48,6 +48,7 @@ const DashboardAdmin = () => {
                 setCardEdition(_.map(resp.data.edition, i => _.pick(i, 'id', 'edition')))
                 $(document).ready(function(){
                     let dataTable = $('#dataTable').DataTable({
+                        "retrieve": true,
                         "order": [[ 5, "desc" ]],
                         "responsive": true,
                         "autoWidth": false,

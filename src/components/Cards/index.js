@@ -37,6 +37,7 @@ const Cards = () => {
                     setData(resp.data)
                     $(document).ready(function(){
                         let dataTable = $('#dataTable').DataTable({
+                            "retrieve": true,
                             "responsive": true,
                             "autoWidth": false,
                             "lengthChange": false,
@@ -79,6 +80,12 @@ const Cards = () => {
 
                         $('#exportPdf').on('click', function() {
                             dataTable.button('.buttons-pdf').trigger();
+                        });
+
+                        $(".dataTable").on('click','.deleteMe', function (evt) { 
+                            const line = evt.target.offsetParent
+                            line.style.display = 'none'
+                            openModal(evt.target.dataset.id)
                         });
 
                         // Desativa o carregamento
@@ -154,15 +161,16 @@ const Cards = () => {
                     <td className="text-center">{line.quantity}</td>
                     <td className="text-center"><Link className='link_text_pen' to={`cardview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
                     <td className="text-center"><Link className='link_text_pen' to={`editcard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
-                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click deleteMe" data-id={line.id}></i></td>
                 </tr>
             )
         )
     }
 
-    // Abre uma modal quando o usuário vai deletar uma carta
+    // Abre uma modal quando o usuário vai deletar uma cartas
     // A modal verifica se o usuário tem certeza que deseja executar a ação
     const openModal = (id) => {
+
         setLineId(id)
         refModal.current.openModal()
     }
@@ -197,26 +205,28 @@ const Cards = () => {
                     </div>
                     <div className="row">
                     <div className="col-lg-12">
-                        <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
-                        <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th className="text-center">Tipo</th>
-                            <th className="text-center">Cor</th>
-                            <th className="text-center">Edição</th>
-                            <th className="text-center">Raridade</th>
-                            <th className="text-center">Qualidade</th>
-                            <th className="text-center">Idioma</th>
-                            <th className="text-center">Quantidade</th>
-                            <th className="text-center">Visualizar</th>
-                            <th className="text-center">Editar</th>
-                            <th className="text-center">Remover</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {renderRow()}
-                        </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="dataTable" className="table table-bordered ">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th className="text-center">Tipo</th>
+                                <th className="text-center">Cor</th>
+                                <th className="text-center">Edição</th>
+                                <th className="text-center">Raridade</th>
+                                <th className="text-center">Qualidade</th>
+                                <th className="text-center">Idioma</th>
+                                <th className="text-center">Quantidade</th>
+                                <th className="text-center">Visualizar</th>
+                                <th className="text-center">Editar</th>
+                                <th className="text-center">Remover</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {renderRow()}
+                            </tbody>
+                            </table>
+                        </div>
                     </div>
                     </div>
                 </div>

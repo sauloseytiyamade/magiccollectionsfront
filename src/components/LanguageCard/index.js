@@ -33,6 +33,7 @@ const LanguageCard = () => {
             setData(resp.data.language)
             $(document).ready(function(){
                 let dataTable = $('#dataTable').DataTable({
+                    "retrieve": true,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,

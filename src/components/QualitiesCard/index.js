@@ -33,6 +33,7 @@ const QualitiesCard = () => {
             setData(resp.data.quality)
             $(document).ready(function(){
                 let dataTable = $('#dataTable').DataTable({
+                    "retrieve": true,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,

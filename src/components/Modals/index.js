@@ -19,8 +19,7 @@ const Modals = forwardRef((props, ref) => {
 
     return(
         <>
-            <div className="d-flex align-items-center justify-content-center">
-            </div>
+            
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>{props.title}</Modal.Title>

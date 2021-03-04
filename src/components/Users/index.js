@@ -29,6 +29,7 @@ const Users = () => {
                 setData(resp.data)
                 $(document).ready(function(){
                     let dataTable = $('#dataTableUser').DataTable({
+                        "retrieve": true,
                         "responsive": true,
                         "autoWidth": false,
                         "lengthChange": false,

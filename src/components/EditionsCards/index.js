@@ -33,6 +33,7 @@ const EditionsCard = () => {
             setData(resp.data.edition)
             $(document).ready(function(){
                 let dataTable = $('#dataTable').DataTable({
+                    "retrieve": true,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,

@@ -36,6 +36,7 @@ const EditionCards = () => {
             .then(resp => {
                 setCardEditions(resp.data.edition)
                 let dataTable = $('#dataTableEditionCards').DataTable({
+                    "retrieve": true,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,
@@ -135,6 +136,8 @@ const EditionCards = () => {
                 $('#dataTableEditionCards').DataTable().destroy()
                 setCardFilterEdition(_.filter(resp.data, {'edition_id': parseInt(idEdition)}))
                 let dataTable = $('#dataTableEditionCards').DataTable({
+                    "retrieve": true,
+                    "retrieve": true,
                     "responsive": true,
                     "autoWidth": false,
                     "lengthChange": false,
