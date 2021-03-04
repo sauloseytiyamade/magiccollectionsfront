@@ -52,6 +52,12 @@ const LanguageCard = () => {
                     dataTable.search(this.value).draw();
                 })
 
+                $(".dataTable").on('click','.deleteMe', function (evt) { 
+                    const line = evt.target.offsetParent
+                    line.style.display = 'none'
+                    openModal(evt.target.dataset.id)
+                });
+
                 refLoading.current.executeLoading()
             })
         })
@@ -77,7 +83,7 @@ const LanguageCard = () => {
                 <tr key={line.id}>
                     <td>{line.language}</td>
                     <td className="text-center"><Link className='link_text_pen' to={`editlanguagescard/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
-                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click deleteMe" data-id={line.id}></i></td>
                 </tr>
             )
         )

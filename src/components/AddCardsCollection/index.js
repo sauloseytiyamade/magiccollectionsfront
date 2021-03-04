@@ -150,6 +150,14 @@ const AddCardsCollection = () => {
                     history.push('/usercollection/cards')
                 }, 5000);
             })
+            .catch(err => {
+                try{
+                    toast.info(messages(err.response.data.message))
+                }catch(err){
+                    //Caso dê algum erro é enviada uma mensagem para o usuário
+                    toast.info(messages('Ops'))
+                }
+            })
     }
 
     // Verifica se o usuário está autenticado

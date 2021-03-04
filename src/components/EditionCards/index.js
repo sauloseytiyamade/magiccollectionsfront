@@ -181,6 +181,12 @@ const EditionCards = () => {
                 $('#exportPdf').on('click', function() {
                     dataTable.button('.buttons-pdf').trigger()
                 })
+
+                $(".dataTable").on('click','.deleteMe', function (evt) { 
+                    const line = evt.target.offsetParent
+                    line.style.display = 'none'
+                    openModal(evt.target.dataset.id)
+                });
             })
             .catch(err => {
                 //Caso dê algum erro é enviada uma mensagem para o usuário
@@ -218,7 +224,7 @@ const EditionCards = () => {
                     <td className="text-center">{line.edition}</td>
                     <td className="text-center">{line.rarity}</td>
                     <td className="text-center"><Link className='link_text_pen' to={`/usercollection/editioncards/${line.id}`}><i className="fas fa-pencil-alt click"></i></Link></td>
-                    <td className="text-center"><i className="fas fa-trash-alt click" onClick={() => openModal(line.id)}></i></td>
+                    <td className="text-center"><i className="fas fa-trash-alt click deleteMe" data-id={line.id}></i></td>
                 </tr>
             )
         )
