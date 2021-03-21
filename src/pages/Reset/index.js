@@ -35,27 +35,32 @@ const Reset = (props) => {
                 password,
                 hashUrl: uuid
             }
-            // Neste momento é enviado a senha para o backend
-            // O backend salvará a nova senha fornecida
-           axios.post(`${BASE_URL_BACK}/reset`,data)
-           .then(resp => {   
-                toast.success(messages(resp.data.message))
-                setTimeout(() => {
-                    window.location.href = `${BASE_URL_FRONT}/login`
-                }, 5000)
-           })
-           .catch(err => {
-                try{
-                    //Caso dê algum erro é enviada uma mensagem para o usuário
-                    toast.info(messages(err.response.data.message))
-                    setTimeout(() => {
-                        window.location.href = `${BASE_URL_FRONT}/login`
-                    }, 5000)
-                }catch(err){
-                    //Caso dê algum erro é enviada uma mensagem para o usuário
-                    toast.info(messages('Ops'))
-                }
-           })
+            if(password.length >= 6){
+                // Neste momento é enviado a senha para o backend
+                // O backend salvará a nova senha fornecida
+                axios.post(`${BASE_URL_BACK}/reset`,data)
+                .then(resp => {   
+                        toast.success(messages(resp.data.message))
+                        setTimeout(() => {
+                            window.location.href = `${BASE_URL_FRONT}/login`
+                        }, 5000)
+                })
+                .catch(err => {
+                        try{
+                            //Caso dê algum erro é enviada uma mensagem para o usuário
+                            toast.info(messages(err.response.data.message))
+                            setTimeout(() => {
+                                window.location.href = `${BASE_URL_FRONT}/login`
+                            }, 5000)
+                        }catch(err){
+                            //Caso dê algum erro é enviada uma mensagem para o usuário
+                            toast.info(messages('Ops'))
+                        }
+                })
+            }else{
+                //Caso a senha não sejam iguais é apresentada a mensagem
+                toast.info('A senha precisa de ter mais de 6 caracteres')
+            }            
         }else{
             //Caso a senha não sejam iguais é apresentada a mensagem
             toast.info('As senhas não coincidem')
