@@ -37,19 +37,10 @@ const DashboardAdmin = () => {
         axios.get(`${BASE_URL_BACK}/logs`,configAxios)
             .then(resp => {
                 setLogs(resp.data.logs)
-            })
-    }, [])
-
-    // Busca informações no backend para montar os cards de edição
-    useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
-            .then(resp => {
-                setCardEdtionLen(resp.data.edition.length)
-                setCardEdition(_.map(resp.data.edition, i => _.pick(i, 'id', 'edition')))
                 $(document).ready(function(){
                     let dataTable = $('#dataTable').DataTable({
                         "retrieve": true,
-                        "order": [[ 5, "desc" ]],
+                        "order": [[ 0, "desc" ]],
                         "responsive": true,
                         "autoWidth": false,
                         "lengthChange": false,
@@ -70,6 +61,15 @@ const DashboardAdmin = () => {
 
                     refLoading.current.executeLoading()
                 })
+            })
+    }, [])
+
+    // Busca informações no backend para montar os cards de edição
+    useEffect(() => {
+        axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
+            .then(resp => {
+                setCardEdtionLen(resp.data.edition.length)
+                setCardEdition(_.map(resp.data.edition, i => _.pick(i, 'id', 'edition')))
             })
             .catch(err => {
                 try{
@@ -160,12 +160,13 @@ const DashboardAdmin = () => {
     const renderRow = () => {
         return logs.map(line => (
                 <tr key={line.id}>
-                    <td>{line.user}</td>
+                    <td className="text-center">{line.id}</td>
+                    <td className="text-center">{line.user}</td>
                     <td className="text-center">{line.logType}</td>
                     <td className="text-center">{line.lineTableId}</td>
                     <td className="text-center">{line.tableName}</td>
                     <td className="text-center"><Link className='link_text_pen' to={`logview/${line.id}`}><i className="fas fa-eye click"></i></Link></td>
-                    <td className="text-center">{moment(line.dateTime).format('DD-MM-YYYY HH:mm:ss')}</td>
+                    <td className="text-center">{moment(line.dateTime).format('DD/MM/YYYY HH:mm:ss')}</td>
                 </tr>
             )
         )
@@ -311,6 +312,7 @@ const DashboardAdmin = () => {
                             <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
                                 <thead className="text-center">
                                     <tr>
+                                        <th>#</th>                                        
                                         <th>Usuário</th>                                        
                                         <th>Ação</th>                                        
                                         <th>Linha da tabela</th>                                        

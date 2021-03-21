@@ -62,7 +62,7 @@ const Forgot = (props) => {
                 <div className='row'>
                     <div className='col-md-6 offset-md-3 col-10 offset-1'>
                         <div className='input-group mb-3'>
-                            <input type='text' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
+                            <input type='email' name='email' value={email} onChange={onChangeMail} className='form-control' placeholder='E-mail' required />
                             <div className='input-group-prepend'>
                             <span className='input-group-text'><i className='fas fa-envelope'></i></span>
                             </div>

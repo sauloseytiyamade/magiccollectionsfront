@@ -53,8 +53,15 @@ const QualitiesCard = () => {
                 })
 
                 $(".dataTable").on('click','.deleteMe', function (evt) { 
-                    const line = evt.target.offsetParent
-                    line.style.display = 'none'
+                    const hasClass = $('.dataTable').hasClass('collapsed')                            
+                    if(hasClass){
+                        const tr_odd = evt.target.offsetParent.parentElement.previousElementSibling
+                        tr_odd.classList.remove('parent')
+                        tr_odd.classList.add('odd')
+                        const line = evt.target.offsetParent
+                        line.style.display = 'none'
+                    }
+                    
                     openModal(evt.target.dataset.id)
                 });
 
@@ -171,7 +178,7 @@ const QualitiesCard = () => {
                             <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
                                 <thead>
                                     <tr>
-                                        <th>Qualitdade</th>
+                                        <th>Qualidade</th>
                                         <th className="text-center">Editar</th>
                                         <th className="text-center">Remover</th>
                                     </tr>
@@ -186,7 +193,7 @@ const QualitiesCard = () => {
             </section>
             <ToastContainer />
             <Modals
-                title='Exclusão de card'
+                title='Exclusão de qualidade'
                 body='Deseja realmente excluir esta qualidade? Se excluir, todo os cards com esta qualidade serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}

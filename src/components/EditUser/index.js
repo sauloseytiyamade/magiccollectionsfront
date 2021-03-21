@@ -87,7 +87,7 @@ const EditUser = (props) => {
                 if(resp.data.message == 'user updated'){
                     toast.success(messages(resp.data.message))
                     setTimeout(() => {
-                        history.push('/usercollection/users')
+                        document.location.reload()
                     }, 5000);
                 }
             })
@@ -139,7 +139,7 @@ const EditUser = (props) => {
             <div className="container-fluid">
                 <div className="row">
                 <div className="col-12 mt-2 mb-3">
-                    <h1>Edição de cartas</h1>
+                    <h1>Edição de usuário</h1>
                 </div>
                 </div>
 
@@ -154,7 +154,7 @@ const EditUser = (props) => {
                     <div className="col-lg-4 mb-5">
                         <div className="form-group">
                         <label>E-mail</label>
-                            <input type="text" name='emailUser' value={emailUser} className="form-control" onChange={handleEmailUser} placeholder="Digite seu e-mail" maxLength="200" required />
+                            <input type="text" name='emailUser' value={emailUser} className="form-control" onChange={handleEmailUser} placeholder="Digite seu e-mail" maxLength="200" disabled />
                         </div>
                     </div>
 

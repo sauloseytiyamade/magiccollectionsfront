@@ -152,7 +152,7 @@ const EditCardsCollection = (props) => {
             <div className="container-fluid">
                 <div className="row">
                 <div className="col-12 mt-2 mb-3">
-                    <h1>Cadastro de Cards</h1>
+                    <h1>Edição de Carta</h1>
                 </div>
                 </div>
 

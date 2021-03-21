@@ -183,8 +183,15 @@ const EditionCards = () => {
                 })
 
                 $(".dataTable").on('click','.deleteMe', function (evt) { 
-                    const line = evt.target.offsetParent
-                    line.style.display = 'none'
+                    const hasClass = $('.dataTable').hasClass('collapsed')                            
+                    if(hasClass){
+                        const tr_odd = evt.target.offsetParent.parentElement.previousElementSibling
+                        tr_odd.classList.remove('parent')
+                        tr_odd.classList.add('odd')
+                        const line = evt.target.offsetParent
+                        line.style.display = 'none'
+                    }
+                    
                     openModal(evt.target.dataset.id)
                 });
             })

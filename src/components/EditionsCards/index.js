@@ -53,8 +53,15 @@ const EditionsCard = () => {
                 })
 
                 $(".dataTable").on('click','.deleteMe', function (evt) { 
-                    const line = evt.target.offsetParent
-                    line.style.display = 'none'
+                    const hasClass = $('.dataTable').hasClass('collapsed')                            
+                    if(hasClass){
+                        const tr_odd = evt.target.offsetParent.parentElement.previousElementSibling
+                        tr_odd.classList.remove('parent')
+                        tr_odd.classList.add('odd')
+                        const line = evt.target.offsetParent
+                        line.style.display = 'none'
+                    }
+                    
                     openModal(evt.target.dataset.id)
                 });
 
@@ -142,7 +149,7 @@ const EditionsCard = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-2">
-                            <h1>Edições das cartas</h1>
+                            <h1>Edições</h1>
                         </div>
                     </div>
 
@@ -163,7 +170,7 @@ const EditionsCard = () => {
                             <table id="dataTable" className="table table-bordered table-responsive-sm table-responsive-md">
                                 <thead>
                                     <tr>
-                                        <th>Cor</th>
+                                        <th>Edição</th>
                                         <th className="text-center">Editar</th>
                                         <th className="text-center">Remover</th>
                                     </tr>
@@ -178,7 +185,7 @@ const EditionsCard = () => {
             </section>
             <ToastContainer />
             <Modals
-                title='Exclusão de card'
+                title='Exclusão de edição'
                 body='Deseja realmente excluir esta edição? Se excluir, todo os cards desta edição serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}

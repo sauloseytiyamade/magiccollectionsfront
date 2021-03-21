@@ -16,6 +16,7 @@ const EditEditionCards = (props) => {
     const [cardType, setCardType] = useState([])
     const [cardColor, setCardColor] = useState([])
     const [cardEdition, setCardEdition] = useState([])
+    const [idCardEdtion, setIdCardEdition] = useState()
     const [cardRarity, setCardRarity] = useState([])
     const token = localStorage.getItem('token')
     const history = useHistory()
@@ -38,6 +39,8 @@ const EditEditionCards = (props) => {
             .then(resp => {
                 setCardName(_.filter(resp.data, {'id': parseInt(id)})[0].card_name)
                 setCard(_.filter(resp.data, {'id': parseInt(id)})[0])
+                setCardEdition(_.filter(resp.data, {'id': parseInt(id)})[0].edition)
+                setIdCardEdition(_.filter(resp.data, {'id': parseInt(id)})[0].edition_id)
 
             })
     },[id])
@@ -57,14 +60,6 @@ const EditEditionCards = (props) => {
                 setCardColor(resp.data.color)
             })
     }, [card.color_id])
-
-    // Busca informações no backend para montar o formulário
-    useEffect(() => {
-        axios.get(`${BASE_URL_BACK}/cardeditions`,configAxios)
-            .then(resp => {
-                setCardEdition(resp.data.edition)
-            })
-    }, [card.edition_id])
 
     // Busca informações no backend para montar o formulário
     useEffect(() => {
@@ -144,24 +139,6 @@ const EditEditionCards = (props) => {
     }
 
     // Renderiza o select do formulário
-    const renderEdition = () => {
-        return(
-            <div className="col-lg-4 mb-5">
-                <div className="form-group">
-                <label>Edição da Carta</label>
-                <select className="form-control" ref={refCardEdition} required>
-                    {card.edition_id > 0 && _.orderBy(cardEdition,[i => i.id == card.edition_id],['desc']).map(edition => {
-                        return(
-                            <option key={edition.id} value={edition.id}>{edition.edition}</option>
-                        )
-                   })}
-                </select>
-                </div>
-            </div>
-        )
-    }
-
-    // Renderiza o select do formulário
     const renderRarity = () => {
         return(
             <div className="col-lg-4 mb-5">
@@ -192,7 +169,7 @@ const EditEditionCards = (props) => {
         const objAddCard = {
             cardName: evt.target.cardName.value.trim(),
             cardColor_id: refCardColor.current.value.trim(),
-            cardEdition_id: refCardEdition.current.value.trim(),
+            cardEdition_id: String(idCardEdtion),
             cardType_id: refCardType.current.value.trim(),
             cardRarity_id: refCardRarity.current.value.trim()
         }
@@ -217,7 +194,7 @@ const EditEditionCards = (props) => {
             <div className="container-fluid">
                 <div className="row">
                 <div className="col-12 mt-2 mb-3">
-                    <h1>Cadastro de Cards</h1>
+                    <h1>Edição de Cards</h1>
                 </div>
                 </div>
 
@@ -231,7 +208,12 @@ const EditEditionCards = (props) => {
                     </div>
                     {renderCardType()}
                     {renderCardColor()}
-                    {renderEdition()}
+                    <div className="col-lg-4 mb-5">
+                        <div className="form-group">
+                        <label>Edição da Carta</label>
+                            <input type="text" name='cardEdition' value={cardEdition} className="form-control" disabled />
+                        </div>
+                    </div>
                     {renderRarity()}
                     </div>
                     <div className="row">

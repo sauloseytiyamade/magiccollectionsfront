@@ -65,6 +65,7 @@ const Users = () => {
                     $('#searchBarTecUser').on('keyup change', function () {
                         dataTable.search(this.value).draw();
                     })
+                    
                 })
             })
             .catch(err => {
@@ -201,7 +202,7 @@ const Users = () => {
           </div>
         </div>
         <Modals 
-            title='Exclusão de card'
+            title='Exclusão de usuário'
             body='Tem certeza que deseja excluir este usuário? Se excluir, a coleção do usuário também será excluída'
             nameButton='Excluir'
             deleteItem={deleteItem}

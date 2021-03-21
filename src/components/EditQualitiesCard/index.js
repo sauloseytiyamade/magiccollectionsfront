@@ -92,7 +92,7 @@ const EditQualitiesCard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-3">
-                            <h1>Qualidade</h1>
+                            <h1>Editar qualidade</h1>
                         </div>
                     </div>
 
@@ -108,7 +108,7 @@ const EditQualitiesCard = (props) => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Alterar</button>
-                                <Link className="btn btn-dark mr-2" to='/usercollection/languages'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/usercollection/qualities'>Voltar</Link>
                             </div>
                         </div>
                     </form>

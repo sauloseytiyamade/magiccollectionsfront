@@ -53,8 +53,15 @@ const ColorsCard = () => {
                 })
                 
                 $(".dataTable").on('click','.deleteMe', function (evt) { 
-                    const line = evt.target.offsetParent
-                    line.style.display = 'none'
+                    const hasClass = $('.dataTable').hasClass('collapsed')                            
+                    if(hasClass){
+                        const tr_odd = evt.target.offsetParent.parentElement.previousElementSibling
+                        tr_odd.classList.remove('parent')
+                        tr_odd.classList.add('odd')
+                        const line = evt.target.offsetParent
+                        line.style.display = 'none'
+                    }
+                    
                     openModal(evt.target.dataset.id)
                 });
 
@@ -186,7 +193,7 @@ const ColorsCard = () => {
             </section>
             <ToastContainer />
             <Modals
-                title='Exclusão de card'
+                title='Exclusão de cor'
                 body='Deseja realmente excluir esta cor? Se excluir, todo os cards desta cor serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}

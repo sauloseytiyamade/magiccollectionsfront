@@ -13,7 +13,7 @@ const messages = (error) => {
         case 'card exist collection':
             return 'Este card já existe na sua coleção'
         case 'card collection created':
-            return 'Card criado com sucesso!!'
+            return 'Card criado com sucesso'
         case 'card collection updated':
             return 'Card atualizado com sucesso'
         case 'edition created':
@@ -27,11 +27,11 @@ const messages = (error) => {
         case 'card exist':
             return 'Este card já existe'
         case 'card created':
-            return 'Card criado com sucess'
+            return 'Card criado com sucesso'
         case 'card updated':
             return 'Card atualizado com sucesso'
         case 'user deleted':
-            return 'Usuário deletado com sucesso'
+            return 'Usuário excluído com sucesso'
         case 'user updated':
             return 'Usuário atualizado com sucesso'
         case 'file not supported':

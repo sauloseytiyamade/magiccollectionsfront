@@ -90,7 +90,7 @@ const EditRaritiesCard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 mt-2 mb-3">
-                            <h1>Raridade</h1>
+                            <h1>Editar raridade</h1>
                         </div>
                     </div>
 

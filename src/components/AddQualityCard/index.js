@@ -95,7 +95,7 @@ const AddQualityCard = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <button type="submit" className="btn btn-dark mr-2">Cadastrar</button>
-                                <Link className="btn btn-dark mr-2" to='/usercollection/languages'>Voltar</Link>
+                                <Link className="btn btn-dark mr-2" to='/usercollection/qualities'>Voltar</Link>
                             </div>
                         </div>
                     </form>

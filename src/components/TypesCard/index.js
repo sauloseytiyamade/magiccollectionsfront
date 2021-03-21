@@ -53,8 +53,15 @@ const TypesCard = () => {
                 })
 
                 $(".dataTable").on('click','.deleteMe', function (evt) { 
-                    const line = evt.target.offsetParent
-                    line.style.display = 'none'
+                    const hasClass = $('.dataTable').hasClass('collapsed')                            
+                    if(hasClass){
+                        const tr_odd = evt.target.offsetParent.parentElement.previousElementSibling
+                        tr_odd.classList.remove('parent')
+                        tr_odd.classList.add('odd')
+                        const line = evt.target.offsetParent
+                        line.style.display = 'none'
+                    }
+                    
                     openModal(evt.target.dataset.id)
                 });
 
@@ -189,7 +196,7 @@ const TypesCard = () => {
             </section>
             <ToastContainer />
             <Modals
-                title='Exclusão de card'
+                title='Exclusão de tipo'
                 body='Deseja realmente excluir este tipo? Se excluir, todo os cards com este tipo serão removidos automaticamente'
                 nameButton='Excluir'
                 deleteItem={deleteItem}
