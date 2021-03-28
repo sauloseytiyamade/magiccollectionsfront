@@ -7,9 +7,7 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <HttpsRedirect>
           <Router />
-        <HttpsRedirect/>
       </AuthProvider>
     </div>
   );

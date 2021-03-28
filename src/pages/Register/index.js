@@ -41,6 +41,9 @@ const Register = (props) => {
         evt.preventDefault()
         const sendButton = document.querySelector('.sendButton')
         sendButton.innerHTML = 'Aguarde...'
+        setTimeout(() => {
+            sendButton.innerHTML = 'Cadastre-se'
+        }, 3000);
 
         //Verifica se as senhas informadas são iguais
         if(password == passwordConfirm){

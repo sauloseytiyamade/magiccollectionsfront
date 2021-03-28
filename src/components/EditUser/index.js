@@ -105,7 +105,7 @@ const EditUser = (props) => {
         return(
             <div className="col-lg-4 mb-5">
                 <div className="form-group">
-                <label>Edição da Carta</label>
+                <label>Perfil do usuário</label>
                 <select className="form-control" onChange={handlePermissionId}  required>
                     {permissionId == 0 &&
                         <>

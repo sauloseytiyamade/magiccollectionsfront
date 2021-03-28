@@ -24,6 +24,9 @@ const Forgot = (props) => {
 
         const sendButton = document.querySelector('.sendButton')
         sendButton.innerHTML = 'Aguarde...'
+        setTimeout(() => {
+            sendButton.innerHTML = 'Esqueci minha senha'
+        }, 3000);
 
         const data = {
             email

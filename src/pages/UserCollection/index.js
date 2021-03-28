@@ -92,7 +92,7 @@ const UserCollection = (props) => {
                     </Switch>
                 </div>
                 <footer className="main-footer">
-                    <strong>Copyright &copy; 2020 - Magic Collections.</strong>
+                    <strong>Copyright &copy; 2021 - Magic Collections.</strong>
                     All rights reserved.
                 </footer>
             </div>

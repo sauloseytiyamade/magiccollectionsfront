@@ -102,6 +102,9 @@ const ConfigUser = () => {
             .catch(err => {
                 if(err.response.data.indexOf('file not supported') != -1){
                     toast.info('Arquivo não suportado')
+                    setTimeout(() => {
+                        document.location.reload()
+                    }, 5000);
                 }else{
                     //Caso dê algum erro é enviada uma mensagem para o usuário
                     toast.info(messages(err.response.data.message))
